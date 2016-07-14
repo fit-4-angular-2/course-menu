@@ -9,5 +9,5 @@ import { MDL_DIRECTIVES } from 'angular2-mdl';
   directives: [ MDL_DIRECTIVES ]
 })
 export class AppComponent {
-  title = 'app works!';
+  title = 'CourseMenu';
 }
