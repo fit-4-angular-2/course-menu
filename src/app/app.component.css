@@ -1,4 +1,9 @@
-
+.no-drawer{
+    padding-left: 22px;
+}
+mdl-layout-title{
+    cursor: pointer;
+}
 .main-content-container{
     display: flex;
     flex-direction: column;
@@ -13,6 +18,9 @@
 
 .router-outlet{
     flex-grow: 1;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    width: 100%;
 }
 
 .main-footer {

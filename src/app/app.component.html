@@ -1,13 +1,13 @@
 <mdl-layout mdl-layout-fixed-header>
    <mdl-layout-header>
-      <mdl-layout-header-row>
+      <mdl-layout-header-row class="no-drawer">
          <mdl-layout-title (click)="gotoHome()">{{title}}</mdl-layout-title>
          <mdl-layout-spacer></mdl-layout-spacer>
       </mdl-layout-header-row>
    </mdl-layout-header>
    <mdl-layout-content class="main-content-container">
       <div class="main-content">
-         <div class="router-outlet">
+         <div class="router-outlet mdl-grid">
             <router-outlet></router-outlet>
          </div>
          <footer class="mdl-mini-footer">
