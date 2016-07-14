@@ -7,10 +7,12 @@
  **********************************************************************************************/
 /** Map relative paths to URLs. */
 const map: any = {
+  'angular2-mdl': 'vendor/angular2-mdl'
 };
 
 /** User packages configuration. */
 const packages: any = {
+  'angular2-mdl': { main: 'dist/components/index.js'}
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
