@@ -14,3 +14,11 @@
 .router-outlet{
     flex-grow: 1;
 }
+
+.main-footer {
+    flex-grow: 1;
+}
+
+.main-footer ul {
+    justify-content: flex-end;
+}
