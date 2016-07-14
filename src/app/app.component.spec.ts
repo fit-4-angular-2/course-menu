@@ -1,14 +1,28 @@
-/* tslint:disable:no-unused-variable */
 
 import {
-  beforeEach, beforeEachProviders,
-  describe, xdescribe,
-  expect, it, xit,
-  async, inject
+  beforeEach,
+  addProviders,
+  describe,
+  expect,
+  it,
+  inject
 } from '@angular/core/testing';
-import { AppComponent } from './app.component';
+import { provide } from '@angular/core';
+import { AppComponent, appRouterProviders } from './index';
+import { Router } from '@angular/router';
 
-beforeEachProviders(() => [AppComponent]);
+export class MockRouter {
+
+  public navigate(commands: any[]) {
+  }
+
+}
+
+beforeEach(() => {
+  addProviders([AppComponent]);
+  addProviders([...appRouterProviders]);
+  addProviders([provide(Router, {useValue: new MockRouter()})]);
+});
 
 describe('App: CourseMenu', () => {
   it('should create the app',
@@ -20,4 +34,13 @@ describe('App: CourseMenu', () => {
       inject([AppComponent], (app: AppComponent) => {
     expect(app.title).toEqual('CourseMenu');
   }));
+
+  it('should navigate to home', inject([AppComponent, Router], (app: AppComponent, router: Router) => {
+
+    spyOn(router, 'navigate');
+    app.gotoHome();
+    expect(router.navigate).toHaveBeenCalled();
+
+  }));
+
 });

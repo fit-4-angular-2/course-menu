@@ -10,14 +10,17 @@ import {
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.css'],
-  directives: [ MDL_LAYOUT_DIRECTIVES, ROUTER_DIRECTIVES ]
+  directives: [
+    MDL_LAYOUT_DIRECTIVES,
+    ROUTER_DIRECTIVES
+  ]
 })
 export class AppComponent {
   public title = 'CourseMenu';
 
-  constructor(private router: Router){}
+  constructor(private router: Router) {}
 
-  public gotoHome(){
+  public gotoHome() {
     this.router.navigate(['/']);
   }
 

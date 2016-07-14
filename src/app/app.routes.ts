@@ -5,15 +5,16 @@ import {
 import { HomeComponent } from './home.component';
 import { ImprintComponent } from './imprint.component';
 
-export const appRoutes: RouterConfig = [
+const appRoutes: RouterConfig = [
   { path: '', component: HomeComponent},
   { path: 'imprint', component: ImprintComponent }
 ];
+
 
 const routes: RouterConfig = [
   ...appRoutes
 ];
 
-export const APP_ROUTER_PROVIDERS = [
+export const appRouterProviders = [
   provideRouter(routes)
 ];
