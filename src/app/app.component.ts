@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { MDL_LAYOUT_DIRECTIVES } from 'angular2-mdl';
+import {
+  MDL_LAYOUT_DIRECTIVES
+} from 'angular2-mdl';
 import {
   ROUTER_DIRECTIVES,
   Router

@@ -4,7 +4,7 @@
 mdl-layout-title{
     cursor: pointer;
 }
-.main-content-container{
+.main-content-container {
     display: flex;
     flex-direction: column;
 }
@@ -18,9 +18,8 @@ mdl-layout-title{
 
 .router-outlet{
     flex-grow: 1;
-    margin-left: 1rem;
-    margin-right: 1rem;
-    width: 100%;
+    margin-left: 16px;
+    margin-right: 16px;
 }
 
 .main-footer {

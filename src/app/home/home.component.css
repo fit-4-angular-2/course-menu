@@ -1,0 +1,8 @@
+:host {
+    flex: 1;
+}
+
+.button-row {
+    text-align: right;
+    padding: 16px 0;
+}

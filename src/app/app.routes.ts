@@ -2,8 +2,8 @@ import {
   provideRouter,
   RouterConfig
 } from '@angular/router';
-import { HomeComponent } from './home.component';
-import { ImprintComponent } from './imprint.component';
+import { HomeComponent } from './home/home.component';
+import { ImprintComponent } from './imprint/imprint.component';
 
 const appRoutes: RouterConfig = [
   { path: '', component: HomeComponent},
