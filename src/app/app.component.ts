@@ -6,6 +6,7 @@ import {
   ROUTER_DIRECTIVES,
   Router
 } from '@angular/router';
+import { HomeComponent } from './home/home.component';
 
 @Component({
   moduleId: module.id,
@@ -15,7 +16,8 @@ import {
   directives: [
     MDL_LAYOUT_DIRECTIVES,
     ROUTER_DIRECTIVES
-  ]
+  ],
+  precompile: [ HomeComponent ]
 })
 export class AppComponent {
   public title = 'CourseMenu';
@@ -25,6 +27,5 @@ export class AppComponent {
   public gotoHome() {
     this.router.navigate(['/']);
   }
-
 }
 
