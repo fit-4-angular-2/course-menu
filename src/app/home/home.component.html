@@ -7,15 +7,15 @@
    </div>
 
    <div class="mdl-cell--12-col mdl-cell--6-col-desktop mdl-cell--3-offset-desktop">
-      <mdl-list style="margin-left:-16px">
-         <mdl-list-item lines="3" *ngFor="let item of items">
-            <mdl-list-item-primary-content (click)="toggleItem(item)">
+      <mdl-list>
+         <mdl-list-item lines="3" *ngFor="let item of items" mdl-ripple (click)="toggleItem(item)">
+            <mdl-list-item-primary-content>
                <span>{{item.title}}</span>
                <mdl-list-item-text-body>{{item.explanation}}</mdl-list-item-text-body>
             </mdl-list-item-primary-content>
             <mdl-list-item-secondary-content>
                <mdl-list-item-secondary-action>
-                  <mdl-checkbox mdl-ripple [(ngModel)]="item.selected"></mdl-checkbox>
+                  <mdl-checkbox mdl-ripple [(ngModel)]="item.selected" (click)="clickCheckbox($event)"></mdl-checkbox>
                </mdl-list-item-secondary-action>
             </mdl-list-item-secondary-content>
          </mdl-list-item>

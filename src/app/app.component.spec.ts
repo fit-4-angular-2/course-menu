@@ -5,7 +5,8 @@ import {
   describe,
   expect,
   it,
-  inject
+  inject,
+  async
 } from '@angular/core/testing';
 import { provide } from '@angular/core';
 import { AppComponent, appRouterProviders } from './index';
@@ -35,12 +36,12 @@ describe('App: CourseMenu', () => {
     expect(app.title).toEqual('CourseMenu');
   }));
 
-  it('should navigate to home', inject([AppComponent, Router], (app: AppComponent, router: Router) => {
+  it('should navigate to home', async(inject([AppComponent, Router], (app: AppComponent, router: Router) => {
 
     spyOn(router, 'navigate');
     app.gotoHome();
     expect(router.navigate).toHaveBeenCalled();
 
-  }));
+  })));
 
 });

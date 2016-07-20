@@ -6,3 +6,8 @@
     text-align: right;
     padding: 16px 0;
 }
+
+
+mdl-list-item[mdl-ripple] {
+    cursor: pointer;
+}
