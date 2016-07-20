@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-
 import { MDL_DIRECTIVES } from 'angular2-mdl';
 
 

@@ -10,9 +10,16 @@ import {
 } from '@angular/core/testing';
 import { provide } from '@angular/core';
 import { AppComponent, appRouterProviders } from './index';
-import { Router } from '@angular/router';
+import {
+  Router,
+  NavigationError,
+  NavigationCancel
+} from '@angular/router';
+import { Subject } from 'rxjs/Rx';
 
 export class MockRouter {
+
+  public events = new Subject();
 
   public navigate(commands: any[]) {
   }
@@ -38,9 +45,37 @@ describe('App: CourseMenu', () => {
 
   it('should navigate to home', async(inject([AppComponent, Router], (app: AppComponent, router: Router) => {
 
+    app.ngOnInit();
+
     spyOn(router, 'navigate');
     app.gotoHome();
     expect(router.navigate).toHaveBeenCalled();
+
+  })));
+
+  it('should navigate to home if a route did not exist',
+    async(inject([AppComponent, Router], (app: AppComponent, router: Router) => {
+
+    app.ngOnInit();
+
+    spyOn(app, 'gotoHome');
+
+    (<any>router).events.next(new NavigationError(0, '/x', ' Error: Cannot match any routes'));
+
+    expect(app.gotoHome).toHaveBeenCalled();
+
+  })));
+
+  it('should npt navigate to home if any route event fires',
+    async(inject([AppComponent, Router], (app: AppComponent, router: Router) => {
+
+    app.ngOnInit();
+
+    spyOn(app, 'gotoHome');
+
+    (<any>router).events.next(new NavigationCancel(0, '/x'));
+
+    expect(app.gotoHome).not.toHaveBeenCalled();
 
   })));
 

@@ -1,10 +1,13 @@
-import { Component } from '@angular/core';
+import {
+  Component,
+  OnInit
+} from '@angular/core';
 import {
   MDL_DIRECTIVES
 } from 'angular2-mdl';
 import {
   ROUTER_DIRECTIVES,
-  Router
+  Router, NavigationError
 } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 
@@ -19,10 +22,18 @@ import { HomeComponent } from './home/home.component';
   ],
   precompile: [ HomeComponent ]
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   public title = 'CourseMenu';
 
   constructor(private router: Router) {}
+
+  public ngOnInit() {
+    this.router.events.subscribe( (e) => {
+      if (e instanceof NavigationError) {
+        this.gotoHome();
+      }
+    });
+  }
 
   public gotoHome() {
     this.router.navigate(['/']);

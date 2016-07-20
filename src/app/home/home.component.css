@@ -7,6 +7,9 @@
     padding: 16px 0;
 }
 
+mdl-list-item {
+    margin: 0 -16px;
+}
 
 mdl-list-item[mdl-ripple] {
     cursor: pointer;
