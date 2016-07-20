@@ -24,11 +24,14 @@
 
 
    <div class="mdl-cell--12-col mdl-cell--6-col-desktop mdl-cell--3-offset-desktop">
-      <p>Senden Sie uns ihren Kurs. Wir setzen uns mit ihnen in Verbidnung um Details zu besprechen.</p>
+      <p>Senden Sie uns ihren Kurswunsch. Wir setzen uns mit ihnen in Verbindung um Details zu besprechen.</p>
    </div>
 
    <div class="mdl-cell--12-col mdl-cell--6-col-desktop mdl-cell--3-offset-desktop">
       <p>Teilen Sie uns bitte noch die Anzhal der Teilnehmer und eine Kontaktmöglichkeit mit.</p>
+      <mdl-textfield type="text" label="Kontakt (Telefon oder Email)" [(ngModel)]="contact" floating-label></mdl-textfield>
+      <br/>
+      <mdl-textfield type="number" label="Anzahl Teilnehmer" error-msg="Bitte geben Sie eine Zahl ein." [(ngModel)]="countOfAttendies" floating-label></mdl-textfield>
    </div>
 
    <div class="mdl-cell--12-col button-row mdl-cell--6-col-desktop mdl-cell--3-offset-desktop">
