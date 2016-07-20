@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {
-  MDL_LAYOUT_DIRECTIVES
+  MDL_DIRECTIVES
 } from 'angular2-mdl';
 import {
   ROUTER_DIRECTIVES,
@@ -14,7 +14,7 @@ import { HomeComponent } from './home/home.component';
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.css'],
   directives: [
-    MDL_LAYOUT_DIRECTIVES,
+    MDL_DIRECTIVES,
     ROUTER_DIRECTIVES
   ],
   precompile: [ HomeComponent ]

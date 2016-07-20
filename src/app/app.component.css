@@ -1,5 +1,5 @@
 .no-drawer{
-    padding-left: 22px;
+    padding-left: 62px;
 }
 mdl-layout-title{
     cursor: pointer;
@@ -25,4 +25,12 @@ mdl-layout-title{
 
 footer {
     flex-shrink: 0;
+}
+
+mdl-layout-header {
+    color: white;
+}
+
+.mdl-layout__drawer-button {
+    color: white;
 }

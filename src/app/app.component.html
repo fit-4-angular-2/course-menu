@@ -1,5 +1,8 @@
 <mdl-layout mdl-layout-fixed-header>
    <mdl-layout-header>
+      <div class="mdl-layout__drawer-button" (click)="gotoHome()">
+         <mdl-icon>home</mdl-icon>
+      </div>
       <mdl-layout-header-row class="no-drawer">
          <mdl-layout-title (click)="gotoHome()">{{title}}</mdl-layout-title>
          <mdl-layout-spacer></mdl-layout-spacer>
