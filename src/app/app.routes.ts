@@ -7,7 +7,8 @@ import { ImprintComponent } from './imprint/imprint.component';
 
 const appRoutes: RouterConfig = [
   { path: 'imprint', component: ImprintComponent },
-  { path: '', component: HomeComponent }
+  { path: '', component: HomeComponent },
+  { path: '**', redirectTo: ''}
 ];
 
 
