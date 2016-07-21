@@ -9,6 +9,7 @@ import {
   Router
 } from '@angular/router';
 import { HomeComponent } from './home/home.component';
+import { ItemsService } from './model/items.service';
 
 @Component({
   moduleId: module.id,
@@ -19,7 +20,8 @@ import { HomeComponent } from './home/home.component';
     MDL_DIRECTIVES,
     ROUTER_DIRECTIVES
   ],
-  precompile: [ HomeComponent ]
+  precompile: [ HomeComponent ],
+  providers: [ ItemsService ]
 })
 export class AppComponent {
   public title = 'CourseMenu';

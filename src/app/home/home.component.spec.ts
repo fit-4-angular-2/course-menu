@@ -8,81 +8,91 @@ import {
   inject,
   async
 } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
 import { Component } from '@angular/core';
-import { TestComponentBuilder, ComponentFixture } from '@angular/compiler/testing';
+import { TestComponentBuilder } from '@angular/compiler/testing';
 import { HomeComponent } from './home.component';
+import { ItemsService } from './../model/items.service';
+import { Item } from './../model/item';
+import {MockBackend} from '@angular/http/testing';
 import {
-  MdlListItemPrimaryContentComponent,
-  MdlCheckboxComponent
-} from 'angular2-mdl';
+  BaseRequestOptions,
+  Http,
+  Response,
+  ResponseOptions,
+} from '@angular/http';
 
-
-
+let oneItem =  [new Item('Grundlagen', 'Projekt erstellen, Arbeiten mit Angular CLI, Komponenten')];
 
 beforeEach(() => {
-  addProviders([HomeComponent]);
+  addProviders([
+    HomeComponent,
+    ItemsService,
+    MockBackend,
+    BaseRequestOptions,
+    { provide: Http,
+      useFactory: (backend, options) => new Http(backend, options),
+      deps: [MockBackend, BaseRequestOptions] }
+  ]);
 });
 
 describe('HomeComponent', () => {
 
   let builder: TestComponentBuilder;
+  let app: HomeComponent;
+  let mockbackend: MockBackend;
 
-  beforeEach(inject([TestComponentBuilder], function (tcb: TestComponentBuilder) {
-    builder = tcb;
+  beforeEach(inject([TestComponentBuilder, HomeComponent, MockBackend],
+    (tcb: TestComponentBuilder, homeComp: HomeComponent, _mockbackend: MockBackend ) => {
+      builder = tcb;
+      app = homeComp;
+      mockbackend = _mockbackend;
   }));
 
-  it('should create the home component',
-    async(inject([HomeComponent], (app: HomeComponent) => {
+  it('should create the home component', async( () => {
       expect(app).toBeTruthy();
-    })));
-
-  it('should have an item',
-    async(inject([HomeComponent], (app: HomeComponent) => {
-      expect(app.items.length).toBe(1);
-    })));
-
-  it('should toggle the item state if the mdl-list-item-primary-content is clicked', async(( ) => {
-
-    builder
-      .overrideTemplate(TestComponent, `
-          <app-home></app-home>
-        `)
-      .createAsync(TestComponent).then( (fixture: ComponentFixture<TestComponent>) => {
-
-        fixture.detectChanges();
-
-        let appHomeComponent = fixture.debugElement.query(By.directive(HomeComponent)).componentInstance;
-        let listItemContent = fixture.debugElement.query(By.directive(MdlListItemPrimaryContentComponent)).nativeElement;
-
-        expect(appHomeComponent.items[0].selected).toBe(false);
-
-        listItemContent.click();
-
-        expect(appHomeComponent.items[0].selected).toBe(true);
-      });
-
   }));
 
-  it('should change the item selection state on checkbox-click', async(() => {
-    builder
-      .overrideTemplate(TestComponent, `
-          <app-home></app-home>
-        `)
-      .createAsync(TestComponent).then( (fixture: ComponentFixture<TestComponent>) => {
+  it('should have an item', ( done )  => {
 
-      fixture.detectChanges();
-
-      let appHomeComponent = fixture.debugElement.query(By.directive(HomeComponent)).componentInstance;
-      let checkbox = fixture.debugElement.query(By.directive(MdlCheckboxComponent)).nativeElement;
-
-      expect(appHomeComponent.items[0].selected).toBe(false);
-
-      checkbox.click();
-
-      expect(appHomeComponent.items[0].selected).toBe(true);
+    mockbackend.connections.subscribe(connection => {
+      connection.mockRespond(
+        new Response(
+          new ResponseOptions({body: JSON.stringify({data: oneItem})})
+        )
+      );
     });
-  }));
+
+    expect(app.isLoading).toBe(true);
+
+    app.ngOnInit();
+
+    app.items.subscribe(items => {
+      expect(items.length).toEqual(1);
+      expect(app.isLoading).toBe(false);
+      done();
+    });
+
+  });
+
+  it('should set the error state if an http error occures', ( done )  => {
+
+    mockbackend.connections.subscribe(connection => {
+      connection.mockError();
+    });
+
+    expect(app.isHttpError).toBe(false);
+
+    app.ngOnInit();
+
+    app.items.subscribe(
+      items => {},
+      e => {
+      expect(app.isHttpError).toBe(true);
+      done();
+    });
+
+  });
+
 
 });
 

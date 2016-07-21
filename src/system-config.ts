@@ -7,12 +7,14 @@
  **********************************************************************************************/
 /** Map relative paths to URLs. */
 const map: any = {
-  'angular2-mdl': 'vendor/angular2-mdl'
+  'angular2-mdl': 'vendor/angular2-mdl',
+  'angular2-in-memory-web-api': 'vendor/angular2-in-memory-web-api'
 };
 
 /** User packages configuration. */
 const packages: any = {
-  'angular2-mdl': { main: 'dist/components/index.js'}
+  'angular2-mdl': { main: 'dist/components/index.js'},
+  'angular2-in-memory-web-api': { main: 'index.js'}
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////

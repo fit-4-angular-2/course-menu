@@ -6,19 +6,14 @@
          Pro Block wird ein Tag benötigt. Aus folgenden Blöcken können Sie wählen:</p>
    </div>
 
+   <div *ngIf="isHttpError">Beim Laden der Daten ist ein Fehler aufgetreten.</div>
+   <div *ngIf="isLoading" class="loading-container">
+      <mdl-spinner active></mdl-spinner>
+   </div>
+
    <div class="mdl-cell--12-col mdl-cell--6-col-desktop mdl-cell--3-offset-desktop">
       <mdl-list>
-         <mdl-list-item lines="3" *ngFor="let item of items" mdl-ripple (click)="toggleItem(item)">
-            <mdl-list-item-primary-content>
-               <span>{{item.title}}</span>
-               <mdl-list-item-text-body>{{item.explanation}}</mdl-list-item-text-body>
-            </mdl-list-item-primary-content>
-            <mdl-list-item-secondary-content>
-               <mdl-list-item-secondary-action>
-                  <mdl-checkbox mdl-ripple [(ngModel)]="item.selected" (click)="clickCheckbox($event)"></mdl-checkbox>
-               </mdl-list-item-secondary-action>
-            </mdl-list-item-secondary-content>
-         </mdl-list-item>
+				<course-item  *ngFor="let item of items | async" [item]="item"></course-item>
       </mdl-list>
    </div>
 
