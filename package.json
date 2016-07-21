@@ -48,11 +48,15 @@
     "ts-node": "0.5.5",
     "tslint": "3.11.0",
     "typescript": "1.8.10",
-    "typings": "0.8.1"
+    "typings": "0.8.1",
+    "validate-commit-msg": "^2.6.1"
   },
   "config": {
     "ghooks": {
       "pre-commit": "npm run test"
+    },
+    "validate-commit-msg": {
+        "helpMessage": "\nNOTE: Please see angular's commit message guidelines (https://github.com/angular/angular.js/blob/master/CONTRIBUTING.md#commit) for information on how to format commit messages.\n\nAs an example, here is a valid commit message: 'docs(slider): Document slider public api'\n\nIf this commit is on a development / WIP branch, you can disable this by running `git commit --no-verify`."
     }
   }
 }
