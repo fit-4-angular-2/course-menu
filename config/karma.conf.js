@@ -37,7 +37,7 @@ module.exports = function (config) {
       'dist/vendor/**/*.spec.js'
     ],
     preprocessors: {
-      'dist/app/**/!(*spec).js': ['coverage']
+      'dist/app/**/!(*spec|*mock).js': ['coverage']
     },
     coverageReporter: {
       dir : 'coverage/',
