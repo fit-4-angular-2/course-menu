@@ -4,7 +4,7 @@ import { Item } from './item';
 export class InMemoryDataService implements InMemoryDbService {
   createDb() {
     let items: Item[] = [
-      new Item('Grundlagen', 'Projekt erstellen, Arbeiten mit Angular CLI, Komponenten')
+      new Item('Grundlagen', 'Projekt mit Angular CLI, Templates, Komponenten, Services, Http-Requests')
     ];
     return {items};
   }

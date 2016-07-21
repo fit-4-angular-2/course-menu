@@ -27,7 +27,7 @@ export class HomeComponent implements OnInit {
 
   public ngOnInit() {
     this.isLoading = true;
-    this.items = this.itemsService.loadItems();
+    this.items = this.itemsService.loadItems(false);
 
     this.items.subscribe((d) => {
       this.isLoading = false;
