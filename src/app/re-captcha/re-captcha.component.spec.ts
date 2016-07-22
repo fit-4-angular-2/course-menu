@@ -1,7 +1,6 @@
 
 import {
   beforeEach,
-  addProviders,
   describe,
   expect,
   async,
@@ -36,7 +35,6 @@ describe('ReCaptcha Component', () => {
       let reCaptchaComponent = fixture.debugElement.query(By.directive(ReCaptchaComponent)).componentInstance;
 
       reCaptchaComponent.onTokenCallback('test');
-
 
     });
   }));

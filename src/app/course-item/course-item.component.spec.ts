@@ -27,7 +27,7 @@ beforeEach(() => {
   ]);
 });
 
-describe('HomeComponent', () => {
+describe('CourseItemComponent', () => {
 
   let builder: TestComponentBuilder;
   let courseItemComp: CourseItemComponent;
