@@ -28,12 +28,12 @@ export class ReCaptchaComponent implements OnInit {
   }
 
   public ngOnInit() {
-    // let script = document.createElement('script');
-    // script.innerHTML = '';
-    // script.src = 'https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit';
-    // script.async = true;
-    // script.defer = true;
-    // document.body.appendChild(script);
+    let script = document.createElement('script');
+    script.innerHTML = '';
+    script.src = 'https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit';
+    script.async = true;
+    script.defer = true;
+    document.body.appendChild(script);
   }
 
   private onloadCallback() {
