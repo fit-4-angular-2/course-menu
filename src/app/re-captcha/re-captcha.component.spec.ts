@@ -23,21 +23,21 @@ describe('ReCaptcha Component', () => {
     builder = _builder;
   }));
 
-  it('should create a re-captcha component and inject a script tag', async(() => {
-    builder.createAsync(TestComponent).then( (fixture: ComponentFixture<TestComponent>) => {
-
-      fixture.detectChanges();
-
-      // let scriptTag = document
-      //   .querySelector('script[src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"]');
-      // expect(scriptTag).toBeDefined();
-      //
-      // let reCaptchaComponent = fixture.debugElement.query(By.directive(ReCaptchaComponent)).componentInstance;
-      //
-      // reCaptchaComponent.onTokenCallback('test');
-
-    });
-  }));
+  // it('should create a re-captcha component and inject a script tag', async(() => {
+  //   builder.createAsync(TestComponent).then( (fixture: ComponentFixture<TestComponent>) => {
+  //
+  //     fixture.detectChanges();
+  //
+  //     // let scriptTag = document
+  //     //   .querySelector('script[src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"]');
+  //     // expect(scriptTag).toBeDefined();
+  //     //
+  //     // let reCaptchaComponent = fixture.debugElement.query(By.directive(ReCaptchaComponent)).componentInstance;
+  //     //
+  //     // reCaptchaComponent.onTokenCallback('test');
+  //
+  //   });
+  // }));
 });
 
 @Component({
