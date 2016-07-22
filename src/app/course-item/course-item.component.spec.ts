@@ -38,7 +38,7 @@ describe('HomeComponent', () => {
       courseItemComp = _courseItemComp;
   }));
 
-  it('should create the home component', async( () => {
+  it('should create the course item component', async( () => {
       expect(courseItemComp).toBeTruthy();
   }));
 

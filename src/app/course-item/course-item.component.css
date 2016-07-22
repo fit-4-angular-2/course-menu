@@ -3,7 +3,7 @@ mdl-list-item {
     padding-top: 0;
 }
 
-mdl-list-item[mdl-ripple] {
+mdl-list-item {
     cursor: pointer;
 }
 

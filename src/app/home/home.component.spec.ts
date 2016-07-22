@@ -8,7 +8,7 @@ import {
   inject,
   async
 } from '@angular/core/testing';
-import { Component } from '@angular/core';
+import {Component, ElementRef, NgZone} from '@angular/core';
 import { TestComponentBuilder } from '@angular/compiler/testing';
 import { HomeComponent } from './home.component';
 import { ItemsService } from './../model/items.service';
@@ -115,6 +115,7 @@ describe('HomeComponent', () => {
         homeComp.items[0].selected = true;
         homeComp.contact = 'a';
         homeComp.countOfAttendies = '1';
+        homeComp.onToken({'token':'x'});
 
         expect(homeComp.hasMissingFields()).toBe(false);
 

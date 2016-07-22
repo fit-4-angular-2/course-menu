@@ -1,13 +1,13 @@
 import {
   Component,
-  OnInit,
-  DoCheck
+  OnInit
 } from '@angular/core';
 import { MDL_DIRECTIVES } from 'angular2-mdl';
 import { Item } from './../model/item';
 import { ItemsService } from './../model/items.service';
 import { Observable } from 'rxjs/Rx';
 import { CourseItemComponent } from './../course-item/course-item.component';
+import { ReCaptchaComponent } from './../re-captcha/re-captcha.component';
 
 
 @Component({
@@ -15,7 +15,7 @@ import { CourseItemComponent } from './../course-item/course-item.component';
   selector: 'app-home',
   templateUrl: 'home.component.html',
   styleUrls: ['home.component.css'],
-  directives: [ MDL_DIRECTIVES, CourseItemComponent ],
+  directives: [ MDL_DIRECTIVES, CourseItemComponent, ReCaptchaComponent ],
   providers: [ ]
 })
 export class HomeComponent implements OnInit {
@@ -26,6 +26,7 @@ export class HomeComponent implements OnInit {
   public isLoading = true;
   public contact: String;
   public countOfAttendies: String;
+  private token: string;
 
   constructor(private itemsService: ItemsService) {}
 
@@ -49,6 +50,19 @@ export class HomeComponent implements OnInit {
 
     let noAttendies = this.countOfAttendies ? (Number(this.countOfAttendies) === 0) : true;
 
-    return atLeastOneItemSelected.length === 0 || noContact || noAttendies;
+    let noToken = this.token ? this.token.length === 0 : true;
+
+    return atLeastOneItemSelected.length === 0 || noContact || noAttendies || noToken;
   }
+
+  public onToken({token}) {
+    this.token = token;
+  }
+
+  // public send() {
+  //   if (this.hasMissingFields()) {
+  //     return;
+  //   }
+  //   console.log('send');
+  // }
 }
