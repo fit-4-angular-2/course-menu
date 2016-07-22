@@ -1,6 +1,7 @@
 import {
   Component,
-  OnInit
+  OnInit,
+  DoCheck
 } from '@angular/core';
 import { MDL_DIRECTIVES } from 'angular2-mdl';
 import { Item } from './../model/item';
@@ -19,17 +20,21 @@ import { CourseItemComponent } from './../course-item/course-item.component';
 })
 export class HomeComponent implements OnInit {
 
-  public items: Observable<Item[]> = null;
+  public obsItems: Observable<Item[]> = null;
+  public items: Item[];
   public isHttpError = false;
   public isLoading = true;
+  public contact: String;
+  public countOfAttendies: number;
 
   constructor(private itemsService: ItemsService) {}
 
   public ngOnInit() {
     this.isLoading = true;
-    this.items = this.itemsService.loadItems(false);
+    this.obsItems = this.itemsService.loadItems();
 
-    this.items.subscribe((d) => {
+    this.obsItems.subscribe((d) => {
+      this.items = d;
       this.isLoading = false;
     }, (error) => {
       this.isHttpError = true;
@@ -37,4 +42,9 @@ export class HomeComponent implements OnInit {
 
   }
 
+  public hasMissingFields(): boolean {
+    let atLeastOneItemSelected = this.items ? this.items.filter(item => item.selected) : [];
+
+    return atLeastOneItemSelected.length === 0;
+  }
 }

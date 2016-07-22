@@ -13,12 +13,13 @@
 
    <div class="mdl-cell--12-col mdl-cell--6-col-desktop mdl-cell--3-offset-desktop">
       <mdl-list>
-				<course-item  *ngFor="let item of items | async" [item]="item"></course-item>
+				<course-item  *ngFor="let item of obsItems | async; let i = index" [item]="item" [index]="i"></course-item>
       </mdl-list>
    </div>
 
 
    <div class="mdl-cell--12-col mdl-cell--6-col-desktop mdl-cell--3-offset-desktop">
+		 	<p></p>
       <p>Senden Sie uns ihren Kurswunsch. Wir setzen uns mit ihnen in Verbindung um Details zu besprechen.</p>
    </div>
 
@@ -30,7 +31,7 @@
    </div>
 
    <div class="mdl-cell--12-col button-row mdl-cell--6-col-desktop mdl-cell--3-offset-desktop">
-      <mdl-button mdl-button-type="raised" mdl-colored="accent" mdl-ripple disabled>Senden</mdl-button>
+      <mdl-button mdl-button-type="raised" mdl-colored="accent" mdl-ripple [disabled]="hasMissingFields()">Senden</mdl-button>
    </div>
 
 </div>

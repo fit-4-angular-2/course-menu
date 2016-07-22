@@ -38,18 +38,18 @@ beforeEach(() => {
 describe('HomeComponent', () => {
 
   let builder: TestComponentBuilder;
-  let app: HomeComponent;
+  let homeComp: HomeComponent;
   let mockbackend: MockBackend;
 
   beforeEach(inject([TestComponentBuilder, HomeComponent, MockBackend],
-    (tcb: TestComponentBuilder, homeComp: HomeComponent, _mockbackend: MockBackend ) => {
+    (tcb: TestComponentBuilder, _homeComp: HomeComponent, _mockbackend: MockBackend ) => {
       builder = tcb;
-      app = homeComp;
+      homeComp = _homeComp;
       mockbackend = _mockbackend;
   }));
 
   it('should create the home component', async( () => {
-      expect(app).toBeTruthy();
+      expect(homeComp).toBeTruthy();
   }));
 
   it('should have an item', ( done )  => {
@@ -62,13 +62,13 @@ describe('HomeComponent', () => {
       );
     });
 
-    expect(app.isLoading).toBe(true);
+    expect(homeComp.isLoading).toBe(true);
 
-    app.ngOnInit();
+    homeComp.ngOnInit();
 
-    app.items.subscribe(items => {
+    homeComp.obsItems.subscribe(items => {
       expect(items.length).toEqual(1);
-      expect(app.isLoading).toBe(false);
+      expect(homeComp.isLoading).toBe(false);
       done();
     });
 
@@ -80,19 +80,48 @@ describe('HomeComponent', () => {
       connection.mockError();
     });
 
-    expect(app.isHttpError).toBe(false);
+    expect(homeComp.isHttpError).toBe(false);
 
-    app.ngOnInit();
+    homeComp.ngOnInit();
 
-    app.items.subscribe(
+    homeComp.obsItems.subscribe(
       items => {},
       e => {
-      expect(app.isHttpError).toBe(true);
+      expect(homeComp.isHttpError).toBe(true);
       done();
     });
 
   });
 
+
+  it('should mark missing fields', ( done ) => {
+
+    mockbackend.connections.subscribe(connection => {
+      connection.mockRespond(
+        new Response(
+          new ResponseOptions({body: JSON.stringify({data: oneItem})})
+        )
+      );
+    });
+
+    homeComp.ngOnInit();
+
+    homeComp.obsItems.subscribe(
+      () => {
+
+        expect(homeComp.hasMissingFields()).toBe(true);
+
+        // If one item is selected it should be false
+        homeComp.items[0].selected = true;
+
+        expect(homeComp.hasMissingFields()).toBe(false);
+
+        done();
+      }
+    );
+
+
+  });
 
 });
 

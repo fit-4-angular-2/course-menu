@@ -36,9 +36,9 @@ describe('App: CourseMenu', () => {
     expect(app).toBeTruthy();
   }));
 
-  it('should have as title \'CourseMenu\'',
+  it('should have as title \'Angular 2 CourseMenu\'',
       inject([AppComponent], (app: AppComponent) => {
-    expect(app.title).toEqual('CourseMenu');
+    expect(app.title).toEqual('Angular 2 CourseMenu');
   }));
 
   it('should navigate to home', async(inject([AppComponent, Router], (app: AppComponent, router: Router) => {

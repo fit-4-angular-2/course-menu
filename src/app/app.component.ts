@@ -24,7 +24,7 @@ import { ItemsService } from './model/items.service';
   providers: [ ItemsService ]
 })
 export class AppComponent {
-  public title = 'CourseMenu';
+  public title = 'Angular 2 CourseMenu';
 
   constructor(private router: Router) {}
 

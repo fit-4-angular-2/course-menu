@@ -1,7 +1,16 @@
 mdl-list-item {
     margin: 0 -16px;
+    padding-top: 0;
 }
 
 mdl-list-item[mdl-ripple] {
     cursor: pointer;
+}
+
+.mdl-list__item--three-line {
+    height: 104px;
+}
+
+.mdl-list__item-text-body {
+    font-size: 16px;
 }

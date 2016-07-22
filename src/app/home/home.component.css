@@ -11,3 +11,7 @@
     text-align: center;
     flex-grow: 1;
 }
+
+mdl-list {
+    padding-top:0;
+}

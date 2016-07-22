@@ -17,6 +17,7 @@ import { Item } from './../model/item';
 export class CourseItemComponent {
 
   @Input() public item: Item = null;
+  @Input() public index: number = 1;
 
   public toggleItem(item: Item) {
     item.selected = !item.selected;
