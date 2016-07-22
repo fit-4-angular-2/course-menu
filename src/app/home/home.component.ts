@@ -56,6 +56,7 @@ export class HomeComponent implements OnInit {
   }
 
   public onToken({token}) {
+    // how to verify https://developers.google.com/recaptcha/docs/verify
     this.token = token;
   }
 

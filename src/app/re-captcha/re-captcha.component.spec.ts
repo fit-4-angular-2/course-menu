@@ -32,9 +32,9 @@ describe('ReCaptcha Component', () => {
         .querySelector('script[src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"]');
       expect(scriptTag).toBeDefined();
 
-      let reCaptchaComponent = fixture.debugElement.query(By.directive(ReCaptchaComponent)).componentInstance;
-
-      reCaptchaComponent.onTokenCallback('test');
+      // let reCaptchaComponent = fixture.debugElement.query(By.directive(ReCaptchaComponent)).componentInstance;
+      //
+      // reCaptchaComponent.onTokenCallback('test');
 
     });
   }));
