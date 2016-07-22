@@ -111,8 +111,10 @@ describe('HomeComponent', () => {
 
         expect(homeComp.hasMissingFields()).toBe(true);
 
-        // If one item is selected it should be false
+        // If one item is selected, a contact is given and the attendie count is present it should be false
         homeComp.items[0].selected = true;
+        homeComp.contact = 'a';
+        homeComp.countOfAttendies = '1';
 
         expect(homeComp.hasMissingFields()).toBe(false);
 

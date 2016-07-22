@@ -25,7 +25,7 @@ export class HomeComponent implements OnInit {
   public isHttpError = false;
   public isLoading = true;
   public contact: String;
-  public countOfAttendies: number;
+  public countOfAttendies: String;
 
   constructor(private itemsService: ItemsService) {}
 
@@ -45,6 +45,10 @@ export class HomeComponent implements OnInit {
   public hasMissingFields(): boolean {
     let atLeastOneItemSelected = this.items ? this.items.filter(item => item.selected) : [];
 
-    return atLeastOneItemSelected.length === 0;
+    let noContact = this.contact ? (this.contact.length === 0) : true;
+
+    let noAttendies = this.countOfAttendies ? (Number(this.countOfAttendies) === 0) : true;
+
+    return atLeastOneItemSelected.length === 0 || noContact || noAttendies;
   }
 }

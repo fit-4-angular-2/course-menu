@@ -53,7 +53,6 @@
   },
   "config": {
     "ghooks": {
-      "pre-commit": "npm run test",
       "commit-msg": "validate-commit-msg"
     },
     "validate-commit-msg": {
