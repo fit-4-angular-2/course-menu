@@ -31,7 +31,7 @@ export class ReCaptchaComponent implements OnInit {
     try {
       let script = document.createElement('script');
       script.innerHTML = '';
-      script.src = 'https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit';
+      script.src = 'http://www.mseemann.de/angular2-mdl/vendor/reflect-metadata/Reflect.js';
       // script.async = true;
       // script.defer = true;
       let anyScriptTag = document.getElementsByTagName('script')[0];
