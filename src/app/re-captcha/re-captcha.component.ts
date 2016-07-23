@@ -28,17 +28,13 @@ export class ReCaptchaComponent implements OnInit {
   }
 
   public ngOnInit() {
-    try {
+    // this code results in a   Script error. Chrome 46.0.2490 (Linux 0.0.0) ERROR
       let script = document.createElement('script');
       script.innerHTML = '';
-      script.src = 'http://www.mseemann.de/angular2-mdl/vendor/reflect-metadata/Reflect.js';
-      // script.async = true;
-      // script.defer = true;
+      script.src = 'https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit';
+      script['crossorigin'] = true;
       let anyScriptTag = document.getElementsByTagName('script')[0];
       anyScriptTag.parentNode.insertBefore(script, anyScriptTag);
-    } catch (e) {
-      console.log(e);
-    }
   }
 
   private onloadCallback() {
