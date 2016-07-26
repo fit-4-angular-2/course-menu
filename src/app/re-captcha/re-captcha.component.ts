@@ -8,7 +8,7 @@ import {
   NgZone
 } from '@angular/core';
 
-
+// https://www.google.com/recaptcha/admin#list
 declare var grecaptcha: { render: Function };
 
 @Component({

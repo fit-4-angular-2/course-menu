@@ -11,6 +11,7 @@ import {
 import { HomeComponent } from './home/home.component';
 import { ItemsService } from './model/items.service';
 
+
 @Component({
   moduleId: module.id,
   selector: 'app-root',
