@@ -8,7 +8,7 @@ import {
   inject,
   async
 } from '@angular/core/testing';
-import {Component, ElementRef, NgZone} from '@angular/core';
+import {Component} from '@angular/core';
 import { TestComponentBuilder } from '@angular/compiler/testing';
 import { HomeComponent } from './home.component';
 import { ItemsService } from './../model/items.service';
@@ -20,6 +20,7 @@ import {
   Response,
   ResponseOptions,
 } from '@angular/http';
+import { SERVER_URL_TOKEN } from './../consts';
 
 let oneItem =  [new Item('Grundlagen', 'Projekt erstellen, Arbeiten mit Angular CLI, Komponenten')];
 
@@ -29,6 +30,7 @@ beforeEach(() => {
     ItemsService,
     MockBackend,
     BaseRequestOptions,
+    { provide: SERVER_URL_TOKEN, useValue: 'http://localhost:8080'},
     { provide: Http,
       useFactory: (backend, options) => new Http(backend, options),
       deps: [MockBackend, BaseRequestOptions] }
@@ -57,7 +59,7 @@ describe('HomeComponent', () => {
     mockbackend.connections.subscribe(connection => {
       connection.mockRespond(
         new Response(
-          new ResponseOptions({body: JSON.stringify({data: oneItem})})
+          new ResponseOptions({body: JSON.stringify({courses: oneItem})})
         )
       );
     });
@@ -99,7 +101,7 @@ describe('HomeComponent', () => {
     mockbackend.connections.subscribe(connection => {
       connection.mockRespond(
         new Response(
-          new ResponseOptions({body: JSON.stringify({data: oneItem})})
+          new ResponseOptions({body: JSON.stringify({courses: oneItem})})
         )
       );
     });

@@ -1,5 +1,6 @@
 import {
-  Injectable
+  Injectable,
+  Inject
 } from '@angular/core';
 import {
   Http
@@ -9,6 +10,10 @@ import {
   Observable,
   ReplaySubject
 } from 'rxjs/Rx';
+import {
+  SERVER_URL_TOKEN
+} from './../consts';
+
 
 export interface IItemsService {
   loadItems(): Observable<Item[]>;
@@ -19,7 +24,7 @@ export class ItemsService implements IItemsService {
 
   private dataObs = new ReplaySubject<Item[]>(1);
 
-  constructor(private http: Http) {}
+  constructor(private http: Http, @Inject(SERVER_URL_TOKEN) private serverUrl: string) {}
 
   public loadItems(forceRefresh?: boolean): Observable<Item[]> {
     // On Error the Subject will be Stoped and Unsubscribed, if so, create another one
@@ -27,10 +32,10 @@ export class ItemsService implements IItemsService {
 
     // If the Subject was NOT subscribed before OR if forceRefresh is requested
     if (!this.dataObs.observers.length || forceRefresh) {
-      this.http.get('rest/items')
+      this.http.get(this.serverUrl + '/courses')
         .subscribe(
           requestData => {
-            this.dataObs.next(requestData.json().data as Item[]);
+            this.dataObs.next(requestData.json().courses as Item[]);
           },
           error => this.dataObs.error(error));
     }

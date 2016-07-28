@@ -22,7 +22,6 @@
     "@angular/platform-browser": "2.0.0-rc.4",
     "@angular/platform-browser-dynamic": "2.0.0-rc.4",
     "@angular/router": "3.0.0-alpha.8",
-    "angular2-in-memory-web-api": "0.0.14",
     "angular2-mdl": "^1.1.5",
     "es6-shim": "0.35.1",
     "reflect-metadata": "0.1.3",

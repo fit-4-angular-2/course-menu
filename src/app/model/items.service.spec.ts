@@ -47,7 +47,7 @@ describe('ItemsService', () => {
       connection.mockRespond(
         new Response(
           new ResponseOptions({
-            body: JSON.stringify( {data: [new Item('a', 'b')]} )
+            body: JSON.stringify( {courses: [new Item('a', 'b')]} )
           })
         )
       );
@@ -68,7 +68,7 @@ describe('ItemsService', () => {
       connection.mockRespond(
         new Response(
           new ResponseOptions({
-            body: JSON.stringify( {data: [item]} )
+            body: JSON.stringify( {courses: [item]} )
           })
         )
       );
@@ -102,7 +102,7 @@ describe('ItemsService', () => {
       connection.mockRespond(
         new Response(
           new ResponseOptions({
-            body: JSON.stringify( {data: [new Item('a', 'b')]} )
+            body: JSON.stringify( {courses: [new Item('a', 'b')]} )
           })
         )
       );

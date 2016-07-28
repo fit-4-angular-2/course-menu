@@ -1,20 +1,18 @@
 import { bootstrap } from '@angular/platform-browser-dynamic';
-import { enableProdMode } from '@angular/core';
+import {
+  enableProdMode
+} from '@angular/core';
 import {
   AppComponent,
   environment,
-  appRouterProviders,
-  InMemoryDataService
+  appRouterProviders
 } from './app/';
 import {
-  XHRBackend,
   HTTP_PROVIDERS
 } from '@angular/http';
 import {
-  InMemoryBackendService,
-  InMemoryBackendConfig,
-  SEED_DATA
-} from 'angular2-in-memory-web-api';
+  SERVER_URL_TOKEN
+} from './app/consts';
 
 if (environment.production) {
   enableProdMode();
@@ -23,8 +21,6 @@ if (environment.production) {
 bootstrap(AppComponent,  [
   appRouterProviders,
   HTTP_PROVIDERS,
-  { provide: XHRBackend, useClass: InMemoryBackendService },
-  { provide: SEED_DATA, useClass: InMemoryDataService },
-  { provide: InMemoryBackendConfig, useValue: {delay: 600}}
+  { provide: SERVER_URL_TOKEN, useValue: environment.serverUrl }
 ]).catch(err => console.error(err));
 
