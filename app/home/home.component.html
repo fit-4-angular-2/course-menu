@@ -1,0 +1,57 @@
+<div  *ngIf="!isDataSend" class="mdl-grid mdl-grid--no-spacing">
+
+   <div class="mdl-cell--12-col mdl-cell--5-col-desktop mdl-cell--3-offset-desktop">
+      <h5>Angular 2 Kurs zusammenstellen</h5>
+      <p>Stellen Sie sich hier ihren persönlichen Kurs zusammen. Jeder Kurs dauert 2 Tage.
+         Pro Block wird ein Tag benötigt. Aus folgenden Blöcken können Sie wählen:</p>
+   </div>
+
+		<div class="mdl-cell--12-col mdl-cell--5-col-desktop mdl-cell--3-offset-desktop">
+   			<div *ngIf="isHttpError">Beim Laden der Daten ist ein Fehler aufgetreten.</div>
+   			<div *ngIf="isLoading" class="loading-container">
+      			<mdl-spinner active></mdl-spinner>
+				</div>
+		</div>
+
+   <div class="mdl-cell--12-col mdl-cell--5-col-desktop mdl-cell--3-offset-desktop">
+      <mdl-list>
+				<course-item  *ngFor="let item of obsItems | async; let i = index" [item]="item" [index]="i"></course-item>
+      </mdl-list>
+   </div>
+
+
+   <div class="mdl-cell--12-col mdl-cell--5-col-desktop mdl-cell--3-offset-desktop">
+		 	<p></p>
+      <p>Senden Sie uns ihren Kurswunsch. Wir setzen uns mit ihnen in Verbindung um Details zu besprechen.</p>
+   </div>
+
+   <div class="mdl-cell--12-col mdl-cell--5-col-desktop mdl-cell--3-offset-desktop">
+      <p>Teilen Sie uns bitte noch eine Kontaktmöglichkeit und die Anzhal der Teilnehmer mit.</p>
+      <mdl-textfield type="text" label="Kontakt (Telefon oder Email)" [(ngModel)]="contact" floating-label></mdl-textfield>
+      <br/>
+      <mdl-textfield type="number" label="Anzahl Teilnehmer" error-msg="Bitte geben Sie eine Zahl ein." [(ngModel)]="countOfAttendies" floating-label></mdl-textfield>
+   </div>
+
+	<div class="mdl-cell--12-col mdl-cell--5-col-desktop mdl-cell--3-offset-desktop" *ngIf="checkToken">
+		<re-captcha sitekey="6LeEuiUTAAAAAAHBatXPYkA5YrJj7i6YynkxFqsX" (token)="onToken($event)" ></re-captcha>
+	</div>
+
+   <div class="mdl-cell--12-col button-row mdl-cell--5-col-desktop mdl-cell--3-offset-desktop">
+      <mdl-button mdl-button-type="raised" mdl-colored="accent" mdl-ripple [disabled]="hasMissingFields()" (click)="send()">Senden</mdl-button>
+   </div>
+
+</div>
+
+<div  *ngIf="isDataSend" class="mdl-grid mdl-grid--no-spacing">
+
+	<div *ngIf="!isSendError" class="mdl-cell--12-col mdl-cell--5-col-desktop mdl-cell--3-offset-desktop">
+		<h5>Ihre Kursauswahl wurde übermittelt</h5>
+		<p>Wir setzen uns schnellstmöglich mit Ihnen in Verbindung.</p>
+	</div>
+
+	<div *ngIf="isSendError" class="mdl-cell--12-col mdl-cell--5-col-desktop mdl-cell--3-offset-desktop">
+		<h5>Fehler:(</h5>
+		<p>Leider ist ein Fehler beim Senden aufgetreten. Bitte versuchen Sie es später noch einmal.</p>
+	</div>
+
+</div>

@@ -1,0 +1,26 @@
+<mdl-layout mdl-layout-fixed-header>
+   <mdl-layout-header>
+      <div class="mdl-layout__drawer-button" (click)="gotoHome()">
+         <mdl-icon>home</mdl-icon>
+      </div>
+      <mdl-layout-header-row class="no-drawer">
+         <mdl-layout-title (click)="gotoHome()">{{title}}</mdl-layout-title>
+         <mdl-layout-spacer></mdl-layout-spacer>
+      </mdl-layout-header-row>
+   </mdl-layout-header>
+   <mdl-layout-content class="main-content-container">
+      <div class="main-content">
+         <div class="router-outlet">
+            <router-outlet></router-outlet>
+         </div>
+         <footer class="mdl-mini-footer">
+            <div class="mdl-mini-footer__right-section">
+               <ul class="mdl-mini-footer__link-list">
+                  <li> <a routerLink="/imprint">Impressum</a></li>
+               </ul>
+            </div>
+         </footer>
+      </div>
+   </mdl-layout-content>
+</mdl-layout>
+

@@ -1,0 +1,125 @@
+{
+  "_args": [
+    [
+      "angular2-mdl@1.1.5",
+      "/Users/mseemannmbpr/Documents/Projekte/github/course-menu"
+    ]
+  ],
+  "_from": "angular2-mdl@1.1.5",
+  "_id": "angular2-mdl@1.1.5",
+  "_inCache": true,
+  "_installable": true,
+  "_location": "/angular2-mdl",
+  "_nodeVersion": "5.10.1",
+  "_npmOperationalInternal": {
+    "host": "packages-16-east.internal.npmjs.com",
+    "tmp": "tmp/angular2-mdl-1.1.5.tgz_1469518551426_0.8915922401938587"
+  },
+  "_npmUser": {
+    "email": "apps@mseemann.de",
+    "name": "mseemann"
+  },
+  "_npmVersion": "3.8.3",
+  "_phantomChildren": {},
+  "_requested": {
+    "name": "angular2-mdl",
+    "raw": "angular2-mdl@1.1.5",
+    "rawSpec": "1.1.5",
+    "scope": null,
+    "spec": "1.1.5",
+    "type": "version"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_shasum": "d05123a5fed93cbdfd882c54f111e1d73848eea8",
+  "_shrinkwrap": null,
+  "_spec": "angular2-mdl@1.1.5",
+  "_where": "/Users/mseemannmbpr/Documents/Projekte/github/course-menu",
+  "angular-cli": {},
+  "bugs": {
+    "url": "https://github.com/mseemann/angular2-mdl/issues"
+  },
+  "dependencies": {
+    "@angular/common": "2.0.0-rc.4",
+    "@angular/core": "2.0.0-rc.4"
+  },
+  "description": "Angular 2 components, directives and styles based on material design lite https://getmdl.io (v: 1.1.3).",
+  "devDependencies": {
+    "@angular/compiler": "2.0.0-rc.4",
+    "@angular/http": "2.0.0-rc.4",
+    "@angular/platform-browser": "2.0.0-rc.4",
+    "@angular/platform-browser-dynamic": "2.0.0-rc.4",
+    "@angular/router": "3.0.0-beta.2",
+    "angular-cli": "1.0.0-beta.6",
+    "broccoli-funnel": "1.0.2",
+    "broccoli-merge-trees": "1.1.1",
+    "codelyzer": "0.0.24",
+    "coveralls": "2.11.9",
+    "ember-cli-inject-live-reload": "1.4.0",
+    "es6-shim": "0.35.1",
+    "jasmine-core": "2.4.1",
+    "jasmine-spec-reporter": "2.5.0",
+    "karma": "1.1.0",
+    "karma-chrome-launcher": "1.0.1",
+    "karma-coverage": "1.0.0",
+    "karma-jasmine": "1.0.2",
+    "karma-spec-reporter": "0.0.26",
+    "material-design-lite": "1.1.3",
+    "ncp": "2.0.0",
+    "node-sass": "3.8.0",
+    "protractor": "3.3.0",
+    "reflect-metadata": "0.1.3",
+    "remap-istanbul": "0.6.4",
+    "rxjs": "5.0.0-beta.6",
+    "systemjs": "0.19.31",
+    "ts-node": "0.9.3",
+    "tslint": "3.13.0",
+    "typescript": "1.9.0-dev.20160615-1.0",
+    "typings": "1.3.1",
+    "zone.js": "0.6.12"
+  },
+  "directories": {},
+  "dist": {
+    "shasum": "d05123a5fed93cbdfd882c54f111e1d73848eea8",
+    "tarball": "https://registry.npmjs.org/angular2-mdl/-/angular2-mdl-1.1.5.tgz"
+  },
+  "gitHead": "c077498e5cc0094ff6e77156059908aed87afbfb",
+  "homepage": "http://mseemann.de/angular2-mdl/",
+  "keywords": [
+    "angular 2",
+    "material design lite",
+    "components",
+    "typescript"
+  ],
+  "license": "MIT",
+  "main": "./dist/components/index.js",
+  "maintainers": [
+    {
+      "email": "apps@mseemann.de",
+      "name": "mseemann"
+    }
+  ],
+  "name": "angular2-mdl",
+  "optionalDependencies": {},
+  "private": false,
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mseemann/angular2-mdl.git"
+  },
+  "scripts": {
+    "deploy-gh-pages": "ng github-pages:deploy --message \"Deploy gh-pages from commit $(git rev-parse HEAD)\"",
+    "e2e": "protractor",
+    "generate-scss-from-mdl-scss": "node ./dev-scripts/generate-scss-from-mdl-scss.js",
+    "lint": "tslint \"src/**/*.ts\"",
+    "postinstall": "typings install",
+    "posttest": "remap-istanbul -i coverage/coverage-final.json -o coverage/coverage-mapped.json -t lcovonly -o coverage/lcov.info; remap-istanbul -i coverage/coverage-final.json -o coverage/coverage-mapped.json -t html -o coverage/coverage-remap",
+    "pree2e": "webdriver-manager update; tsc --project e2e",
+    "prepublish": "typings install; tsc --project src",
+    "start": "ng server",
+    "test": "ng version; tsc -v; ng test --watch false"
+  },
+  "typings": "./dist/components/index.d.ts",
+  "version": "1.1.5"
+}

@@ -1,0 +1,17 @@
+:host {
+    flex: 1;
+}
+
+.button-row {
+    text-align: right;
+    padding: 16px 0;
+}
+
+.loading-container {
+    text-align: center;
+    flex-grow: 1;
+}
+
+mdl-list {
+    padding-top:0;
+}
