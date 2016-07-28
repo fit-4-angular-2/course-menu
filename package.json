@@ -10,7 +10,8 @@
     "test": "ng version; tsc -v; ng test --watch false",
     "posttest": "remap-istanbul -i coverage/coverage-final.json -o coverage/coverage-mapped.json -t lcovonly -o coverage/lcov.info; remap-istanbul -i coverage/coverage-final.json -o coverage/coverage-mapped.json -t html -o coverage/coverage-remap",
     "pree2e": "webdriver-manager update",
-    "e2e": "protractor"
+    "e2e": "protractor",
+    "deploy-gh-pages": "ng github-pages:deploy --message \"Deploy gh-pages from commit $(git rev-parse HEAD)\""
   },
   "private": true,
   "dependencies": {
