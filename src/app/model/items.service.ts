@@ -3,7 +3,9 @@ import {
   Inject
 } from '@angular/core';
 import {
-  Http
+  Http,
+  Headers,
+  RequestOptions
 } from '@angular/http';
 import { Item } from './item';
 import {
@@ -13,10 +15,13 @@ import {
 import {
   SERVER_URL_TOKEN
 } from './../consts';
+import { MenuSelection } from './menuSelection';
+
 
 
 export interface IItemsService {
   loadItems(): Observable<Item[]>;
+  sendSelections(selecttion: MenuSelection, token: String):Promise<boolean>;
 }
 
 @Injectable()
@@ -41,6 +46,28 @@ export class ItemsService implements IItemsService {
     }
 
     return this.dataObs;
+  }
+
+  public sendSelections(selection: MenuSelection, token: String): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+
+      let body = JSON.stringify(selection);
+      let headers = new Headers({ 'Content-Type': 'application/json', 'google-token': token });
+      let options = new RequestOptions({ headers: headers });
+
+      this.http.post(this.serverUrl + '/courses/addSelection', body, options).subscribe(
+        (response) => {
+          console.log(response);
+          resolve(true);
+        },
+        (error) => {
+          console.log(error);
+          reject(error);
+        }
+      );
+
+
+    });
   }
 
 }

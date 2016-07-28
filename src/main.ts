@@ -11,7 +11,8 @@ import {
   HTTP_PROVIDERS
 } from '@angular/http';
 import {
-  SERVER_URL_TOKEN
+  SERVER_URL_TOKEN,
+  CHECK_NO_ROBOT_TOKEN
 } from './app/consts';
 
 if (environment.production) {
@@ -21,6 +22,8 @@ if (environment.production) {
 bootstrap(AppComponent,  [
   appRouterProviders,
   HTTP_PROVIDERS,
-  { provide: SERVER_URL_TOKEN, useValue: environment.serverUrl }
+  { provide: SERVER_URL_TOKEN, useValue: environment.serverUrl },
+  { provide: CHECK_NO_ROBOT_TOKEN, useValue: true}
+
 ]).catch(err => console.error(err));
 
