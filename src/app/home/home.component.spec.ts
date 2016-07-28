@@ -20,7 +20,10 @@ import {
   Response,
   ResponseOptions,
 } from '@angular/http';
-import { SERVER_URL_TOKEN } from './../consts';
+import {
+  SERVER_URL_TOKEN,
+  CHECK_NO_ROBOT_TOKEN
+} from './../consts';
 
 let oneItem =  [new Item('Grundlagen', 'Projekt erstellen, Arbeiten mit Angular CLI, Komponenten')];
 
@@ -31,6 +34,7 @@ beforeEach(() => {
     MockBackend,
     BaseRequestOptions,
     { provide: SERVER_URL_TOKEN, useValue: 'http://localhost:8080'},
+    { provide: CHECK_NO_ROBOT_TOKEN, useValue: true},
     { provide: Http,
       useFactory: (backend, options) => new Http(backend, options),
       deps: [MockBackend, BaseRequestOptions] }
