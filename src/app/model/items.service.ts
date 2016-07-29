@@ -9,10 +9,6 @@ import {
 } from '@angular/http';
 import { Item } from './item';
 import {
-  Observable,
-  ReplaySubject
-} from 'rxjs/Rx';
-import {
   SERVER_URL_TOKEN
 } from './../consts';
 import { MenuSelection } from './menuSelection';
@@ -20,32 +16,19 @@ import { MenuSelection } from './menuSelection';
 
 
 export interface IItemsService {
-  loadItems(): Observable<Item[]>;
-  sendSelections(selecttion: MenuSelection, token: String):Promise<boolean>;
+  loadItems(): Promise<Item[]>;
+  sendSelections(selecttion: MenuSelection, token: String): Promise<boolean>;
 }
 
 @Injectable()
 export class ItemsService implements IItemsService {
 
-  private dataObs = new ReplaySubject<Item[]>(1);
-
   constructor(private http: Http, @Inject(SERVER_URL_TOKEN) private serverUrl: string) {}
 
-  public loadItems(forceRefresh?: boolean): Observable<Item[]> {
-    // On Error the Subject will be Stoped and Unsubscribed, if so, create another one
-    this.dataObs = this.dataObs.isUnsubscribed ? new ReplaySubject<Item[]>(1) : this.dataObs;
-
-    // If the Subject was NOT subscribed before OR if forceRefresh is requested
-    if (!this.dataObs.observers.length || forceRefresh) {
-      this.http.get(this.serverUrl + '/courses')
-        .subscribe(
-          requestData => {
-            this.dataObs.next(requestData.json().courses as Item[]);
-          },
-          error => this.dataObs.error(error));
-    }
-
-    return this.dataObs;
+  public loadItems(forceRefresh?: boolean): Promise<Item[]> {
+      return this.http.get(this.serverUrl + '/courses').toPromise().then( (reponse) => {
+          return <Item[]> reponse.json().courses;
+      });
   }
 
   public sendSelections(selection: MenuSelection, token: String): Promise<boolean> {
@@ -57,11 +40,9 @@ export class ItemsService implements IItemsService {
 
       this.http.post(this.serverUrl + '/courses/addSelection', body, options).subscribe(
         (response) => {
-          console.log(response);
           resolve(true);
         },
         (error) => {
-          console.log(error);
           reject(error);
         }
       );

@@ -8,36 +8,35 @@ import {
   inject,
   async
 } from '@angular/core/testing';
-import {Component} from '@angular/core';
+import { Component } from '@angular/core';
 import { TestComponentBuilder } from '@angular/compiler/testing';
 import { HomeComponent } from './home.component';
-import { ItemsService } from './../model/items.service';
+import {
+  ItemsService,
+  IItemsService
+} from './../model/items.service';
 import { Item } from './../model/item';
-import {MockBackend} from '@angular/http/testing';
-import {
-  BaseRequestOptions,
-  Http,
-  Response,
-  ResponseOptions,
-} from '@angular/http';
-import {
-  SERVER_URL_TOKEN,
-  CHECK_NO_ROBOT_TOKEN
-} from './../consts';
+import { MenuSelection } from '../model/menuSelection';
 
 let oneItem =  [new Item('Grundlagen', 'Projekt erstellen, Arbeiten mit Angular CLI, Komponenten')];
+
+class MockItemsService implements IItemsService {
+
+  public resultWithError = false;
+
+  public loadItems(): Promise<Item[]> {
+    return this.resultWithError ? Promise.reject<Item[]>(null) : Promise.resolve(oneItem);
+  }
+  sendSelections(selecttion: MenuSelection, token: String): Promise<boolean> {
+    return this.resultWithError ? Promise.reject<boolean>(null) : Promise.resolve(true);
+  }
+}
+
 
 beforeEach(() => {
   addProviders([
     HomeComponent,
-    ItemsService,
-    MockBackend,
-    BaseRequestOptions,
-    { provide: SERVER_URL_TOKEN, useValue: 'http://localhost:8080'},
-    { provide: CHECK_NO_ROBOT_TOKEN, useValue: true},
-    { provide: Http,
-      useFactory: (backend, options) => new Http(backend, options),
-      deps: [MockBackend, BaseRequestOptions] }
+    { provide: ItemsService, useClass: MockItemsService},
   ]);
 });
 
@@ -45,13 +44,13 @@ describe('HomeComponent', () => {
 
   let builder: TestComponentBuilder;
   let homeComp: HomeComponent;
-  let mockbackend: MockBackend;
+  let mockService: MockItemsService;
 
-  beforeEach(inject([TestComponentBuilder, HomeComponent, MockBackend],
-    (tcb: TestComponentBuilder, _homeComp: HomeComponent, _mockbackend: MockBackend ) => {
+  beforeEach(inject([TestComponentBuilder, HomeComponent, ItemsService],
+    (tcb: TestComponentBuilder, _homeComp: HomeComponent, _mockService: ItemsService ) => {
       builder = tcb;
       homeComp = _homeComp;
-      mockbackend = _mockbackend;
+      mockService = <any> _mockService;
   }));
 
   it('should create the home component', async( () => {
@@ -59,80 +58,96 @@ describe('HomeComponent', () => {
   }));
 
   it('should have an item', ( done )  => {
-
-    mockbackend.connections.subscribe(connection => {
-      connection.mockRespond(
-        new Response(
-          new ResponseOptions({body: JSON.stringify({courses: oneItem})})
-        )
-      );
-    });
-
-    expect(homeComp.isLoading).toBe(true);
-
-    homeComp.ngOnInit();
-
-    homeComp.obsItems.subscribe(items => {
-      expect(items.length).toEqual(1);
-      expect(homeComp.isLoading).toBe(false);
-      done();
-    });
-
+      expect(homeComp.isLoading).toBe(true);
+      homeComp.ngOnInit().then( () => {
+        expect(homeComp.items.length).toEqual(1);
+        expect(homeComp.isLoading).toBe(false);
+        done();
+      });
   });
 
   it('should set the error state if an http error occures', ( done )  => {
 
-    mockbackend.connections.subscribe(connection => {
-      connection.mockError();
-    });
-
     expect(homeComp.isHttpError).toBe(false);
-
-    homeComp.ngOnInit();
-
-    homeComp.obsItems.subscribe(
-      items => {},
-      e => {
+    mockService.resultWithError = true;
+    homeComp.ngOnInit().catch( () => {
       expect(homeComp.isHttpError).toBe(true);
       done();
     });
-
   });
 
 
   it('should mark missing fields', ( done ) => {
 
-    mockbackend.connections.subscribe(connection => {
-      connection.mockRespond(
-        new Response(
-          new ResponseOptions({body: JSON.stringify({courses: oneItem})})
-        )
-      );
+    homeComp.ngOnInit().then( () => {
+      expect(homeComp.hasMissingFields()).toBe(true);
+
+      // If one item is selected, a contact is given and the attendie count is present it should be false
+      fillInRequiredFileds(homeComp);
+
+      expect(homeComp.hasMissingFields()).toBe(false);
+
+      done();
     });
 
-    homeComp.ngOnInit();
+  });
 
-    homeComp.obsItems.subscribe(
-      () => {
+  it('should not call itemsService.sendSelections if there are missing fileds', ( done ) => {
 
-        expect(homeComp.hasMissingFields()).toBe(true);
+    spyOn(mockService, 'sendSelections');
 
-        // If one item is selected, a contact is given and the attendie count is present it should be false
-        homeComp.items[0].selected = true;
-        homeComp.contact = 'a';
-        homeComp.countOfAttendies = '1';
-        homeComp.onToken({'token':'x'});
+    homeComp.send();
 
-        expect(homeComp.hasMissingFields()).toBe(false);
+    expect(mockService.sendSelections).not.toHaveBeenCalled();
 
+    done();
+  });
+
+  it('should send the selections if all required fields are present', ( done ) => {
+    homeComp.ngOnInit().then( () => {
+
+      expect(homeComp.isDataSend).toBe(false);
+
+      fillInRequiredFileds(homeComp);
+
+      homeComp.send().then( () => {
+        expect(homeComp.isDataSend).toBe(true);
         done();
-      }
-    );
+      });
 
+    });
+  });
+
+  it('should mark an error state if an error occures during send data', ( done ) => {
+
+    homeComp.ngOnInit().then( () => {
+
+      expect(homeComp.isDataSend).toBe(false);
+      expect(homeComp.isSendError).toBe(false);
+
+      fillInRequiredFileds(homeComp);
+
+      mockService.resultWithError = true;
+
+      homeComp.send().catch( () => {
+        expect(homeComp.isDataSend).toBe(true);
+        expect(homeComp.isSendError).toBe(true);
+        done();
+      });
+
+    });
 
   });
 
 });
+
+
+function fillInRequiredFileds(homeComp) {
+  homeComp.items[0].selected = true;
+  homeComp.contact = 'a';
+  homeComp.countOfAttendies = '1';
+  homeComp.onToken({'token': 'x'});
+}
 
 
 @Component({

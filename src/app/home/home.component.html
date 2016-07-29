@@ -15,7 +15,7 @@
 
    <div class="mdl-cell--12-col mdl-cell--5-col-desktop mdl-cell--3-offset-desktop">
       <mdl-list>
-				<course-item  *ngFor="let item of obsItems | async; let i = index" [item]="item" [index]="i"></course-item>
+				<course-item  *ngFor="let item of items; let i = index" [item]="item" [index]="i"></course-item>
       </mdl-list>
    </div>
 

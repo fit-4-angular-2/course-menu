@@ -9,7 +9,6 @@ import { ItemsService } from './../model/items.service';
 import { Observable } from 'rxjs/Rx';
 import { CourseItemComponent } from './../course-item/course-item.component';
 import { ReCaptchaComponent } from './../re-captcha/re-captcha.component';
-import { CHECK_NO_ROBOT_TOKEN } from './../consts';
 
 
 @Component({
@@ -22,35 +21,32 @@ import { CHECK_NO_ROBOT_TOKEN } from './../consts';
 })
 export class HomeComponent implements OnInit {
 
-  public obsItems: Observable<Item[]> = null;
+
   public items: Item[];
   public isHttpError = false;
   public isLoading = true;
   public contact: String;
   public countOfAttendies: String;
   private token: string;
-  private checkToken: boolean;
   public isDataSend = false;
   public isSendError = false;
 
-  constructor(
-    private itemsService: ItemsService,
-    @Inject(CHECK_NO_ROBOT_TOKEN) private checkNoRobotToken: boolean) {
-    this.checkToken = checkNoRobotToken;
+  constructor(private itemsService: ItemsService) {
   }
 
   public ngOnInit() {
     this.isLoading = true;
-    this.obsItems = this.itemsService.loadItems();
-
-    this.obsItems.subscribe((d) => {
-      this.items = d;
+    let p = this.itemsService.loadItems();
+    p.then( (items) => {
+      this.items = items;
       this.isLoading = false;
-    }, (error) => {
+    });
+    p.catch( (error) => {
       this.isHttpError = true;
       this.isLoading = false;
     });
-
+    // usually this is for testing :(
+    return p;
   }
 
   public hasMissingFields(): boolean {
@@ -60,20 +56,17 @@ export class HomeComponent implements OnInit {
 
     let noAttendies = this.countOfAttendies ? (Number(this.countOfAttendies) === 0) : true;
 
-    let noToken = this.checkToken ? (this.token ? this.token.length === 0 : true) : false;
+    let noToken = this.token ? this.token.length === 0 : true;
 
     return atLeastOneItemSelected.length === 0 || noContact || noAttendies || noToken;
   }
 
   public onToken({token}) {
-    // how to verify https://developers.google.com/recaptcha/docs/verify
     this.token = token;
   }
 
   public send() {
-    console.log('send');
     if (this.hasMissingFields()) {
-      console.log('rejected');
       return;
     }
     let p = this.itemsService.sendSelections({
@@ -83,12 +76,12 @@ export class HomeComponent implements OnInit {
     }, this.token);
     p.then( () => {
       this.isDataSend = true;
-      console.log('ok');
     });
     p.catch( () => {
       this.isDataSend = true;
       this.isSendError = true;
-      console.log('error');
     });
+    // usually this is for testing :(
+    return p;
   }
 }
