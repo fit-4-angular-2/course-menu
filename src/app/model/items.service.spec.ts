@@ -15,6 +15,7 @@ import {
   Response,
   ResponseOptions
 } from '@angular/http';
+import { SERVER_URL_TOKEN } from './../consts';
 
 
 beforeEach(() => {
@@ -22,6 +23,7 @@ beforeEach(() => {
     ItemsService,
     MockBackend,
     BaseRequestOptions,
+    { provide: SERVER_URL_TOKEN, useValue: 'whatever' },
     { provide: Http,
       useFactory: (backend, options) => new Http(backend, options),
       deps: [MockBackend, BaseRequestOptions] }
@@ -40,81 +42,60 @@ describe('ItemsService', () => {
   }));
 
 
-  // it('should have an item after request', ( done )  => {
-  //
-  //   mockbackend.connections.subscribe(connection => {
-  //     connection.mockRespond(
-  //       new Response(
-  //         new ResponseOptions({
-  //           body: JSON.stringify( {courses: [new Item('a', 'b')]} )
-  //         })
-  //       )
-  //     );
-  //   });
-  //
-  //   service.loadItems().subscribe(items => {
-  //     expect(items.length).toEqual(1);
-  //     done();
-  //   });
-  //
-  // });
-  //
-  //
-  // it('should cash the result', ( done )  => {
-  //
-  //   let item = new Item('a', 'b');
-  //   mockbackend.connections.subscribe(connection => {
-  //     connection.mockRespond(
-  //       new Response(
-  //         new ResponseOptions({
-  //           body: JSON.stringify( {courses: [item]} )
-  //         })
-  //       )
-  //     );
-  //   });
-  //
-  //   // initial load
-  //   service.loadItems().subscribe(items => {});
-  //
-  //   // change the item to detect if the result changes
-  //   item.title = 'c';
-  //
-  //   service.loadItems().subscribe(itemsNext => {
-  //     expect(itemsNext[0].title).toBe('a');
-  //     done();
-  //   });
-  //
-  // });
-  //
-  //
-  // it('should redo the request id the first one errors', ( done )  => {
-  //   let counter = 0;
-  //   mockbackend.connections.subscribe(connection => {
-  //
-  //     // let the first call fail
-  //     if (counter === 0) {
-  //       connection.mockError();
-  //       counter++;
-  //       return;
-  //     }
-  //
-  //     connection.mockRespond(
-  //       new Response(
-  //         new ResponseOptions({
-  //           body: JSON.stringify( {courses: [new Item('a', 'b')]} )
-  //         })
-  //       )
-  //     );
-  //   });
-  //
-  //   service.loadItems().subscribe(items => {}, () => {});
-  //
-  //   service.loadItems().subscribe(items => {
-  //     expect(items.length).toEqual(1);
-  //     done();
-  //   });
-  //
-  // });
+  it('should have an item after request', ( done )  => {
+
+    mockbackend.connections.subscribe(connection => {
+      connection.mockRespond(
+        new Response(
+          new ResponseOptions({
+            body: JSON.stringify( {courses: [new Item('a', 'b')]} )
+          })
+        )
+      );
+    });
+
+    service.loadItems().then(items => {
+      expect(items.length).toEqual(1);
+      done();
+    });
+
+  });
+
+
+  it('should send the selection to the server', ( done ) => {
+    let sendData = {items: [], contact: 'contact', countOfAtendies: '3'};
+    mockbackend.connections.subscribe(connection => {
+
+      expect(connection.request.headers.get('google-token')).toBe('token');
+      expect(connection.request.headers.get('Content-Type')).toBe('application/json');
+
+      expect(connection.request.json().replace(/\\"/g, '"')).toEqual('"' + JSON.stringify(sendData) + '"');
+
+      connection.mockRespond(
+        new Response(
+          new ResponseOptions({})
+        )
+      );
+
+    });
+
+    service.sendSelections(sendData, 'token'). then(  () => {
+      done();
+    });
+  });
+
+  it('should reject if an error occurs during data send', ( done ) => {
+    let sendData = {items: [], contact: 'contact', countOfAtendies: '3'};
+
+    mockbackend.connections.subscribe(connection => {
+      connection.mockError(new Error('some error'));
+    });
+
+    service.sendSelections(sendData, 'token'). catch(  () => {
+      done();
+    });
+
+  });
 
 
 });

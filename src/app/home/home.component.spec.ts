@@ -33,14 +33,14 @@ class MockItemsService implements IItemsService {
 }
 
 
-beforeEach(() => {
-  addProviders([
-    HomeComponent,
-    { provide: ItemsService, useClass: MockItemsService},
-  ]);
-});
-
 describe('HomeComponent', () => {
+
+  beforeEach(() => {
+    addProviders([
+      HomeComponent,
+      { provide: ItemsService, useClass: MockItemsService},
+    ]);
+  });
 
   let builder: TestComponentBuilder;
   let homeComp: HomeComponent;
