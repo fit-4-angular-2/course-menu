@@ -13,12 +13,18 @@ import {
 import {
   SERVER_URL_TOKEN
 } from './app/consts';
+import {
+  disableDeprecatedForms,
+  provideForms
+} from '@angular/forms';
 
 if (environment.production) {
   enableProdMode();
 }
 
 bootstrap(AppComponent,  [
+  disableDeprecatedForms(),
+  provideForms(),
   appRouterProviders,
   HTTP_PROVIDERS,
   { provide: SERVER_URL_TOKEN, useValue: environment.serverUrl }
