@@ -1,9 +1,6 @@
 
 import {
-  async,
-  inject,
-  TestComponentBuilder,
-  ComponentFixture
+  TestBed
 } from '@angular/core/testing';
 import { ReCaptchaComponent } from './re-captcha.component';
 import {
@@ -13,29 +10,29 @@ import { By } from '@angular/platform-browser';
 
 describe('ReCaptcha Component', () => {
 
-  let builder: TestComponentBuilder;
-
-  beforeEach(inject([TestComponentBuilder], (_builder: TestComponentBuilder) => {
-    builder = _builder;
-  }));
-
-  it('should emit the token', async(() => {
-    builder.createAsync(TestComponent).then( (fixture: ComponentFixture<TestComponent>) => {
-
-      fixture.detectChanges();
-
-      let reCaptchaComponent = fixture.debugElement.query(By.directive(ReCaptchaComponent)).componentInstance;
-
-      reCaptchaComponent.onTokenCallback('test');
-
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [],
+      declarations: [ReCaptchaComponent, TestComponent],
     });
-  }));
+  });
+
+  it('should emit the token', ( done ) => {
+    let fixture = TestBed.createComponent(TestComponent);
+    fixture.detectChanges();
+
+    let reCaptchaComponent = fixture.debugElement.query(By.directive(ReCaptchaComponent)).componentInstance;
+
+    reCaptchaComponent.onTokenCallback('test');
+
+    done();
+
+  });
 });
 
 @Component({
   selector: 'test-test',
-  template: '<re-captcha (token)="onToken"></re-captcha>',
-  directives: [ReCaptchaComponent]
+  template: '<re-captcha (token)="onToken"></re-captcha>'
 })
 class TestComponent {
   public token: string;

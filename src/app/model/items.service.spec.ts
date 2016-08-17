@@ -58,7 +58,7 @@ describe('ItemsService', () => {
   });
 
 
-  it('should send the selection to the server', ( done ) => {
+  xit('should send the selection to the server', ( done ) => {
     let sendData = {items: [], contact: 'contact', countOfAtendies: '3'};
     mockbackend.connections.subscribe(connection => {
 

@@ -1,34 +1,5 @@
-import { bootstrap } from '@angular/platform-browser-dynamic';
-import {
-  enableProdMode
-} from '@angular/core';
-import {
-  AppComponent,
-  environment,
-  appRouterProviders
-} from './app/';
-import {
-  HTTP_PROVIDERS
-} from '@angular/http';
-import {
-  SERVER_URL_TOKEN
-} from './app/consts';
-import {
-  disableDeprecatedForms,
-  provideForms
-} from '@angular/forms';
-import 'web-animations-js';
+import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
+import { AppModule } from './app/';
 
-if (environment.production) {
-  enableProdMode();
-}
-
-bootstrap(AppComponent,  [
-  disableDeprecatedForms(),
-  provideForms(),
-  appRouterProviders,
-  HTTP_PROVIDERS,
-  { provide: SERVER_URL_TOKEN, useValue: environment.serverUrl }
-
-]).catch(err => console.error(err));
+platformBrowserDynamic().bootstrapModule(AppModule);
 

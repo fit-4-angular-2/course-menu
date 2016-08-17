@@ -1,23 +1,15 @@
 import {
   Component,
-  OnInit,
-  Inject
+  OnInit
 } from '@angular/core';
-import { MDL_DIRECTIVES } from 'angular2-mdl';
 import { Item } from './../model/item';
 import { ItemsService } from './../model/items.service';
-import { Observable } from 'rxjs/Rx';
-import { CourseItemComponent } from './../course-item/course-item.component';
-import { ReCaptchaComponent } from './../re-captcha/re-captcha.component';
-
 
 @Component({
   moduleId: module.id,
   selector: 'app-home',
   templateUrl: 'home.component.html',
-  styleUrls: ['home.component.css'],
-  directives: [ MDL_DIRECTIVES, CourseItemComponent, ReCaptchaComponent ],
-  providers: [ ]
+  styleUrls: ['home.component.css']
 })
 export class HomeComponent implements OnInit {
 

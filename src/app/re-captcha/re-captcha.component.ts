@@ -14,9 +14,7 @@ declare var grecaptcha: { render: Function };
 @Component({
   moduleId: module.id,
   selector: 're-captcha',
-  template: '',
-  directives: [ ],
-  providers: [ ]
+  template: ''
 })
 export class ReCaptchaComponent implements OnInit {
 

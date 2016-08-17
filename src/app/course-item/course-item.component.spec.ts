@@ -1,11 +1,7 @@
 
 import {
-  addProviders,
-  inject,
-  async,
-  fakeAsync,
-  TestComponentBuilder,
-  ComponentFixture
+  TestBed,
+  async
 } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Component } from '@angular/core';
@@ -13,62 +9,49 @@ import { CourseItemComponent } from './course-item.component';
 import {
   MdlListItemPrimaryContentComponent,
   MdlCheckboxComponent,
-  MDL_DIRECTIVES
+  MdlModule
 } from 'angular2-mdl';
 import { Item } from './../model/item';
+import { FormsModule } from '@angular/forms';
 
 
-beforeEach(() => {
-  addProviders([
-    CourseItemComponent
-  ]);
-});
 
 describe('CourseItemComponent', () => {
 
-  let builder: TestComponentBuilder;
-  let courseItemComp: CourseItemComponent;
+  beforeEach( async(() => {
+    TestBed.configureTestingModule({
+      imports: [ MdlModule, FormsModule ],
+      declarations: [CourseItemComponent, TestComponent],
+    });
 
-  beforeEach(inject([TestComponentBuilder, CourseItemComponent],
-    (tcb: TestComponentBuilder, _courseItemComp: CourseItemComponent ) => {
-      builder = tcb;
-      courseItemComp = _courseItemComp;
-  }));
-
-  it('should create the course item component', async( () => {
-      expect(courseItemComp).toBeTruthy();
   }));
 
 
   it('should toggle the item state if the mdl-list-item-primary-content is clicked', async(( ) => {
 
-    builder
-      .createAsync(TestComponent).then( (fixture: ComponentFixture<TestComponent>) => {
+    TestBed.compileComponents().then( () => {
+      let fixture = TestBed.createComponent(TestComponent);
+      fixture.detectChanges();
 
-        fakeAsync(() => {
-          fixture.detectChanges();
+      let courseItemComponent = fixture.debugElement.query(By.directive(CourseItemComponent)).componentInstance;
 
-          let courseItemComponent = fixture.debugElement.query(By.directive(CourseItemComponent)).componentInstance;
+      let listItemContent = fixture.debugElement.query(By.directive(MdlListItemPrimaryContentComponent)).nativeElement;
 
-          let listItemContent = fixture.debugElement.query(By.directive(MdlListItemPrimaryContentComponent)).nativeElement;
+      expect(courseItemComponent.item.selected).toBe(false);
 
-          expect(courseItemComponent.item.selected).toBe(false);
+      listItemContent.click();
 
-          listItemContent.click();
-
-          expect(courseItemComponent.item.selected).toBe(true);
-        })();
-
-      });
+      expect(courseItemComponent.item.selected).toBe(true);
+    });
 
   }));
 
-  it('should change the item selection state on checkbox-click', async(() => {
-    builder
-      .createAsync(TestComponent).then( (fixture: ComponentFixture<TestComponent>) => {
+  it('should change the item selection state on checkbox-click', async(( ) => {
 
+    TestBed.compileComponents().then( () => {
+      let fixture = TestBed.createComponent(TestComponent);
       fixture.detectChanges();
-
+      
       let courseItemComponent = fixture.debugElement.query(By.directive(CourseItemComponent)).componentInstance;
       let checkbox = fixture.debugElement.query(By.directive(MdlCheckboxComponent)).nativeElement;
 
@@ -78,6 +61,8 @@ describe('CourseItemComponent', () => {
 
       expect(courseItemComponent.item.selected).toBe(true);
     });
+
+
   }));
 
 });
@@ -85,8 +70,7 @@ describe('CourseItemComponent', () => {
 
 @Component({
   selector: 'test-component',
-  template: '<mdl-list><course-item [item]="item"></course-item></mdl-list>',
-  directives: [CourseItemComponent, MDL_DIRECTIVES]
+  template: '<mdl-list><course-item [item]="item"></course-item></mdl-list>'
 })
 class TestComponent {
   public item = new Item('Grundlagen', 'Projekt erstellen, Arbeiten mit Angular CLI, Komponenten', false);

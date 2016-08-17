@@ -2,7 +2,6 @@ import {
   Component,
   Input
 } from '@angular/core';
-import { MDL_DIRECTIVES } from 'angular2-mdl';
 import { Item } from './../model/item';
 
 
@@ -10,9 +9,7 @@ import { Item } from './../model/item';
   moduleId: module.id,
   selector: 'course-item',
   templateUrl: 'course-item.component.html',
-  styleUrls: ['course-item.component.css'],
-  directives: [ MDL_DIRECTIVES ],
-  providers: [ ]
+  styleUrls: ['course-item.component.css']
 })
 export class CourseItemComponent {
 

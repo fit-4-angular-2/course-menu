@@ -1,14 +1,14 @@
-import {
-  Component
-} from '@angular/core';
-import {
-  MDL_DIRECTIVES
-} from 'angular2-mdl';
-import {
-  ROUTER_DIRECTIVES,
-  Router
-} from '@angular/router';
-import { ItemsService } from './model/items.service';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { Route } from '@angular/router';
+import { HomeComponent } from './home/home.component';
+import { ImprintComponent } from './imprint/imprint.component';
+
+export const AppRoutes: [Route] = [
+  { path: 'imprint', component: ImprintComponent },
+  { path: '', component: HomeComponent },
+  { path: '**', redirectTo: ''}
+];
 
 
 @Component({
@@ -16,11 +16,6 @@ import { ItemsService } from './model/items.service';
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.css'],
-  directives: [
-    MDL_DIRECTIVES,
-    ROUTER_DIRECTIVES
-  ],
-  providers: [ ItemsService ]
 })
 export class AppComponent {
   public title = 'Angular 2 CourseMenu';

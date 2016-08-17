@@ -5,7 +5,7 @@ import {
   async
 } from '@angular/core/testing';
 import { provide } from '@angular/core';
-import { AppComponent, appRouterProviders } from './index';
+import { AppComponent } from './index';
 import {
   Router
 } from '@angular/router';
@@ -22,7 +22,7 @@ export class MockRouter {
 
 beforeEach(() => {
   addProviders([AppComponent]);
-  addProviders([...appRouterProviders]);
+  // addProviders([...appRouterProviders]);
   addProviders([provide(Router, {useValue: new MockRouter()})]);
 });
 
