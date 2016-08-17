@@ -17,6 +17,7 @@ import {
   disableDeprecatedForms,
   provideForms
 } from '@angular/forms';
+import 'web-animations-js';
 
 if (environment.production) {
   enableProdMode();

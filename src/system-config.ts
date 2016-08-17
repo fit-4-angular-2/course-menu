@@ -7,12 +7,14 @@
  **********************************************************************************************/
 /** Map relative paths to URLs. */
 const map: any = {
-  'angular2-mdl': 'vendor/angular2-mdl'
+  'angular2-mdl': 'vendor/angular2-mdl',
+  'web-animations-js': 'vendor/web-animations-js'
 };
 
 /** User packages configuration. */
 const packages: any = {
-  'angular2-mdl': { main: 'dist/components/index.js'}
+  'angular2-mdl': { main: 'dist/components/index.js'},
+  'web-animations-js': {main: 'web-animations.min.js'}
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////

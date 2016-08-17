@@ -1,15 +1,11 @@
 
 import {
-  beforeEach,
   addProviders,
-  describe,
-  expect,
-  it,
   inject,
-  async
+  async,
+  TestComponentBuilder
 } from '@angular/core/testing';
 import { Component } from '@angular/core';
-import { TestComponentBuilder } from '@angular/compiler/testing';
 import { HomeComponent } from './home.component';
 import {
   ItemsService,

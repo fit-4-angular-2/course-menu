@@ -1,17 +1,14 @@
 
 import {
-  beforeEach,
   addProviders,
-  describe,
-  expect,
-  it,
   inject,
   async,
-  fakeAsync
+  fakeAsync,
+  TestComponentBuilder,
+  ComponentFixture
 } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Component } from '@angular/core';
-import { TestComponentBuilder, ComponentFixture } from '@angular/compiler/testing';
 import { CourseItemComponent } from './course-item.component';
 import {
   MdlListItemPrimaryContentComponent,

@@ -8,7 +8,6 @@ import {
   ROUTER_DIRECTIVES,
   Router
 } from '@angular/router';
-import { HomeComponent } from './home/home.component';
 import { ItemsService } from './model/items.service';
 
 
@@ -21,7 +20,6 @@ import { ItemsService } from './model/items.service';
     MDL_DIRECTIVES,
     ROUTER_DIRECTIVES
   ],
-  precompile: [ HomeComponent ],
   providers: [ ItemsService ]
 })
 export class AppComponent {

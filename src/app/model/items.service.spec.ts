@@ -1,9 +1,5 @@
 import {
-  beforeEach,
   addProviders,
-  describe,
-  expect,
-  it,
   inject
 } from '@angular/core/testing';
 import { ItemsService } from './items.service';
