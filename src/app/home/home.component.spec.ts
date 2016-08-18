@@ -12,7 +12,8 @@ import {
 } from './../model/items.service';
 import { Item } from './../model/item';
 import { MenuSelection } from '../model/menuSelection';
-import {AppModule} from '../app.module';
+import { AppModule } from '../app.module';
+import { SITE_KEY } from './../consts';
 
 let oneItem =  [new Item('Grundlagen', 'Projekt erstellen, Arbeiten mit Angular CLI, Komponenten')];
 
@@ -39,7 +40,8 @@ describe('HomeComponent', () => {
       imports: [ AppModule ],
       declarations: [],
       providers: [
-        { provide: ItemsService, useClass: MockItemsService}
+        { provide: ItemsService, useClass: MockItemsService},
+        { provide: SITE_KEY, useValue: null}
       ]
     });
     TestBed.compileComponents().catch((e) => {
@@ -75,7 +77,7 @@ describe('HomeComponent', () => {
   }));
 
   // not in async. otherwise the async function termintaes with error because of the rejected promise
-  xit('should set the error state if an http error occures', ()  => {
+  it('should set the error state if an http error occures', ()  => {
 
       let homeComp = fixture.componentInstance;
       expect(homeComp.isHttpError).toBe(false);
@@ -88,7 +90,7 @@ describe('HomeComponent', () => {
   });
 
 
-  xit('should mark missing fields', async(() => {
+  it('should mark missing fields', async(() => {
     fixture.detectChanges();
     let homeComp = fixture.componentInstance;
     fixture.whenStable().then( () => {
@@ -103,7 +105,7 @@ describe('HomeComponent', () => {
   }));
 
 
-  xit('should not call itemsService.sendSelections if there are missing fileds', async(() => {
+  it('should not call itemsService.sendSelections if there are missing fileds', async(() => {
     let homeComp = fixture.componentInstance;
     spyOn(mockService, 'sendSelections');
 
@@ -115,7 +117,7 @@ describe('HomeComponent', () => {
 
   }));
 
-  xit('should send the selections if all required fields are present', async(() => {
+  it('should send the selections if all required fields are present', async(() => {
     let homeComp = fixture.componentInstance;
 
     fixture.detectChanges();
@@ -134,7 +136,7 @@ describe('HomeComponent', () => {
   }));
 
   // not in async. otherwise the async function termintaes with error because of the rejected promise
-  xit('should mark an error state if an error occures during send data', () => {
+  it('should mark an error state if an error occures during send data', () => {
 
     let homeComp = fixture.componentInstance;
 

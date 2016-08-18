@@ -17,15 +17,13 @@ describe('ReCaptcha Component', () => {
     });
   });
 
-  it('should emit the token', ( done ) => {
+  it('should emit the token', () => {
     let fixture = TestBed.createComponent(TestComponent);
     fixture.detectChanges();
 
     let reCaptchaComponent = fixture.debugElement.query(By.directive(ReCaptchaComponent)).componentInstance;
 
     reCaptchaComponent.onTokenCallback('test');
-
-    done();
 
   });
 });

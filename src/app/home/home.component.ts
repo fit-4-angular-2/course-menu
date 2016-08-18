@@ -1,9 +1,11 @@
 import {
   Component,
-  OnInit
+  OnInit,
+  Inject
 } from '@angular/core';
 import { Item } from './../model/item';
 import { ItemsService } from './../model/items.service';
+import {SITE_KEY} from '../consts';
 
 @Component({
   moduleId: module.id,
@@ -23,7 +25,7 @@ export class HomeComponent implements OnInit {
   public isDataSend = false;
   public isSendError = false;
 
-  constructor(private itemsService: ItemsService) {
+  constructor(private itemsService: ItemsService, @Inject(SITE_KEY) private sitekey: string) {
   }
 
   public ngOnInit() {

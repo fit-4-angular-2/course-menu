@@ -33,7 +33,7 @@
    </div>
 
 	<div class="mdl-cell--12-col mdl-cell--5-col-desktop mdl-cell--3-offset-desktop">
-		<re-captcha sitekey="6LeEuiUTAAAAAAHBatXPYkA5YrJj7i6YynkxFqsX" (token)="onToken($event)" ></re-captcha>
+		<re-captcha [sitekey]="sitekey" (token)="onToken($event)" ></re-captcha>
 	</div>
 
    <div class="mdl-cell--12-col button-row mdl-cell--5-col-desktop mdl-cell--3-offset-desktop">
