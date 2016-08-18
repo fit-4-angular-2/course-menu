@@ -14,24 +14,23 @@ import {
 import { Item } from './../model/item';
 import { FormsModule } from '@angular/forms';
 
-
-
 describe('CourseItemComponent', () => {
+
+  let fixture;
 
   beforeEach( async(() => {
     TestBed.configureTestingModule({
       imports: [ MdlModule, FormsModule ],
       declarations: [CourseItemComponent, TestComponent],
     });
-
+    TestBed.compileComponents().then( () => {
+      fixture = TestBed.createComponent(TestComponent);
+      fixture.detectChanges();
+    });
   }));
 
 
   it('should toggle the item state if the mdl-list-item-primary-content is clicked', async(( ) => {
-
-    TestBed.compileComponents().then( () => {
-      let fixture = TestBed.createComponent(TestComponent);
-      fixture.detectChanges();
 
       let courseItemComponent = fixture.debugElement.query(By.directive(CourseItemComponent)).componentInstance;
 
@@ -42,16 +41,11 @@ describe('CourseItemComponent', () => {
       listItemContent.click();
 
       expect(courseItemComponent.item.selected).toBe(true);
-    });
 
   }));
 
   it('should change the item selection state on checkbox-click', async(( ) => {
 
-    TestBed.compileComponents().then( () => {
-      let fixture = TestBed.createComponent(TestComponent);
-      fixture.detectChanges();
-      
       let courseItemComponent = fixture.debugElement.query(By.directive(CourseItemComponent)).componentInstance;
       let checkbox = fixture.debugElement.query(By.directive(MdlCheckboxComponent)).nativeElement;
 
@@ -60,8 +54,6 @@ describe('CourseItemComponent', () => {
       checkbox.click();
 
       expect(courseItemComponent.item.selected).toBe(true);
-    });
-
 
   }));
 
