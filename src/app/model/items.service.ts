@@ -25,7 +25,7 @@ export class ItemsService implements IItemsService {
 
   constructor(private http: Http, @Inject(SERVER_URL_TOKEN) private serverUrl: string) {}
 
-  public loadItems(forceRefresh?: boolean): Promise<CourseItem[]> {
+  public loadItems(): Promise<CourseItem[]> {
       return this.http.get(this.serverUrl + '/courses').toPromise().then( (reponse) => {
           return <CourseItem[]> reponse.json().courses;
       });

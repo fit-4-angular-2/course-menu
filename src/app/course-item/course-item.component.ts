@@ -1,6 +1,7 @@
 import {
   Component,
-  Input
+  Input,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { CourseItem } from './../model/course-item';
 
@@ -9,7 +10,8 @@ import { CourseItem } from './../model/course-item';
   moduleId: module.id,
   selector: 'course-item',
   templateUrl: 'course-item.component.html',
-  styleUrls: ['course-item.component.css']
+  styleUrls: ['course-item.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CourseItemComponent {
 

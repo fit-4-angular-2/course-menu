@@ -5,7 +5,9 @@ import {
 } from '@angular/core';
 import { CourseItem } from './../model/course-item';
 import { ItemsService } from './../model/items.service';
-import {SITE_KEY} from '../consts';
+import { SITE_KEY } from '../consts';
+import { AppStateService } from '../model/app-state.service';
+import {MenuSelection} from '../model/menuSelection';
 
 @Component({
   moduleId: module.id,
@@ -25,7 +27,14 @@ export class HomeComponent implements OnInit {
   public isDataSend = false;
   public isSendError = false;
 
-  constructor(private itemsService: ItemsService, @Inject(SITE_KEY) private sitekey: string) {
+  constructor(
+    private itemsService: ItemsService,
+    @Inject(SITE_KEY) private sitekey: string,
+    private appStateService: AppStateService) {
+  }
+
+  get courseItems() {
+    return this.appStateService.getAppState().map((state: MenuSelection) =>  state.items);
   }
 
   public ngOnInit() {

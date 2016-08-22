@@ -12,6 +12,7 @@ import { HomeComponent } from './home/home.component';
 import { CourseItemComponent } from './course-item/course-item.component';
 import { ReCaptchaComponent } from './re-captcha/re-captcha.component';
 import { ItemsService } from './model/items.service';
+import {AppStateService} from './model/app-state.service';
 
 @NgModule({
   imports: [
@@ -29,6 +30,7 @@ import { ItemsService } from './model/items.service';
     ReCaptchaComponent
   ],
   providers: [
+    AppStateService,
     ItemsService,
     { provide: SERVER_URL_TOKEN, useValue: environment.serverUrl },
     { provide: SITE_KEY, useValue: '6LeEuiUTAAAAAAHBatXPYkA5YrJj7i6YynkxFqsX'}

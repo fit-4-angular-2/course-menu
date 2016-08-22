@@ -1,7 +1,8 @@
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
-import { Observer } from 'rxjs/Observer';
+import 'rxjs/add/operator/scan';
+import 'rxjs/add/operator/share';
 
 import {MenuSelection} from './menuSelection';
 
@@ -17,6 +18,7 @@ export class AppStateService {
 
   constructor() {
     let initState = new MenuSelection();
+
     let appStateSubject = this.actionDispatcher.scan( (state: MenuSelection, action) => {
 
       return action.createNewState(state);
