@@ -7,7 +7,7 @@ import {
   Headers,
   RequestOptions
 } from '@angular/http';
-import { Item } from './item';
+import { CourseItem } from './course-item';
 import {
   SERVER_URL_TOKEN
 } from './../consts';
@@ -16,7 +16,7 @@ import { MenuSelection } from './menuSelection';
 
 
 export interface IItemsService {
-  loadItems(): Promise<Item[]>;
+  loadItems(): Promise<CourseItem[]>;
   sendSelections(selecttion: MenuSelection, token: String): Promise<boolean>;
 }
 
@@ -25,9 +25,9 @@ export class ItemsService implements IItemsService {
 
   constructor(private http: Http, @Inject(SERVER_URL_TOKEN) private serverUrl: string) {}
 
-  public loadItems(forceRefresh?: boolean): Promise<Item[]> {
+  public loadItems(forceRefresh?: boolean): Promise<CourseItem[]> {
       return this.http.get(this.serverUrl + '/courses').toPromise().then( (reponse) => {
-          return <Item[]> reponse.json().courses;
+          return <CourseItem[]> reponse.json().courses;
       });
   }
 

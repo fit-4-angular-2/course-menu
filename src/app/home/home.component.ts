@@ -3,7 +3,7 @@ import {
   OnInit,
   Inject
 } from '@angular/core';
-import { Item } from './../model/item';
+import { CourseItem } from './../model/course-item';
 import { ItemsService } from './../model/items.service';
 import {SITE_KEY} from '../consts';
 
@@ -16,7 +16,7 @@ import {SITE_KEY} from '../consts';
 export class HomeComponent implements OnInit {
 
 
-  public items: Item[];
+  public items: CourseItem[];
   public isHttpError = false;
   public isLoading = true;
   public contact: String;

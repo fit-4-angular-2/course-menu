@@ -3,7 +3,7 @@ import {
   inject
 } from '@angular/core/testing';
 import { ItemsService } from './items.service';
-import { Item } from './item';
+import { CourseItem } from './course-item';
 import { MockBackend } from '@angular/http/testing';
 import {
   BaseRequestOptions,
@@ -44,7 +44,7 @@ describe('ItemsService', () => {
       connection.mockRespond(
         new Response(
           new ResponseOptions({
-            body: JSON.stringify( {courses: [new Item('a', 'b')]} )
+            body: JSON.stringify( {courses: [new CourseItem('a', 'b')]} )
           })
         )
       );

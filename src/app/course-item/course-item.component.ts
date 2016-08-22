@@ -2,7 +2,7 @@ import {
   Component,
   Input
 } from '@angular/core';
-import { Item } from './../model/item';
+import { CourseItem } from './../model/course-item';
 
 
 @Component({
@@ -13,10 +13,10 @@ import { Item } from './../model/item';
 })
 export class CourseItemComponent {
 
-  @Input() public item: Item = null;
+  @Input() public item: CourseItem = null;
   @Input() public index: number = 1;
 
-  public toggleItem(item: Item) {
+  public toggleItem(item: CourseItem) {
     item.selected = !item.selected;
   }
 

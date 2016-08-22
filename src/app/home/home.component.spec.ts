@@ -10,19 +10,19 @@ import {
   ItemsService,
   IItemsService
 } from './../model/items.service';
-import { Item } from './../model/item';
+import { CourseItem } from './../model/course-item';
 import { MenuSelection } from '../model/menuSelection';
 import { AppModule } from '../app.module';
 import { SITE_KEY } from './../consts';
 
-let oneItem =  [new Item('Grundlagen', 'Projekt erstellen, Arbeiten mit Angular CLI, Komponenten')];
+let oneItem =  [new CourseItem('Grundlagen', 'Projekt erstellen, Arbeiten mit Angular CLI, Komponenten')];
 
 class MockItemsService implements IItemsService {
 
   public resultWithError = false;
 
-  public loadItems(): Promise<Item[]> {
-    return this.resultWithError ? Promise.reject<Item[]>([]) : Promise.resolve(oneItem);
+  public loadItems(): Promise<CourseItem[]> {
+    return this.resultWithError ? Promise.reject<CourseItem[]>([]) : Promise.resolve(oneItem);
   }
   sendSelections(selecttion: MenuSelection, token: String): Promise<boolean> {
     return this.resultWithError ? Promise.reject<boolean>(false) : Promise.resolve(true);

@@ -11,7 +11,7 @@ import {
   MdlCheckboxComponent,
   MdlModule
 } from 'angular2-mdl';
-import { Item } from './../model/item';
+import { CourseItem } from './../model/course-item';
 import { FormsModule } from '@angular/forms';
 
 describe('CourseItemComponent', () => {
@@ -65,5 +65,5 @@ describe('CourseItemComponent', () => {
   template: '<mdl-list><course-item [item]="item"></course-item></mdl-list>'
 })
 class TestComponent {
-  public item = new Item('Grundlagen', 'Projekt erstellen, Arbeiten mit Angular CLI, Komponenten', false);
+  public item = new CourseItem('Grundlagen', 'Projekt erstellen, Arbeiten mit Angular CLI, Komponenten', false);
 }

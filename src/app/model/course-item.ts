@@ -1,4 +1,4 @@
-export class Item {
+export class CourseItem {
   title: string;
   explanation: string;
   selected: boolean;
