@@ -2,7 +2,12 @@ import { IAppAction, AppStateService} from '../model/app-state.service';
 import { AppState } from '../model/app-state';
 import { Injectable } from '@angular/core';
 import { ItemsService } from '../model/items.service';
-import { CourseItemsLoadedAction, ITEMS } from './course-items-loaded-action';
+import {
+  CourseItemsLoadedAction,
+  ITEMS,
+  ErrorBackendCallAction
+} from './index';
+
 
 
 @Injectable()
@@ -14,13 +19,14 @@ export class LoadCourseItemsAction implements IAppAction {
 
     let newState = curentState.cloneState();
     newState.items = [];
+    newState.uiState.isLoading = true;
 
     let p = this.itemsService.loadItems();
     p.then( (items) => {
       this.appState.dispatchAction(CourseItemsLoadedAction, [{provide: ITEMS, useValue: items }]);
     });
     p.catch( (error) => {
-
+      this.appState.dispatchAction(ErrorBackendCallAction);
     });
 
     return newState;

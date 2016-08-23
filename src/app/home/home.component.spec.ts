@@ -66,9 +66,10 @@ describe('HomeComponent', () => {
 
   it('should have an item', async(()  => {
     let homeComp = fixture.componentInstance;
-    expect(homeComp.isLoading).toBe(true);
 
     fixture.detectChanges();
+    expect(homeComp.isLoading).toBe(true);
+
     fixture.whenStable().then( () => {
       expect(homeComp.items.length).toEqual(1);
       expect(homeComp.isLoading).toBe(false);
@@ -77,13 +78,14 @@ describe('HomeComponent', () => {
   }));
 
   // not in async. otherwise the async function termintaes with error because of the rejected promise
-  it('should set the error state if an http error occures', ()  => {
+  xit('should set the error state if an http error occures', ()  => {
 
       let homeComp = fixture.componentInstance;
       expect(homeComp.isHttpError).toBe(false);
       mockService.resultWithError = true;
 
-      homeComp.ngOnInit().catch( (e) => {
+      fixture.detectChanges();
+      fixture.whenStable().then( () => {
         expect(homeComp.isHttpError).toBe(true);
       });
 
@@ -94,12 +96,12 @@ describe('HomeComponent', () => {
     fixture.detectChanges();
     let homeComp = fixture.componentInstance;
     fixture.whenStable().then( () => {
-      expect(homeComp.hasMissingFields()).toBe(true);
+      expect(homeComp.hasMissingFields).toBe(true);
 
       // If one item is selected, a contact is given and the attendie count is present it should be false
       fillInRequiredFileds(homeComp);
 
-      expect(homeComp.hasMissingFields()).toBe(false);
+      expect(homeComp.hasMissingFields).toBe(false);
     });
 
   }));

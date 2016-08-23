@@ -1,28 +1,22 @@
 import {
-  Injectable,
-  Inject,
-  OpaqueToken
+  Injectable
 } from '@angular/core';
 import {
-  CourseItem,
   AppState,
   IAppAction
 } from '../model';
 
 
-export let ITEMS = new OpaqueToken('items');
 
 @Injectable()
-export class CourseItemsLoadedAction implements IAppAction {
+export class ErrorBackendCallAction implements IAppAction {
 
-  constructor(@Inject(ITEMS) private items: CourseItem[]) {
-  }
 
   createNewState(curentState: AppState): AppState {
 
     let newState = curentState.cloneState();
-    newState.items = this.items;
     newState.uiState.isLoading = false;
+    newState.uiState.isHttpError = true;
     return newState;
   }
 

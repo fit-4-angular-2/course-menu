@@ -21,7 +21,7 @@ export class HomeComponent implements OnInit {
 
   public items: CourseItem[];
   public isHttpError = false;
-  public isLoading = true;
+  public isLoading = false;
   public contact: String;
   public countOfAttendies: String;
   private token: string;
@@ -30,33 +30,21 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private itemsService: ItemsService,
-    @Inject(SITE_KEY) private sitekey: string,
+    @Inject(SITE_KEY) public sitekey: string,
     private appStateService: AppStateService) {
   }
 
-  get courseItems() {
-    return this.appStateService.getAppState().map((state: AppState) =>  state.items);
-  }
-
   public ngOnInit() {
+    this.appStateService.getAppState().subscribe( (appState) => {
+      this.isLoading    = appState.uiState.isLoading;
+      this.isHttpError  = appState.uiState.isHttpError;
+      this.items        = appState.items;
+    });
 
     this.appStateService.dispatchAction(LoadCourseItemsAction);
-
-    this.isLoading = true;
-    let p = this.itemsService.loadItems();
-    p.then( (items) => {
-      this.items = items;
-      this.isLoading = false;
-    });
-    p.catch( (error) => {
-      this.isHttpError = true;
-      this.isLoading = false;
-    });
-    // usually this is for testing :(
-    return p;
   }
 
-  public hasMissingFields(): boolean {
+  get hasMissingFields(): boolean {
     let atLeastOneItemSelected = this.items ? this.items.filter(item => item.selected) : [];
 
     let noContact = this.contact ? (this.contact.length === 0) : true;
@@ -73,7 +61,7 @@ export class HomeComponent implements OnInit {
   }
 
   public send() {
-    if (this.hasMissingFields()) {
+    if (this.hasMissingFields) {
       return;
     }
     let appState = new AppState();

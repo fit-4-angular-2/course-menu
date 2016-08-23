@@ -1,25 +1,32 @@
 import {
   Component,
-  Input,
-  ChangeDetectionStrategy
+  Input
 } from '@angular/core';
-import { CourseItem } from './../model/course-item';
+import {
+  CourseItem,
+  AppStateService
+} from './../model/index';
+import {
+  ToogleItemAction,
+  ITEM
+} from '../actions/index';
+
 
 
 @Component({
   moduleId: module.id,
   selector: 'course-item',
   templateUrl: 'course-item.component.html',
-  styleUrls: ['course-item.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['course-item.component.css']
 })
 export class CourseItemComponent {
 
   @Input() public item: CourseItem = null;
-  @Input() public index: number = 1;
+
+  constructor(private appStateService: AppStateService) {}
 
   public toggleItem(item: CourseItem) {
-    item.selected = !item.selected;
+    this.appStateService.dispatchAction(ToogleItemAction, [{provide: ITEM, useValue: item }]);
   }
 
   public clickCheckbox(event) {

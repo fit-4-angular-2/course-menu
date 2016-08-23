@@ -7,7 +7,8 @@
    </div>
 
 		<div class="mdl-cell--12-col mdl-cell--5-col-desktop mdl-cell--3-offset-desktop">
-   			<div *ngIf="isHttpError">Beim Laden der Daten ist ein Fehler aufgetreten.</div>
+   			<div *ngIf="isHttpError" class="mdl-color-text--red">Beim Laden der Daten ist ein Fehler aufgetreten.</div>
+      <div></div>
    			<div *ngIf="isLoading" class="loading-container">
       			<mdl-spinner active></mdl-spinner>
 				</div>
@@ -15,7 +16,7 @@
 
    <div class="mdl-cell--12-col mdl-cell--5-col-desktop mdl-cell--3-offset-desktop">
       <mdl-list>
-				<course-item  *ngFor="let item of items; let i = index" [item]="item" [index]="i"></course-item>
+				<course-item  *ngFor="let item of items" [item]="item"></course-item>
       </mdl-list>
    </div>
 
@@ -37,7 +38,7 @@
 	</div>
 
    <div class="mdl-cell--12-col button-row mdl-cell--5-col-desktop mdl-cell--3-offset-desktop">
-      <mdl-button mdl-button-type="raised" mdl-colored="accent" mdl-ripple [disabled]="hasMissingFields()" (click)="send()">Senden</mdl-button>
+      <mdl-button mdl-button-type="raised" mdl-colored="accent" mdl-ripple [disabled]="hasMissingFields" (click)="send()">Senden</mdl-button>
    </div>
 
 </div>
@@ -55,5 +56,3 @@
 	</div>
 
 </div>
-
-<div>{{courseItems | async | json }}</div>

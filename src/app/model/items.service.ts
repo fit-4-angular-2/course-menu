@@ -12,7 +12,8 @@ import {
   SERVER_URL_TOKEN
 } from './../consts';
 import { AppState } from './app-state';
-
+import 'rxjs/add/operator/delay';
+import 'rxjs/add/operator/timeout';
 
 
 export interface IItemsService {
@@ -26,9 +27,9 @@ export class ItemsService implements IItemsService {
   constructor(private http: Http, @Inject(SERVER_URL_TOKEN) private serverUrl: string) {}
 
   public loadItems(): Promise<CourseItem[]> {
-      return this.http.get(this.serverUrl + '/courses').toPromise().then( (reponse) => {
-          return <CourseItem[]> reponse.json().courses;
-      });
+    return this.http.get(this.serverUrl + '/courses').delay(1000).toPromise().then( (reponse) => {
+      return <CourseItem[]> reponse.json().courses;
+    });
   }
 
   public sendSelections(selection: AppState, token: String): Promise<boolean> {

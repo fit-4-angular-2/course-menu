@@ -11,7 +11,9 @@ import {
   MdlCheckboxComponent,
   MdlModule
 } from 'angular2-mdl';
-import { CourseItem } from './../model/course-item';
+import {
+  CourseItem
+} from './../model/index';
 import { FormsModule } from '@angular/forms';
 
 describe('CourseItemComponent', () => {
@@ -34,13 +36,15 @@ describe('CourseItemComponent', () => {
 
       let courseItemComponent = fixture.debugElement.query(By.directive(CourseItemComponent)).componentInstance;
 
+      spyOn(courseItemComponent, 'toggleItem').and.callThrough();
+
       let listItemContent = fixture.debugElement.query(By.directive(MdlListItemPrimaryContentComponent)).nativeElement;
 
       expect(courseItemComponent.item.selected).toBe(false);
 
       listItemContent.click();
 
-      expect(courseItemComponent.item.selected).toBe(true);
+      expect(courseItemComponent.toggleItem).toHaveBeenCalled();
 
   }));
 
