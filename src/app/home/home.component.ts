@@ -7,7 +7,8 @@ import { CourseItem } from './../model/course-item';
 import { ItemsService } from './../model/items.service';
 import { SITE_KEY } from '../consts';
 import { AppStateService } from '../model/app-state.service';
-import {MenuSelection} from '../model/menuSelection';
+import { AppState } from '../model/app-state';
+import { LoadCourseItemsAction } from '../actions/load-course-items-action';
 
 @Component({
   moduleId: module.id,
@@ -34,10 +35,13 @@ export class HomeComponent implements OnInit {
   }
 
   get courseItems() {
-    return this.appStateService.getAppState().map((state: MenuSelection) =>  state.items);
+    return this.appStateService.getAppState().map((state: AppState) =>  state.items);
   }
 
   public ngOnInit() {
+
+    this.appStateService.dispatchAction(LoadCourseItemsAction);
+
     this.isLoading = true;
     let p = this.itemsService.loadItems();
     p.then( (items) => {
@@ -72,11 +76,12 @@ export class HomeComponent implements OnInit {
     if (this.hasMissingFields()) {
       return;
     }
-    let p = this.itemsService.sendSelections({
-        items: this.items.filter(item => item.selected),
-      contact: this.contact,
-      countOfAtendies: this.countOfAttendies
-    }, this.token);
+    let appState = new AppState();
+    appState.items = this.items.filter(item => item.selected);
+    appState.contact = this.contact;
+    appState.countOfAtendies = this.countOfAttendies;
+
+    let p = this.itemsService.sendSelections(appState, this.token);
     p.then( () => {
       this.isDataSend = true;
     });

@@ -5,19 +5,16 @@ import {
 
 import { AppStateService, IAppAction } from './app-state.service';
 import { CourseItem } from './course-item';
-import { MenuSelection } from './menuSelection';
+import { AppState } from './app-state';
 
 let oneItem = new CourseItem('theTitle', 'expl.');
 
 class TestAction implements IAppAction {
 
-  public createNewState(oldState) {
+  public createNewState(oldState: AppState) {
+    let newState = oldState.cloneState();
 
-    let newState: MenuSelection = {
-      items: [...oldState.items, oneItem],
-      contact: oldState.contact,
-      countOfAtendies: oldState.countOfAttendies
-    };
+    newState.items = [...oldState.items, oneItem];
 
     return newState;
   }
@@ -29,7 +26,7 @@ describe('AppStateService', () => {
 
   beforeEach( () => {
     TestBed.configureTestingModule({
-      providers: [AppStateService]
+      providers: [AppStateService, TestAction]
     });
   });
 
@@ -50,7 +47,7 @@ describe('AppStateService', () => {
 
   it('should add items that are loaded from the backend', ( done ) => {
 
-    appStateService.dispatchAction(new TestAction());
+    appStateService.dispatchAction(TestAction);
 
     const appState = appStateService.getLastAppState();
 

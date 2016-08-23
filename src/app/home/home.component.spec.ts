@@ -11,7 +11,7 @@ import {
   IItemsService
 } from './../model/items.service';
 import { CourseItem } from './../model/course-item';
-import { MenuSelection } from '../model/menuSelection';
+import { AppState } from '../model/app-state';
 import { AppModule } from '../app.module';
 import { SITE_KEY } from './../consts';
 
@@ -24,7 +24,7 @@ class MockItemsService implements IItemsService {
   public loadItems(): Promise<CourseItem[]> {
     return this.resultWithError ? Promise.reject<CourseItem[]>([]) : Promise.resolve(oneItem);
   }
-  sendSelections(selecttion: MenuSelection, token: String): Promise<boolean> {
+  sendSelections(selecttion: AppState, token: String): Promise<boolean> {
     return this.resultWithError ? Promise.reject<boolean>(false) : Promise.resolve(true);
   }
 }

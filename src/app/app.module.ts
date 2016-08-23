@@ -12,7 +12,9 @@ import { HomeComponent } from './home/home.component';
 import { CourseItemComponent } from './course-item/course-item.component';
 import { ReCaptchaComponent } from './re-captcha/re-captcha.component';
 import { ItemsService } from './model/items.service';
-import {AppStateService} from './model/app-state.service';
+import { AppStateService } from './model/app-state.service';
+import { LoadCourseItemsAction } from './actions/load-course-items-action';
+import { CourseItemsLoadedAction } from './actions/course-items-loaded-action';
 
 @NgModule({
   imports: [
@@ -32,10 +34,12 @@ import {AppStateService} from './model/app-state.service';
   providers: [
     AppStateService,
     ItemsService,
+    LoadCourseItemsAction,
+    CourseItemsLoadedAction,
     { provide: SERVER_URL_TOKEN, useValue: environment.serverUrl },
     { provide: SITE_KEY, useValue: '6LeEuiUTAAAAAAHBatXPYkA5YrJj7i6YynkxFqsX'}
   ],
-  entryComponents: [AppComponent],
+  entryComponents: [],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

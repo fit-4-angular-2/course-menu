@@ -3,23 +3,31 @@ import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/scan';
 import 'rxjs/add/operator/share';
+import {
+  Injectable,
+  Injector,
+  ReflectiveInjector,
+  Provider,
+  Type
+} from '@angular/core';
 
-import {MenuSelection} from './menuSelection';
+import { AppState } from './app-state';
 
 
 export interface IAppAction {
-  createNewState(curentState: MenuSelection): MenuSelection;
+  createNewState(curentState: AppState): AppState;
 }
 
+@Injectable()
 export class AppStateService {
 
-  private appStateSubject: BehaviorSubject<MenuSelection>;
+  private appStateSubject: BehaviorSubject<AppState>;
   private actionDispatcher = new Subject();
 
-  constructor() {
-    let initState = new MenuSelection();
+  constructor(private injector: Injector) {
+    let initState = AppState.createEmptyState();
 
-    let appStateSubject = this.actionDispatcher.scan( (state: MenuSelection, action) => {
+    let appStateSubject = this.actionDispatcher.scan( (state: AppState, action) => {
 
       return action.createNewState(state);
 
@@ -34,15 +42,25 @@ export class AppStateService {
     return res;
   }
 
-  public getAppState(): Observable<MenuSelection> {
+  public getAppState(): Observable<AppState> {
     return this.appStateSubject.share();
   }
 
-  public getLastAppState(): MenuSelection {
+  public getLastAppState(): AppState {
     return this.appStateSubject.getValue();
   }
 
-  public dispatchAction(action: IAppAction) {
+  // TODO how to make sure that this is of type IAppAction
+  public dispatchAction(actionClass: any, providers?: Array<Type | Provider | {[k: string]: any} | any[]>) {
+    let action;
+    if (providers) {
+      // why do i need to add this class to the providers? it should already be part of the parent provider
+      let localProviders = [actionClass, ...providers];
+      let localInjector = ReflectiveInjector.resolveAndCreate(localProviders, this.injector);
+      action = localInjector.get(actionClass);
+    } else {
+      action = this.injector.get(actionClass);
+    }
     this.actionDispatcher.next(action);
   }
 

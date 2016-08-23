@@ -11,13 +11,13 @@ import { CourseItem } from './course-item';
 import {
   SERVER_URL_TOKEN
 } from './../consts';
-import { MenuSelection } from './menuSelection';
+import { AppState } from './app-state';
 
 
 
 export interface IItemsService {
   loadItems(): Promise<CourseItem[]>;
-  sendSelections(selecttion: MenuSelection, token: String): Promise<boolean>;
+  sendSelections(selecttion: AppState, token: String): Promise<boolean>;
 }
 
 @Injectable()
@@ -31,7 +31,7 @@ export class ItemsService implements IItemsService {
       });
   }
 
-  public sendSelections(selection: MenuSelection, token: String): Promise<boolean> {
+  public sendSelections(selection: AppState, token: String): Promise<boolean> {
     return new Promise((resolve, reject) => {
 
       let body = JSON.stringify(selection);
