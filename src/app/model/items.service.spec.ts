@@ -2,8 +2,7 @@ import {
   addProviders,
   inject
 } from '@angular/core/testing';
-import { ItemsService } from './items.service';
-import { CourseItem } from './course-item';
+import { ItemsService, IItemsService } from './items.service';
 import { MockBackend } from '@angular/http/testing';
 import {
   BaseRequestOptions,
@@ -12,9 +11,25 @@ import {
   ResponseOptions
 } from '@angular/http';
 import { SERVER_URL_TOKEN } from './../consts';
-import {AppState} from './app-state';
-import {AppStateService} from './app-state.service';
-import {LoadCourseItemsAction} from '../actions/load-course-items-action';
+import { AppStateService } from './app-state.service';
+import { LoadCourseItemsAction } from '../actions/load-course-items-action';
+import { Observable } from 'rxjs/Observable';
+import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
+import { CourseItem, AppState } from './../model/index';
+
+let oneItem: CourseItem[] =  [new CourseItem('Grundlagen', 'Projekt erstellen, Arbeiten mit Angular CLI, Komponenten')];
+
+export class MockItemsService implements IItemsService {
+
+  public resultWithError = false;
+
+  public loadItems(): Observable<CourseItem[]> {
+    return this.resultWithError ? Observable.throw(ErrorObservable.create('error')) : Observable.of(oneItem);
+  }
+  sendSelections(selecttion: AppState, token: String): Promise<boolean> {
+    return this.resultWithError ? Promise.reject<boolean>(false) : Promise.resolve(true);
+  }
+}
 
 
 beforeEach(() => {
@@ -55,7 +70,7 @@ describe('ItemsService', () => {
       );
     });
 
-    service.loadItems().then(items => {
+    service.loadItems().subscribe(items => {
       expect(items.length).toEqual(1);
       done();
     });

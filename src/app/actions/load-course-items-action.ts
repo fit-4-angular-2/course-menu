@@ -1,4 +1,7 @@
-import { IAppAction, AppStateService} from '../model/app-state.service';
+import {
+  IAppAction,
+  AppStateService
+} from '../model/index';
 import { AppState } from '../model/app-state';
 import { Injectable } from '@angular/core';
 import { ItemsService } from '../model/items.service';
@@ -7,8 +10,6 @@ import {
   ITEMS,
   ErrorBackendCallAction
 } from './index';
-
-
 
 @Injectable()
 export class LoadCourseItemsAction implements IAppAction {
@@ -21,13 +22,11 @@ export class LoadCourseItemsAction implements IAppAction {
     newState.items = [];
     newState.uiState.isLoading = true;
 
-    let p = this.itemsService.loadItems();
-    p.then( (items) => {
+    this.itemsService.loadItems().subscribe( (items) => {
       this.appState.dispatchAction(CourseItemsLoadedAction, [{provide: ITEMS, useValue: items }]);
-    });
-    p.catch( (error) => {
-      this.appState.dispatchAction(ErrorBackendCallAction);
-    });
+    }, (error) => {
+        this.appState.dispatchAction(ErrorBackendCallAction);
+      });
 
     return newState;
   }

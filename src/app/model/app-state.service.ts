@@ -57,6 +57,7 @@ export class AppStateService {
     // why do i need to add this class to the providers? it should already be part of the parent injector
     // advantage: i don't need to add this as provider to the app module
     localProviders.push(actionClass);
+
     const localInjector = ReflectiveInjector.resolveAndCreate(localProviders, this.injector);
     const action = localInjector.get(actionClass);
 

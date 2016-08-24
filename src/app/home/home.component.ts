@@ -8,7 +8,6 @@ import { ItemsService } from './../model/items.service';
 import { SITE_KEY } from '../consts';
 import { AppStateService } from '../model/app-state.service';
 import { AppState } from '../model/app-state';
-import { LoadCourseItemsAction } from '../actions/load-course-items-action';
 
 @Component({
   moduleId: module.id,
@@ -40,8 +39,6 @@ export class HomeComponent implements OnInit {
       this.isHttpError  = appState.uiState.isHttpError;
       this.items        = appState.items;
     });
-
-    this.appStateService.dispatchAction(LoadCourseItemsAction);
   }
 
   get hasMissingFields(): boolean {

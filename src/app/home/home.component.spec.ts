@@ -6,33 +6,18 @@ import {
   ComponentFixture
 } from '@angular/core/testing';
 import { HomeComponent } from './home.component';
-import {
-  ItemsService,
-  IItemsService
-} from './../model/items.service';
-import { CourseItem } from './../model/course-item';
-import { AppState } from '../model/app-state';
+import { ItemsService } from './../model/items.service';
+import { AppStateService } from './../model/index';
 import { AppModule } from '../app.module';
 import { SITE_KEY } from './../consts';
-
-let oneItem =  [new CourseItem('Grundlagen', 'Projekt erstellen, Arbeiten mit Angular CLI, Komponenten')];
-
-class MockItemsService implements IItemsService {
-
-  public resultWithError = false;
-
-  public loadItems(): Promise<CourseItem[]> {
-    return this.resultWithError ? Promise.reject<CourseItem[]>([]) : Promise.resolve(oneItem);
-  }
-  sendSelections(selecttion: AppState, token: String): Promise<boolean> {
-    return this.resultWithError ? Promise.reject<boolean>(false) : Promise.resolve(true);
-  }
-}
+import { MockItemsService } from './../model/items.service.spec';
+import { LoadCourseItemsAction } from './../actions/load-course-items-action';
 
 
 describe('HomeComponent', () => {
 
   let mockService: MockItemsService;
+  let appStateService: AppStateService;
   let fixture: ComponentFixture<any>;
 
   beforeEach(async(() => {
@@ -53,8 +38,10 @@ describe('HomeComponent', () => {
 
 
 
-  beforeEach(async(inject([ItemsService], (_mockService: ItemsService ) => {
-    mockService = <any> _mockService;
+  beforeEach(async(inject([ItemsService, AppStateService],
+    (_mockService: ItemsService, _appStateService: AppStateService ) => {
+      mockService = <any> _mockService;
+      appStateService = _appStateService;
   })));
 
   it('should create the home component', async((  ) => {
@@ -64,21 +51,26 @@ describe('HomeComponent', () => {
 
   }));
 
-  it('should have an item', async(()  => {
+  it('should have an item', async(( done )  => {
     let homeComp = fixture.componentInstance;
-
     fixture.detectChanges();
-    expect(homeComp.isLoading).toBe(true);
+    expect(homeComp.isLoading).toBe(false);
 
     fixture.whenStable().then( () => {
-      expect(homeComp.items.length).toEqual(1);
-      expect(homeComp.isLoading).toBe(false);
+      appStateService.dispatchAction(LoadCourseItemsAction);
+      // forward to CourseItemsLoadedActon by skipping the load action
+      appStateService.getAppState().skip(1).subscribe( () => {
+        expect(homeComp.items.length).toEqual(1);
+        expect(homeComp.isLoading).toBe(false);
+        done();
+      });
+
     });
 
   }));
 
   // not in async. otherwise the async function termintaes with error because of the rejected promise
-  xit('should set the error state if an http error occures', ()  => {
+  it('should set the error state if an http error occures', async(( done)  => {
 
       let homeComp = fixture.componentInstance;
       expect(homeComp.isHttpError).toBe(false);
@@ -86,22 +78,37 @@ describe('HomeComponent', () => {
 
       fixture.detectChanges();
       fixture.whenStable().then( () => {
-        expect(homeComp.isHttpError).toBe(true);
+
+        appStateService.dispatchAction(LoadCourseItemsAction);
+        // forward to ErrorBackendAction by skipping the load action
+        appStateService.getAppState().skip(1).subscribe( () => {
+          expect(homeComp.isHttpError).toBe(true);
+          done();
+        });
+
       });
 
-  });
+  }));
 
 
-  it('should mark missing fields', async(() => {
+  it('should mark missing fields', async(( done ) => {
     fixture.detectChanges();
     let homeComp = fixture.componentInstance;
     fixture.whenStable().then( () => {
       expect(homeComp.hasMissingFields).toBe(true);
 
-      // If one item is selected, a contact is given and the attendie count is present it should be false
-      fillInRequiredFileds(homeComp);
+      appStateService.dispatchAction(LoadCourseItemsAction);
+      // forward to Loaded action by skipping the load action
+      appStateService.getAppState().skip(1).subscribe( () => {
 
-      expect(homeComp.hasMissingFields).toBe(false);
+        // If one item is selected, a contact is given and the attendie count is present it should be false
+        fillInRequiredFileds(homeComp);
+
+        expect(homeComp.hasMissingFields).toBe(false);
+
+        done();
+      });
+
     });
 
   }));
@@ -119,7 +126,7 @@ describe('HomeComponent', () => {
 
   }));
 
-  it('should send the selections if all required fields are present', async(() => {
+  it('should send the selections if all required fields are present', async(( done ) => {
     let homeComp = fixture.componentInstance;
 
     fixture.detectChanges();
@@ -127,10 +134,17 @@ describe('HomeComponent', () => {
 
       expect(homeComp.isDataSend).toBe(false);
 
-      fillInRequiredFileds(homeComp);
+      appStateService.dispatchAction(LoadCourseItemsAction);
+      // forward to Loaded action by skipping the load action
+      appStateService.getAppState().skip(1).subscribe( () => {
 
-      homeComp.send().then( () => {
-        expect(homeComp.isDataSend).toBe(true);
+        fillInRequiredFileds(homeComp);
+
+        homeComp.send().then( () => {
+          expect(homeComp.isDataSend).toBe(true);
+        });
+
+        done();
       });
 
     });
@@ -138,7 +152,7 @@ describe('HomeComponent', () => {
   }));
 
   // not in async. otherwise the async function termintaes with error because of the rejected promise
-  it('should mark an error state if an error occures during send data', () => {
+  xit('should mark an error state if an error occures during send data', ( done ) => {
 
     let homeComp = fixture.componentInstance;
 
@@ -148,13 +162,22 @@ describe('HomeComponent', () => {
       expect(homeComp.isDataSend).toBe(false);
       expect(homeComp.isSendError).toBe(false);
 
-      fillInRequiredFileds(homeComp);
+      appStateService.dispatchAction(LoadCourseItemsAction);
+      // forward to Loaded action by skipping the load action
+      appStateService.getAppState().skip(0).subscribe( () => {
 
-      mockService.resultWithError = true;
+        fillInRequiredFileds(homeComp);
 
-      homeComp.send().catch( () => {
-        expect(homeComp.isDataSend).toBe(true);
-        expect(homeComp.isSendError).toBe(true);
+        mockService.resultWithError = true;
+
+        homeComp.send().catch( () => {
+          expect(homeComp.isDataSend).toBe(true);
+          expect(homeComp.isSendError).toBe(true);
+
+          done();
+        });
+
+
       });
 
     });

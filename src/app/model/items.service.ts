@@ -5,6 +5,7 @@ import {
 import {
   Http,
   Headers,
+  Response,
   RequestOptions
 } from '@angular/http';
 import { CourseItem } from './course-item';
@@ -12,12 +13,13 @@ import {
   SERVER_URL_TOKEN
 } from './../consts';
 import { AppState } from './app-state';
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/delay';
 import 'rxjs/add/operator/timeout';
 
 
 export interface IItemsService {
-  loadItems(): Promise<CourseItem[]>;
+  loadItems(): Observable<CourseItem[]>;
   sendSelections(selecttion: AppState, token: String): Promise<boolean>;
 }
 
@@ -26,10 +28,10 @@ export class ItemsService implements IItemsService {
 
   constructor(private http: Http, @Inject(SERVER_URL_TOKEN) private serverUrl: string) {}
 
-  public loadItems(): Promise<CourseItem[]> {
-    return this.http.get(this.serverUrl + '/courses').delay(1000).toPromise().then( (reponse) => {
-      return <CourseItem[]> reponse.json().courses;
-    });
+  public loadItems(): Observable<CourseItem[]> {
+    return this.http.get(this.serverUrl + '/courses')
+      .delay(750)
+      .map((r: Response) => r.json().courses as CourseItem[]);
   }
 
   public sendSelections(selection: AppState, token: String): Promise<boolean> {

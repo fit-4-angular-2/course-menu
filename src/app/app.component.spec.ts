@@ -11,6 +11,8 @@ import {
 import { Subject } from 'rxjs/Rx';
 import {APP_BASE_HREF} from '@angular/common';
 import {SITE_KEY} from './consts';
+import { MockItemsService } from './model/items.service.spec';
+import { ItemsService } from './model/items.service';
 
 export class MockRouter {
 
@@ -36,7 +38,8 @@ describe('App: CourseMenu', () => {
       providers: [
         { provide: Router, useValue: new MockRouter()},
         { provide: APP_BASE_HREF, useValue: '/'},
-        { provide: SITE_KEY, useValue: null}
+        { provide: SITE_KEY, useValue: null},
+        { provide: ItemsService, useClass: MockItemsService},
       ]
     });
     TestBed.compileComponents();
