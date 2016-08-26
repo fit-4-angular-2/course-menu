@@ -95,7 +95,7 @@ describe('HomeComponent', () => {
     fixture.detectChanges();
     let homeComp = fixture.componentInstance;
     fixture.whenStable().then( () => {
-      expect(homeComp.hasMissingFields).toBe(true);
+      expect(homeComp.form.valid).toBe(false);
 
       appStateService.dispatchAction(LoadCourseItemsAction);
       // forward to Loaded action by skipping the load action
@@ -104,7 +104,7 @@ describe('HomeComponent', () => {
         // If one item is selected, a contact is given and the attendie count is present it should be false
         fillInRequiredFileds(homeComp);
 
-        expect(homeComp.hasMissingFields).toBe(false);
+        expect(homeComp.form.valid).toBe(true);
 
         done();
       });

@@ -15,6 +15,7 @@ import {
   CourseItem
 } from './../model/index';
 import { FormsModule } from '@angular/forms';
+import { CMModule } from '../cm/index';
 
 describe('CourseItemComponent', () => {
 
@@ -22,7 +23,7 @@ describe('CourseItemComponent', () => {
 
   beforeEach( async(() => {
     TestBed.configureTestingModule({
-      imports: [ MdlModule, FormsModule ],
+      imports: [ MdlModule, FormsModule, CMModule ],
       declarations: [CourseItemComponent, TestComponent],
     });
     TestBed.compileComponents().then( () => {

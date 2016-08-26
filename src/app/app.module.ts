@@ -15,6 +15,7 @@ import { CourseItemComponent } from './course-item/course-item.component';
 import { ReCaptchaComponent } from './re-captcha/re-captcha.component';
 import { ItemsService } from './model/items.service';
 import { AppStateService } from './model/app-state.service';
+import { CMModule } from './cm/index';
 
 @NgModule({
   imports: [
@@ -23,6 +24,7 @@ import { AppStateService } from './model/app-state.service';
     ReactiveFormsModule,
     HttpModule,
     MdlModule,
+    CMModule,
     RouterModule.forRoot(AppRoutes)
   ],
   declarations: [

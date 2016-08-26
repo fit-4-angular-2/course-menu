@@ -1,4 +1,8 @@
+<form [formGroup]="form">
+
 <div  *ngIf="!isDataSend" class="mdl-grid mdl-grid--no-spacing">
+
+
 
    <div class="mdl-cell--12-col mdl-cell--5-col-desktop mdl-cell--3-offset-desktop">
       <h5>Angular 2 Kurs zusammenstellen</h5>
@@ -14,10 +18,16 @@
 				</div>
 		</div>
 
+
+
    <div class="mdl-cell--12-col mdl-cell--5-col-desktop mdl-cell--3-offset-desktop">
+
       <mdl-list>
-				<course-item  *ngFor="let item of items" [item]="item"></course-item>
+        <cm-collection formControlName="selectedItems">
+				  <course-item  *ngFor="let item of items" [item]="item"></course-item>
+        </cm-collection>
       </mdl-list>
+
    </div>
 
 
@@ -28,9 +38,9 @@
 
    <div class="mdl-cell--12-col mdl-cell--5-col-desktop mdl-cell--3-offset-desktop">
       <p>Teilen Sie uns bitte noch eine Kontaktmöglichkeit und die Anzhal der Teilnehmer mit.</p>
-      <mdl-textfield type="text" label="Kontakt (Telefon oder Email)" [(ngModel)]="contact" floating-label></mdl-textfield>
+      <mdl-textfield type="text" label="Kontakt (Telefon oder Email)" formControlName="contact" floating-label></mdl-textfield>
       <br/>
-      <mdl-textfield type="number" label="Anzahl Teilnehmer" error-msg="Bitte geben Sie eine Zahl ein." [(ngModel)]="countOfAttendies" floating-label></mdl-textfield>
+      <mdl-textfield type="number" label="Anzahl Teilnehmer" error-msg="Bitte geben Sie eine Zahl ein." formControlName="countOfAttendies" floating-label></mdl-textfield>
    </div>
 
 	<div class="mdl-cell--12-col mdl-cell--5-col-desktop mdl-cell--3-offset-desktop">
@@ -38,10 +48,13 @@
 	</div>
 
    <div class="mdl-cell--12-col button-row mdl-cell--5-col-desktop mdl-cell--3-offset-desktop">
-      <mdl-button mdl-button-type="raised" mdl-colored="accent" mdl-ripple [disabled]="hasMissingFields" (click)="send()">Senden</mdl-button>
+      <mdl-button mdl-button-type="raised" mdl-colored="accent" mdl-ripple [disabled]="!form.valid" (click)="send()">Senden</mdl-button>
    </div>
 
+
+
 </div>
+</form>
 
 <div  *ngIf="isDataSend" class="mdl-grid mdl-grid--no-spacing">
 

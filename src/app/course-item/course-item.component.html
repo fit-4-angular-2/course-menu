@@ -5,7 +5,7 @@
 	</mdl-list-item-primary-content>
 	<mdl-list-item-secondary-content>
 		 <mdl-list-item-secondary-action>
-				<mdl-checkbox mdl-ripple [(ngModel)]="item.selected" (click)="clickCheckbox($event)"></mdl-checkbox>
+				<mdl-checkbox mdl-ripple [(ngModel)]="item.selected" (click)="clickCheckbox($event)" cmItem="item"></mdl-checkbox>
 		 </mdl-list-item-secondary-action>
 	</mdl-list-item-secondary-content>
 </mdl-list-item>
