@@ -15,7 +15,8 @@ import { AppStateService } from './app-state.service';
 import { LoadCourseItemsAction } from '../actions/load-course-items-action';
 import { Observable } from 'rxjs/Observable';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
-import { CourseItem, AppState } from './../model/index';
+import { CourseItem } from './../model/index';
+import { MenuSelection } from './app-state';
 
 let oneItem: CourseItem[] =  [new CourseItem('Grundlagen', 'Projekt erstellen, Arbeiten mit Angular CLI, Komponenten')];
 
@@ -26,8 +27,8 @@ export class MockItemsService implements IItemsService {
   public loadItems(): Observable<CourseItem[]> {
     return this.resultWithError ? Observable.throw(ErrorObservable.create('error')) : Observable.of(oneItem);
   }
-  sendSelections(selecttion: AppState, token: String): Promise<boolean> {
-    return this.resultWithError ? Promise.reject<boolean>(false) : Promise.resolve(true);
+  sendSelections(selecttion: MenuSelection, token: String): Observable<boolean> {
+    return this.resultWithError ?  Observable.throw(ErrorObservable.create('error')) : Observable.of(true);
   }
 }
 
@@ -78,8 +79,8 @@ describe('ItemsService', () => {
   });
 
 
-  xit('should send the selection to the server', ( done ) => {
-    let sendData = AppState.createEmptyState();
+  it('should send the selection to the server', ( done ) => {
+    let sendData = MenuSelection.createEmptyState();
     sendData.contact = 'contact';
     sendData.countOfAtendies = '3';
 
@@ -88,7 +89,9 @@ describe('ItemsService', () => {
       expect(connection.request.headers.get('google-token')).toBe('token');
       expect(connection.request.headers.get('Content-Type')).toBe('application/json');
 
-      expect(connection.request.json().replace(/\\"/g, '"')).toEqual('"' + JSON.stringify(sendData) + '"');
+      // why the hell is this an object and not a string?
+      let jsonString =  JSON.stringify(connection.request.json());
+      expect(jsonString).toEqual(JSON.stringify(sendData));
 
       connection.mockRespond(
         new Response(
@@ -98,13 +101,16 @@ describe('ItemsService', () => {
 
     });
 
-    service.sendSelections(sendData, 'token'). then(  () => {
+    service.sendSelections(sendData, 'token').subscribe( r => {
+      expect(r).toEqual(true, 'send data did not return true');
       done();
     });
+
+
   });
 
   it('should reject if an error occurs during data send', ( done ) => {
-    let sendData = AppState.createEmptyState();
+    let sendData = MenuSelection.createEmptyState();
     sendData.contact = 'contact';
     sendData.countOfAtendies = '3';
 
@@ -112,9 +118,12 @@ describe('ItemsService', () => {
       connection.mockError(new Error('some error'));
     });
 
-    service.sendSelections(sendData, 'token'). catch(  () => {
-      done();
-    });
+    service.sendSelections(sendData, 'token'). subscribe(
+      () => {},
+      () => {
+        done();
+      }
+    );
 
   });
 

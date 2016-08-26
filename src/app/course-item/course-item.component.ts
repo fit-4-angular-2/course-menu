@@ -6,10 +6,6 @@ import {
   CourseItem,
   AppStateService
 } from './../model/index';
-import {
-  ToogleItemAction,
-  ITEM
-} from '../actions/index';
 
 
 
@@ -26,7 +22,7 @@ export class CourseItemComponent {
   constructor(private appStateService: AppStateService) {}
 
   public toggleItem(item: CourseItem) {
-    this.appStateService.dispatchAction(ToogleItemAction, [{provide: ITEM, useValue: item }]);
+    item.selected = !item.selected;
   }
 
   public clickCheckbox(event) {

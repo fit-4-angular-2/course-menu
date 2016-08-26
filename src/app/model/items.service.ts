@@ -12,7 +12,7 @@ import { CourseItem } from './course-item';
 import {
   SERVER_URL_TOKEN
 } from './../consts';
-import { AppState } from './app-state';
+import { MenuSelection } from './app-state';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/delay';
 import 'rxjs/add/operator/timeout';
@@ -20,7 +20,7 @@ import 'rxjs/add/operator/timeout';
 
 export interface IItemsService {
   loadItems(): Observable<CourseItem[]>;
-  sendSelections(selecttion: AppState, token: String): Promise<boolean>;
+  sendSelections(selecttion: MenuSelection, token: String): Observable<boolean>;
 }
 
 @Injectable()
@@ -34,24 +34,14 @@ export class ItemsService implements IItemsService {
       .map((r: Response) => r.json().courses as CourseItem[]);
   }
 
-  public sendSelections(selection: AppState, token: String): Promise<boolean> {
-    return new Promise((resolve, reject) => {
+  public sendSelections(selection: MenuSelection, token: String): Observable<boolean> {
+    let body = JSON.stringify(selection);
 
-      let body = JSON.stringify(selection);
-      let headers = new Headers({ 'Content-Type': 'application/json', 'google-token': token });
-      let options = new RequestOptions({ headers: headers });
+    let headers = new Headers({ 'Content-Type': 'application/json', 'google-token': token });
+    let options = new RequestOptions({ headers: headers });
 
-      this.http.post(this.serverUrl + '/courses/addSelection', body, options).subscribe(
-        (response) => {
-          resolve(true);
-        },
-        (error) => {
-          reject(error);
-        }
-      );
+    return this.http.post(this.serverUrl + '/courses/addSelection', body, options).map(() => true );
 
-
-    });
   }
 
 }

@@ -7,17 +7,21 @@ import {
   FormBuilder,
   FormGroup,
   FormControl,
-  Validators,
-  AbstractControl
+  Validators
 } from '@angular/forms';
 
 import { CourseItem } from './../model/course-item';
 import { ItemsService } from './../model/items.service';
 import { SITE_KEY } from '../consts';
 import { AppStateService } from '../model/app-state.service';
-import { AppState } from '../model/app-state';
+import { MenuSelection } from '../model/app-state';
 
 import { CmCollectionValidators } from './../cm/index';
+import {
+  SendMenuSelectionAction,
+  MENU_SELECTION,
+  TOKEN
+} from '../actions/index';
 
 
 @Component({
@@ -28,18 +32,15 @@ import { CmCollectionValidators } from './../cm/index';
 })
 export class HomeComponent implements OnInit {
 
-
   public items: CourseItem[];
-  public selectedItems: CourseItem[] = [];
   public isHttpError = false;
   public isLoading = false;
-  private token: string;
   public isDataSend = false;
-  public isSendError = false;
 
   private contactControl          = new FormControl('', Validators.required);
   private countOfAttendiesControl = new FormControl('', Validators.required);
-  private selectedItemsControl    = new FormControl(this.selectedItems, CmCollectionValidators.atLeastOneItemSelected);
+  private selectedItemsControl    = new FormControl([], CmCollectionValidators.atLeastOneItemSelected);
+  private tokenControl            = new FormControl(null);
 
   public form: FormGroup;
 
@@ -50,54 +51,42 @@ export class HomeComponent implements OnInit {
     private formBuilder: FormBuilder) {
   }
 
-
-
   public ngOnInit() {
 
     this.appStateService.getAppState().subscribe( (appState) => {
+      // we could keep the uiState directily but how do we know
+      // what information this component is using from the uiState?
       this.isLoading    = appState.uiState.isLoading;
       this.isHttpError  = appState.uiState.isHttpError;
+      this.isDataSend   = appState.uiState.isDataSend;
+
       this.items        = appState.items;
 
       this.form = this.formBuilder.group({
         'contact': this.contactControl,
         'countOfAttendies': this.countOfAttendiesControl,
-        'selectedItems': this.selectedItemsControl
+        'selectedItems': this.selectedItemsControl,
+        'token': this.tokenControl
       });
-      //
-      // this.form.valueChanges
-      //   .subscribe((formValues) => {
-      //     // console.log(this.form.controls['selectedItems']);
-      //     // console.log('Model Driven Form valid value: ', this.form.valid, JSON.stringify(formValues));
-      //   });
-
     });
 
-
   }
 
-  public onToken({token}) {
-    this.token = token;
-  }
 
   public send() {
     if (!this.form.valid) {
       return;
     }
-    let appState = new AppState();
-    appState.items = this.items.filter(item => item.selected);
-    appState.contact = this.form.value.contact;
-    appState.countOfAtendies = this.form.value.countOfAttendies;
 
-    let p = this.itemsService.sendSelections(appState, this.token);
-    p.then( () => {
-      this.isDataSend = true;
-    });
-    p.catch( () => {
-      this.isDataSend = true;
-      this.isSendError = true;
-    });
-    // usually this is for testing :(
-    return p;
+    let menuSelection = MenuSelection.createEmptyState();
+    menuSelection.selectedItems   = this.form.value.selectedItems;
+    menuSelection.contact         = this.form.value.contact;
+    menuSelection.countOfAtendies = this.form.value.countOfAttendies;
+
+    this.appStateService.dispatchAction(SendMenuSelectionAction, [
+      {provide: MENU_SELECTION, useValue: menuSelection },
+      {provide: TOKEN, useValue: this.form.value.token}
+    ]);
+
   }
 }

@@ -44,11 +44,11 @@
    </div>
 
 	<div class="mdl-cell--12-col mdl-cell--5-col-desktop mdl-cell--3-offset-desktop">
-		<re-captcha [sitekey]="sitekey" (token)="onToken($event)" ></re-captcha>
+		<re-captcha [sitekey]="sitekey" formControlName="token"></re-captcha>
 	</div>
 
    <div class="mdl-cell--12-col button-row mdl-cell--5-col-desktop mdl-cell--3-offset-desktop">
-      <mdl-button mdl-button-type="raised" mdl-colored="accent" mdl-ripple [disabled]="!form.valid" (click)="send()">Senden</mdl-button>
+      <button mdl-button mdl-button-type="raised" mdl-colored="accent" mdl-ripple [disabled]="!form.valid" (click)="send()">Senden</button>
    </div>
 
 
@@ -63,7 +63,7 @@
 		<p>Wir setzen uns schnellstmöglich mit Ihnen in Verbindung.</p>
 	</div>
 
-	<div *ngIf="isSendError" class="mdl-cell--12-col mdl-cell--5-col-desktop mdl-cell--3-offset-desktop">
+	<div *ngIf="isHttpError" class="mdl-cell--12-col mdl-cell--5-col-desktop mdl-cell--3-offset-desktop">
 		<h5>Fehler:(</h5>
 		<p>Leider ist ein Fehler beim Senden aufgetreten. Bitte versuchen Sie es später noch einmal.</p>
 	</div>

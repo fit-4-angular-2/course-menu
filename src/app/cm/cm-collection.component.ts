@@ -1,11 +1,7 @@
 import {
   forwardRef,
   Provider,
-  Component,
-  AfterContentChecked,
-  OnInit,
-  AfterViewInit,
-  AfterContentInit
+  Component
 } from '@angular/core';
 import {
   NG_VALUE_ACCESSOR,
