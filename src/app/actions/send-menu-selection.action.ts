@@ -13,6 +13,10 @@ import {
   AppState,
   MenuSelection
 } from '../model/app-state';
+import {
+  MenuSelectionSendAction,
+  ErrorBackendCallAction
+} from './index';
 export let MENU_SELECTION = new OpaqueToken('menuSelection');
 export let TOKEN = new OpaqueToken('token');
 
@@ -28,14 +32,13 @@ export class SendMenuSelectionAction implements IAppAction {
   createNewState(curentState: AppState): AppState {
 
     let newState = curentState.cloneState();
-    newState.items = [];
     newState.uiState.isLoading = true;
 
-    // this.itemsService.sendSelections().subscribe( (items) => {
-    //   //this.appState.dispatchAction(CourseItemsLoadedAction, [{provide: ITEMS, useValue: items }]);
-    // }, (error) => {
-    //   //this.appState.dispatchAction();
-    // });
+    this.itemsService.sendSelections(this.menuSelection, this.token).subscribe( () => {
+      this.appState.dispatchAction(MenuSelectionSendAction);
+    }, (error) => {
+      this.appState.dispatchAction(ErrorBackendCallAction);
+    });
 
     return newState;
   }

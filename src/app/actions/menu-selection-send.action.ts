@@ -6,18 +6,13 @@ import {
   IAppAction
 } from '../model';
 
-
-
 @Injectable()
-export class ErrorBackendCallAction implements IAppAction {
-
+export class MenuSelectionSendAction implements IAppAction {
 
   createNewState(curentState: AppState): AppState {
-
     let newState = curentState.cloneState();
     newState.uiState.isLoading = false;
-    newState.uiState.isDataSend = false;
-    newState.uiState.isHttpError = true;
+    newState.uiState.isDataSend = true;
     return newState;
   }
 
