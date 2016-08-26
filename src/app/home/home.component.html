@@ -2,8 +2,6 @@
 
 <div  *ngIf="!isDataSend" class="mdl-grid mdl-grid--no-spacing">
 
-
-
    <div class="mdl-cell--12-col mdl-cell--5-col-desktop mdl-cell--3-offset-desktop">
       <h5>Angular 2 Kurs zusammenstellen</h5>
       <p>Stellen Sie sich hier ihren persönlichen Kurs zusammen. Jeder Kurs dauert 2 Tage.
@@ -19,10 +17,9 @@
 		</div>
 
 
-
    <div class="mdl-cell--12-col mdl-cell--5-col-desktop mdl-cell--3-offset-desktop">
 
-      <mdl-list>
+      <mdl-list *ngIf="!isLoading">
         <cm-collection formControlName="selectedItems">
 				  <course-item  *ngFor="let item of items" [item]="item"></course-item>
         </cm-collection>
@@ -50,8 +47,6 @@
    <div class="mdl-cell--12-col button-row mdl-cell--5-col-desktop mdl-cell--3-offset-desktop">
       <button mdl-button mdl-button-type="raised" mdl-colored="accent" mdl-ripple [disabled]="!form.valid" (click)="send()">Senden</button>
    </div>
-
-
 
 </div>
 </form>

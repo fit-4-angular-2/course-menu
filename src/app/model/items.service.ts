@@ -40,8 +40,9 @@ export class ItemsService implements IItemsService {
     let headers = new Headers({ 'Content-Type': 'application/json', 'google-token': token });
     let options = new RequestOptions({ headers: headers });
 
-    return this.http.post(this.serverUrl + '/courses/addSelection', body, options).map(() => true );
-
+    return this.http.post(this.serverUrl + '/courses/addSelection', body, options)
+      .delay(750)
+      .map(() => true );
   }
 
 }

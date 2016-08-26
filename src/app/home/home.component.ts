@@ -40,7 +40,7 @@ export class HomeComponent implements OnInit {
   private contactControl          = new FormControl('', Validators.required);
   private countOfAttendiesControl = new FormControl('', Validators.required);
   private selectedItemsControl    = new FormControl([], CmCollectionValidators.atLeastOneItemSelected);
-  private tokenControl            = new FormControl(null);
+  private tokenControl            = new FormControl(null, Validators.required);
 
   public form: FormGroup;
 
@@ -79,7 +79,7 @@ export class HomeComponent implements OnInit {
     }
 
     let menuSelection = MenuSelection.createEmptyState();
-    menuSelection.selectedItems   = this.form.value.selectedItems;
+    menuSelection.items           = this.form.value.selectedItems;
     menuSelection.contact         = this.form.value.contact;
     menuSelection.countOfAtendies = this.form.value.countOfAttendies;
 

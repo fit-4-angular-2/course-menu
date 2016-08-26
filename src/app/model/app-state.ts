@@ -21,7 +21,7 @@ export class UIState {
 export class MenuSelection {
   public contact: String;
   public countOfAtendies: String;
-  public selectedItems: CourseItem[] = [];
+  public items: CourseItem[] = [];
 
   static createEmptyState(): MenuSelection {
     return new MenuSelection();
@@ -29,7 +29,7 @@ export class MenuSelection {
 
   public cloneState(): MenuSelection {
     let result = new MenuSelection();
-    result.selectedItems = [...this.selectedItems];
+    result.items = [...this.items];
     result.contact = this.contact;
     result.countOfAtendies = this.countOfAtendies;
     return result;
