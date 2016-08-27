@@ -25,7 +25,7 @@ export class CmCollectionComponent  implements ControlValueAccessor {
   private selectedValues: any[];
   private onTouchedCallback: () => void;
   private onChangeCallback: (_: any) => void;
-  private cmItems = new Set();
+  public cmItems = new Set();
 
   constructor() {}
 
@@ -51,9 +51,8 @@ export class CmCollectionComponent  implements ControlValueAccessor {
     this.onTouchedCallback = fn;
   }
 
-  public addItem(cmItem: CmCollectionItemDirective): boolean {
+  public addItem(cmItem: CmCollectionItemDirective) {
     this.cmItems.add(cmItem);
-    return this.selectedValues.indexOf(cmItem.cmItem) !== -1;
   }
 
   public removeItem(cmItem: CmCollectionItemDirective) {

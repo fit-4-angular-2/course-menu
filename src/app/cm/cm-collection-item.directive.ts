@@ -15,9 +15,14 @@ export class CmCollectionItemDirective implements  OnInit, OnDestroy {
 
   @Input() cmItem: any;
 
-  constructor(@Optional() private cmCollection: CmCollectionComponent, private ngModel: NgModel) {}
+  constructor(@Optional() public cmCollection: CmCollectionComponent, private ngModel: NgModel) {}
 
   public ngOnInit() {
+
+    if (this.cmCollection) {
+      this.cmCollection.addItem(this);
+    }
+
     this.ngModel.control.registerOnChange((currentValue) => {
       if (this.cmCollection) {
         this.cmCollection.updateSelectedItems(this.cmItem, currentValue);
