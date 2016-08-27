@@ -12,7 +12,7 @@ import {
 } from '@angular/http';
 import { SERVER_URL_TOKEN } from './../consts';
 import { AppStateService } from './app-state.service';
-import { LoadCourseItemsAction } from '../actions/load-course-items-action';
+import { LoadCourseItemsAction } from '../actions/load-course-items.action';
 import { Observable } from 'rxjs/Observable';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 import { CourseItem } from './../model/index';

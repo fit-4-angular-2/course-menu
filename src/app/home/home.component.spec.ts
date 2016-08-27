@@ -11,7 +11,7 @@ import { AppStateService } from './../model/index';
 import { AppModule } from '../app.module';
 import { SITE_KEY } from './../consts';
 import { MockItemsService } from './../model/items.service.spec';
-import { LoadCourseItemsAction } from './../actions/load-course-items-action';
+import { LoadCourseItemsAction } from '../actions/load-course-items.action';
 
 
 describe('HomeComponent', () => {
