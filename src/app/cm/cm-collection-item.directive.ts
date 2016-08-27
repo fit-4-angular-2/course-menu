@@ -24,6 +24,7 @@ export class CmCollectionItemDirective implements  OnInit, OnDestroy {
     }
 
     this.ngModel.control.registerOnChange((currentValue) => {
+      console.log('value changed', currentValue);
       if (this.cmCollection) {
         this.cmCollection.updateSelectedItems(this.cmItem, currentValue);
       }

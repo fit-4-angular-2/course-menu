@@ -22,7 +22,7 @@ const CM_COLLECTION_CONTROL_VALUE_ACCESSOR = new Provider(NG_VALUE_ACCESSOR, {
 })
 export class CmCollectionComponent  implements ControlValueAccessor {
 
-  private selectedValues: any[];
+  public selectedValues: any[];
   private onTouchedCallback: () => void;
   private onChangeCallback: (_: any) => void;
   public cmItems = new Set();
