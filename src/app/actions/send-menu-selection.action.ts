@@ -25,7 +25,7 @@ export class SendMenuSelectionAction implements IAppAction {
 
   constructor(
     private itemsService: ItemsService,
-    private appState: AppStateService,
+    private appStateService: AppStateService,
     @Inject(MENU_SELECTION) private menuSelection: MenuSelection,
     @Inject(TOKEN) private token: String) {}
 
@@ -35,11 +35,12 @@ export class SendMenuSelectionAction implements IAppAction {
     newState.uiState.isLoading = true;
 
     this.itemsService.sendSelections(this.menuSelection, this.token).subscribe( () => {
-      this.appState.dispatchAction(MenuSelectionSendAction);
+      this.appStateService.dispatchAction(MenuSelectionSendAction);
     }, (error) => {
-      this.appState.dispatchAction(ErrorBackendCallAction);
+      this.appStateService.dispatchAction(ErrorBackendCallAction);
     });
 
     return newState;
   }
+
 }
