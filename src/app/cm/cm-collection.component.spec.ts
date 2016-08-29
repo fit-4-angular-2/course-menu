@@ -9,7 +9,7 @@ import { CMModule } from './index';
 import { CmCollectionComponent } from './cm-collection.component';
 import { CmCollectionItemDirective } from './cm-collection-item.directive';
 
-
+const item = {selected: false};
 
 
 describe('Component: CmCollection', () => {
@@ -74,19 +74,28 @@ describe('Component: CmCollection', () => {
 
       let debElem = fixture.debugElement.query(By.css('input'));
 
+      // unfortunatly this dosn't propagate the changes up to the collectionComponente
       debElem.nativeElement.click();
       fixture.detectChanges();
 
       fixture.whenStable().then( () => {
 
         let collectionInstance = fixture.debugElement.query(By.directive(CmCollectionComponent)).componentInstance;
-        console.log(collectionInstance.selectedValues); // is empty :(
 
-        console.log(fixture.componentInstance.items); // item is selected
+        // simulate that the item is selected
+        collectionInstance.updateSelectedItems(item, true);
+        
+        // TODO check this after the next rc
+        // console.log(collectionInstance.selectedValues); // is empty :(
+        // console.log(fixture.componentInstance.items); // item is selected
+        // console.log(fixture.componentInstance.selectedItems); // also empty
 
-        console.log(fixture.componentInstance.selectedItems); // also empty
+        expect(fixture.componentInstance.selectedItems.length).toBe(1, 'the item was not selected');
 
-        //expect(fixture.componentInstance.selectedItems.length).toBe(1, 'the item was not selected');
+        // simulate that the item is not selected
+        collectionInstance.updateSelectedItems(item, false);
+
+        expect(fixture.componentInstance.selectedItems.length).toBe(0, 'the item was not removed from the selection');
 
         done();
 
@@ -112,7 +121,7 @@ describe('Component: CmCollection', () => {
 class TestComponent {
 
   public items = [
-    { selected: false }
+    item
   ];
 
   public selectedItems = [];

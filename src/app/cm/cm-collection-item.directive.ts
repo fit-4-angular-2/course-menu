@@ -3,7 +3,8 @@ import {
   OnInit,
   OnDestroy,
   Input,
-  Optional
+  Optional,
+  Self
 } from '@angular/core';
 import { CmCollectionComponent } from './cm-collection.component';
 import {NgModel} from '@angular/forms';
@@ -15,7 +16,7 @@ export class CmCollectionItemDirective implements  OnInit, OnDestroy {
 
   @Input() cmItem: any;
 
-  constructor(@Optional() public cmCollection: CmCollectionComponent, private ngModel: NgModel) {}
+  constructor(@Optional() public cmCollection: CmCollectionComponent, @Self() private ngModel: NgModel) {}
 
   public ngOnInit() {
 
@@ -24,7 +25,7 @@ export class CmCollectionItemDirective implements  OnInit, OnDestroy {
     }
 
     this.ngModel.control.registerOnChange((currentValue) => {
-      console.log('value changed', currentValue);
+
       if (this.cmCollection) {
         this.cmCollection.updateSelectedItems(this.cmItem, currentValue);
       }

@@ -1,7 +1,8 @@
 import {
   forwardRef,
   Provider,
-  Component
+  Component,
+  OnInit
 } from '@angular/core';
 import {
   NG_VALUE_ACCESSOR,
@@ -9,6 +10,8 @@ import {
 } from '@angular/forms';
 
 import { CmCollectionItemDirective } from './cm-collection-item.directive';
+
+const noop = () => {};
 
 const CM_COLLECTION_CONTROL_VALUE_ACCESSOR = new Provider(NG_VALUE_ACCESSOR, {
   useExisting: forwardRef(() => CmCollectionComponent),
@@ -20,23 +23,23 @@ const CM_COLLECTION_CONTROL_VALUE_ACCESSOR = new Provider(NG_VALUE_ACCESSOR, {
   template: '<ng-content></ng-content>',
   providers: [ CM_COLLECTION_CONTROL_VALUE_ACCESSOR ]
 })
-export class CmCollectionComponent  implements ControlValueAccessor {
+export class CmCollectionComponent  implements ControlValueAccessor, OnInit {
 
   public selectedValues: any[];
-  private onTouchedCallback: () => void;
-  private onChangeCallback: (_: any) => void;
+  private onTouchedCallback: () => void = noop;
+  private onChangeCallback: (_: any) => void = noop;
   public cmItems = new Set();
 
   constructor() {}
 
+  public ngOnInit() {
+  }
   /**
    * Write a new value to the element.
    */
   public writeValue(obj: any) {
     this.selectedValues = obj;
-    if (this.onChangeCallback ) {
-      this.onChangeCallback(this.selectedValues);
-    }
+    this.onChangeCallback(this.selectedValues);
   }
   /**
    * Set the function to be called when the control receives a change event.
@@ -70,8 +73,6 @@ export class CmCollectionComponent  implements ControlValueAccessor {
       }
     }
 
-    if (this.onChangeCallback ) {
-      this.onChangeCallback(this.selectedValues);
-    }
+    this.onChangeCallback(this.selectedValues);
   }
 }
