@@ -53,13 +53,13 @@ export class AppStateService {
   // TODO how to make sure that this is of type IAppAction
   public dispatchAction(actionClass: any, providers?: Array<Type | Provider | {[k: string]: any} | any[]>) {
 
-    let localProviders = providers ? [...providers] : [];
-    // why do i need to add this class to the providers? it should already be part of the parent injector
-    // advantage: i don't need to add this as provider to the app module
-    localProviders.push(actionClass);
+    const localProviders = providers ? [...providers] : [];
 
-    const localInjector = ReflectiveInjector.resolveAndCreate(localProviders, this.injector);
-    const action = localInjector.get(actionClass);
+    const reflectiveInjector = ReflectiveInjector.resolveAndCreate(localProviders, this.injector);
+
+    const action =  reflectiveInjector.resolveAndInstantiate(actionClass);
+
+    // console.log('action instance', action);
 
     if (!action.createNewState) {
       throw new Error(`instance of ${actionClass.name} did not conform to the IAppAction interface`);

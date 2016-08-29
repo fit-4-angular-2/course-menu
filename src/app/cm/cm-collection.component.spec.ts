@@ -84,7 +84,7 @@ describe('Component: CmCollection', () => {
 
         // simulate that the item is selected
         collectionInstance.updateSelectedItems(item, true);
-        
+
         // TODO check this after the next rc
         // console.log(collectionInstance.selectedValues); // is empty :(
         // console.log(fixture.componentInstance.items); // item is selected

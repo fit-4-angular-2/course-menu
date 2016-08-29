@@ -16,6 +16,11 @@ import { ReCaptchaComponent } from './re-captcha/re-captcha.component';
 import { ItemsService } from './model/items.service';
 import { AppStateService } from './model/app-state.service';
 import { CMModule } from './cm/index';
+import { LoadCourseItemsAction } from './actions/load-course-items.action';
+import { SendMenuSelectionAction } from './actions/send-menu-selection.action';
+import { CourseItemsLoadedAction } from './actions/course-items-loaded.action';
+import { ErrorBackendCallAction } from './actions/error-backend-call.action';
+import { MenuSelectionSendAction } from './actions/menu-selection-send.action';
 
 @NgModule({
   imports: [
@@ -37,6 +42,11 @@ import { CMModule } from './cm/index';
   providers: [
     AppStateService,
     ItemsService,
+    SendMenuSelectionAction,
+    CourseItemsLoadedAction,
+    LoadCourseItemsAction,
+    ErrorBackendCallAction,
+    MenuSelectionSendAction,
     { provide: SERVER_URL_TOKEN, useValue: environment.serverUrl },
     { provide: SITE_KEY, useValue: '6LeEuiUTAAAAAAHBatXPYkA5YrJj7i6YynkxFqsX'}
   ],

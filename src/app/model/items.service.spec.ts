@@ -18,7 +18,8 @@ import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 import { CourseItem } from './../model/index';
 import { MenuSelection } from './app-state';
 
-export let oneItem: CourseItem[] =  [new CourseItem('Grundlagen', 'Projekt erstellen, Arbeiten mit Angular CLI, Komponenten')];
+export let coursItem = new CourseItem('Grundlagen', 'Projekt erstellen, Arbeiten mit Angular CLI, Komponenten');
+export let oneItem: CourseItem[] =  [coursItem];
 
 export class MockItemsService implements IItemsService {
 
