@@ -11,13 +11,14 @@ import { ImprintComponent } from './imprint/imprint.component';
 import {
   LoadCourseItemsAction
 } from './actions/load-course-items.action';
-import { AppStateService } from './model/app-state.service';
+import {AppStateService} from './model/app-state.service';
 
 export const AppRoutes: [Route] = [
   { path: 'imprint', component: ImprintComponent },
   { path: '', component: HomeComponent },
   { path: '**', redirectTo: ''}
 ];
+
 
 
 @Component({

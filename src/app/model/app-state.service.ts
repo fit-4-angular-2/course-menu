@@ -12,6 +12,7 @@ import {
 } from '@angular/core';
 
 import { AppState } from './app-state';
+import {SendMenuSelectionAction} from "../actions/send-menu-selection.action";
 
 
 export interface IAppAction {
@@ -55,7 +56,9 @@ export class AppStateService {
 
     const localProviders = providers ? [...providers] : [];
 
+
     let binding = ReflectiveInjector.resolve(localProviders);
+    // console.log(binding);
     const childInjector = ReflectiveInjector.fromResolvedProviders(binding, this.injector);
 
     const action = childInjector.resolveAndInstantiate(actionClass);

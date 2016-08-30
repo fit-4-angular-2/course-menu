@@ -179,16 +179,17 @@ describe('HomeComponent', () => {
 
     fixture.detectChanges();
 
-    spyOn(appStateService, 'dispatchAction');
+    spyOn(appStateService, 'dispatchAction').and.callThrough();
     // still not working - the dummy service is not used instead of the SendMenuSelectionAction
 
     homeComp.send();
 
-    // just a hint but not really a test :(
-    expect(appStateService.dispatchAction).toHaveBeenCalled();
 
-    // let appState = appStateService.getLastAppState();
-    // console.log(appState);
+    // just a hint but not really a test :(
+    // expect(appStateService.dispatchAction).toHaveBeenCalled();
+
+    let appState = appStateService.getLastAppState();
+    console.log(appState);
 
     // expect(homeComp.isDataSend).toBe(true);
 
@@ -212,7 +213,7 @@ describe('HomeComponent', () => {
 
         fillInRequiredFileds(homeComp);
 
-        //mockService.resultWithError = true;
+        // mockService.resultWithError = true;
 
         homeComp.send().catch( () => {
           expect(homeComp.isDataSend).toBe(true);
