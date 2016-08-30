@@ -188,6 +188,7 @@ describe('HomeComponent', () => {
     expect(appStateService.dispatchAction).toHaveBeenCalled();
 
     // let appState = appStateService.getLastAppState();
+    // console.log(appState);
 
     // expect(homeComp.isDataSend).toBe(true);
 

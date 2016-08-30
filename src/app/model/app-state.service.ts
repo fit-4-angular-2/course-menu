@@ -8,7 +8,7 @@ import {
   Injector,
   ReflectiveInjector,
   Provider,
-  Type
+  Type, DynamicComponentLoader
 } from '@angular/core';
 
 import { AppState } from './app-state';
@@ -55,9 +55,10 @@ export class AppStateService {
 
     const localProviders = providers ? [...providers] : [];
 
-    const reflectiveInjector = ReflectiveInjector.resolveAndCreate(localProviders, this.injector);
+    let binding = ReflectiveInjector.resolve(localProviders);
+    const childInjector = ReflectiveInjector.fromResolvedProviders(binding, this.injector);
 
-    const action =  reflectiveInjector.resolveAndInstantiate(actionClass);
+    const action = childInjector.resolveAndInstantiate(actionClass);
 
     // console.log('action instance', action);
 
