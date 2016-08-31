@@ -13,6 +13,7 @@ import { AppStateService } from '../model/app-state.service';
 import { LoadCourseItemsAction } from './load-course-items.action';
 import { ErrorBackendCallAction } from './error-backend-call.action';
 import { CourseItemsLoadedAction, ITEMS } from './course-items-loaded.action';
+import { AppStateInjector } from '../model/app-state.injector';
 
 describe('LoadCourseItemsAction', () => {
 
@@ -26,6 +27,7 @@ describe('LoadCourseItemsAction', () => {
       providers: [
         LoadCourseItemsAction,
         AppStateService,
+        AppStateInjector,
         { provide: ItemsService, useClass: MockItemsService}
       ]
     });

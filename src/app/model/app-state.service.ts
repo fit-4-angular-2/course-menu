@@ -5,14 +5,12 @@ import 'rxjs/add/operator/scan';
 import 'rxjs/add/operator/share';
 import {
   Injectable,
-  Injector,
-  ReflectiveInjector,
   Provider,
-  Type, DynamicComponentLoader
+  Type
 } from '@angular/core';
 
 import { AppState } from './app-state';
-import {SendMenuSelectionAction} from "../actions/send-menu-selection.action";
+import {AppStateInjector} from './app-state.injector';
 
 
 export interface IAppAction {
@@ -25,7 +23,7 @@ export class AppStateService {
   private appStateSubject: BehaviorSubject<AppState>;
   private actionDispatcher = new Subject();
 
-  constructor(private injector: Injector) {
+  constructor(private injector: AppStateInjector) {
     let initState = AppState.createEmptyState();
 
     let appStateSubject = this.actionDispatcher.scan( (state: AppState, action) => {
@@ -51,24 +49,9 @@ export class AppStateService {
     return this.appStateSubject.getValue();
   }
 
-  // TODO how to make sure that this is of type IAppAction
-  public dispatchAction(actionClass: any, providers?: Array<Type | Provider | {[k: string]: any} | any[]>) {
 
-    const localProviders = providers ? [...providers] : [];
-
-
-    let binding = ReflectiveInjector.resolve(localProviders);
-    // console.log(binding);
-    const childInjector = ReflectiveInjector.fromResolvedProviders(binding, this.injector);
-
-    const action = childInjector.resolveAndInstantiate(actionClass);
-
-    // console.log('action instance', action);
-
-    if (!action.createNewState) {
-      throw new Error(`instance of ${actionClass.name} did not conform to the IAppAction interface`);
-    }
-
+  public dispatchAction(actionClass: Type, providers?: Array<Type | Provider | {[k: string]: any} | any[]>) {
+    const action = this.injector.resolveAndInstantiate(actionClass, providers);
     this.actionDispatcher.next(action);
   }
 

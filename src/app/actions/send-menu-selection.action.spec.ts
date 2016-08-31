@@ -17,6 +17,7 @@ import { ItemsService } from './../model/items.service';
 import { AppStateService } from '../model/app-state.service';
 import { MenuSelectionSendAction } from './menu-selection-send.action';
 import { ErrorBackendCallAction } from './error-backend-call.action';
+import { AppStateInjector } from '../model/app-state.injector';
 
 describe('SendMenuSelection', () => {
 
@@ -35,6 +36,7 @@ describe('SendMenuSelection', () => {
       providers: [
         SendMenuSelectionAction,
         AppStateService,
+        AppStateInjector,
         { provide: ItemsService, useClass: MockItemsService},
         { provide: TOKEN, useValue: 'toekn' },
         { provide: MENU_SELECTION, useValue: menuSelection}

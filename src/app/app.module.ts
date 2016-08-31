@@ -16,6 +16,7 @@ import { ReCaptchaComponent } from './re-captcha/re-captcha.component';
 import { ItemsService } from './model/items.service';
 import { AppStateService } from './model/app-state.service';
 import { CMModule } from './cm/index';
+import { AppStateInjector } from './model/app-state.injector';
 
 @NgModule({
   imports: [
@@ -35,6 +36,7 @@ import { CMModule } from './cm/index';
     ReCaptchaComponent
   ],
   providers: [
+    AppStateInjector,
     AppStateService,
     ItemsService,
     { provide: SERVER_URL_TOKEN, useValue: environment.serverUrl },

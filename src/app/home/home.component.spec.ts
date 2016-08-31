@@ -13,10 +13,11 @@ import {
 } from './../model/index';
 import { AppModule } from '../app.module';
 import { SITE_KEY } from './../consts';
-import { LoadCourseItemsAction } from '../actions/load-course-items.action';
 import { oneItem, coursItem } from '../model/items.service.spec';
 import { SendMenuSelectionAction, MENU_SELECTION, TOKEN } from '../actions/index';
 import { MenuSelection } from '../model/app-state';
+import { AppStateInjector } from '../model/app-state.injector';
+import { ErrorBackendCallAction } from '../actions/error-backend-call.action';
 
 @Injectable()
 class DummyLoadCourseItemsAction implements IAppAction {
@@ -50,15 +51,17 @@ class DummySendMenuSelectionAction implements IAppAction {
 
   createNewState(curentState: AppState): AppState {
     let result = curentState.cloneState();
-
+    result.uiState.isDataSend = true;
     return result;
   }
+
 
 }
 
 describe('HomeComponent', () => {
 
   let appStateService: AppStateService;
+  let appStateInjector: AppStateInjector;
   let fixture: ComponentFixture<any>;
 
   beforeEach(async(() => {
@@ -66,11 +69,8 @@ describe('HomeComponent', () => {
       imports: [ AppModule ],
       declarations: [],
       providers: [
-        DummyLoadCourseItemsAction,
-        DummyErrorLoadCourseItemsAction,
-        DummySendMenuSelectionAction,
+        AppStateInjector,
         { provide: SITE_KEY, useValue: null}, // avoid loading the re-captcha scripts
-        { provide: SendMenuSelectionAction, useClass: DummySendMenuSelectionAction}
       ]
     });
     TestBed.compileComponents().catch((e) => {
@@ -82,9 +82,10 @@ describe('HomeComponent', () => {
 
 
 
-  beforeEach(async(inject([AppStateService],
-    (_appStateService: AppStateService ) => {
+  beforeEach(async(inject([AppStateService, AppStateInjector],
+    (_appStateService: AppStateService, appStateInjector_: AppStateInjector ) => {
       appStateService = _appStateService;
+      appStateInjector = appStateInjector_;
   })));
 
   it('should create the home component', async((  ) => {
@@ -167,6 +168,9 @@ describe('HomeComponent', () => {
   }));
 
   it('should send the selections if all required fields are present', async(() => {
+
+    appStateInjector.replaceTokenWithClass(SendMenuSelectionAction, DummySendMenuSelectionAction);
+
     let homeComp = fixture.componentInstance;
 
     fixture.detectChanges();
@@ -177,55 +181,28 @@ describe('HomeComponent', () => {
 
     fillInRequiredFileds(homeComp);
 
-    fixture.detectChanges();
-
-    spyOn(appStateService, 'dispatchAction').and.callThrough();
-    // still not working - the dummy service is not used instead of the SendMenuSelectionAction
-
     homeComp.send();
 
-
-    // just a hint but not really a test :(
-    // expect(appStateService.dispatchAction).toHaveBeenCalled();
-
-    let appState = appStateService.getLastAppState();
-    console.log(appState);
-
-    // expect(homeComp.isDataSend).toBe(true);
-
+    expect(homeComp.isDataSend).toBe(true);
 
   }));
 
-  // not in async. otherwise the async function termintaes with error because of the rejected promise
-  xit('should mark an error state if an error occures during send data', ( done ) => {
+
+  it('should mark an error state if an error occures during send data', ( ) => {
+
+    appStateInjector.replaceTokenWithClass(SendMenuSelectionAction, ErrorBackendCallAction);
 
     let homeComp = fixture.componentInstance;
 
     fixture.detectChanges();
-    fixture.whenStable().then( () => {
 
-      expect(homeComp.isDataSend).toBe(false);
-      expect(homeComp.isSendError).toBe(false);
+    appStateService.dispatchAction(DummyLoadCourseItemsAction);
 
-      appStateService.dispatchAction(LoadCourseItemsAction);
-      // forward to Loaded action by skipping the load action
-      appStateService.getAppState().skip(0).subscribe( () => {
+    fillInRequiredFileds(homeComp);
 
-        fillInRequiredFileds(homeComp);
+    homeComp.send();
 
-        // mockService.resultWithError = true;
-
-        homeComp.send().catch( () => {
-          expect(homeComp.isDataSend).toBe(true);
-          expect(homeComp.isSendError).toBe(true);
-
-          done();
-        });
-
-
-      });
-
-    });
+    expect(homeComp.isHttpError).toBe(true);
 
   });
 

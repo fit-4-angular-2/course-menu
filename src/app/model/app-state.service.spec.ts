@@ -6,6 +6,7 @@ import {
 import { AppStateService, IAppAction } from './app-state.service';
 import { CourseItem } from './course-item';
 import { AppState } from './app-state';
+import { AppStateInjector } from './app-state.injector';
 
 let oneItem = new CourseItem('theTitle', 'expl.');
 
@@ -26,7 +27,7 @@ describe('AppStateService', () => {
 
   beforeEach( () => {
     TestBed.configureTestingModule({
-      providers: [AppStateService, TestAction]
+      providers: [AppStateService, TestAction, AppStateInjector]
     });
   });
 
