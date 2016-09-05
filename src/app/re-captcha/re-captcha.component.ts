@@ -12,11 +12,6 @@ import {
   ControlValueAccessor
 } from '@angular/forms';
 
-const TOKEN_VALUE_ACCESSOR = new Provider(NG_VALUE_ACCESSOR, {
-  useExisting: forwardRef(() => ReCaptchaComponent),
-  multi: true
-});
-
 // https://www.google.com/recaptcha/admin#list
 declare var grecaptcha: { render: Function };
 
@@ -24,7 +19,11 @@ declare var grecaptcha: { render: Function };
   moduleId: module.id,
   selector: 're-captcha',
   template: '',
-  providers: [ TOKEN_VALUE_ACCESSOR ]
+  providers: [ {
+    provide: NG_VALUE_ACCESSOR,
+    useExisting: forwardRef(() => ReCaptchaComponent),
+    multi: true
+  } ]
 })
 export class ReCaptchaComponent implements OnInit, ControlValueAccessor {
 

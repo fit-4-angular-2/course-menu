@@ -16,6 +16,7 @@ import { MenuSelection } from './app-state';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/delay';
 import 'rxjs/add/operator/timeout';
+import 'rxjs/add/operator/map';
 
 
 export interface IItemsService {

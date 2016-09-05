@@ -6,7 +6,8 @@ import {
 } from '@angular/core/testing';
 import { AppComponent, AppModule } from './index';
 import {
-  Router
+  Router,
+  UrlTree
 } from '@angular/router';
 import { Subject } from 'rxjs/Rx';
 import {APP_BASE_HREF} from '@angular/common';
@@ -24,6 +25,8 @@ export class MockRouter {
   public navigate(commands: any[]) {}
 
   public createUrlTree() {}
+
+  public serializeUrl(url: UrlTree) {return ''};
 
 }
 

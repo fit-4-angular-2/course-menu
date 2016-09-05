@@ -43,9 +43,28 @@ const barrels: string[] = [
 ];
 
 const cliSystemConfigPackages: any = {};
-barrels.forEach((barrelName: string) => {
-  cliSystemConfigPackages[barrelName] = { main: 'index' };
-});
+cliSystemConfigPackages['@angular/core'] = { main: 'bundles/core.umd.js' };
+cliSystemConfigPackages['@angular/forms'] = { main: 'bundles/forms.umd.js' };
+cliSystemConfigPackages['@angular/common'] = { main: 'bundles/common.umd.js' };
+cliSystemConfigPackages['@angular/compiler'] = { main: 'bundles/compiler.umd.js' };
+cliSystemConfigPackages['@angular/http'] = { main: 'bundles/http.umd.js' };
+cliSystemConfigPackages['@angular/router'] = { main: 'bundles/router.umd.js' };
+cliSystemConfigPackages['@angular/platform-browser'] = { main: 'bundles/platform-browser.umd.js' };
+cliSystemConfigPackages['@angular/platform-browser-dynamic'] = { main: 'bundles/platform-browser-dynamic.umd.js' };
+
+
+cliSystemConfigPackages['rxjs'] = { main: 'index.js' };
+cliSystemConfigPackages['app'] = { main: 'index.js' };
+
+
+cliSystemConfigPackages['@angular/core/testing'] = { main: '../bundles/core-testing.umd.js' };
+cliSystemConfigPackages['@angular/common/testing'] = { main: '../bundles/common-testing.umd.js' };
+cliSystemConfigPackages['@angular/compiler/testing'] = { main: '../bundles/compiler-testing.umd.js' };
+cliSystemConfigPackages['@angular/platform-browser/testing'] = { main: '../bundles/platform-browser-testing.umd.js' };
+cliSystemConfigPackages['@angular/platform-browser-dynamic/testing'] = { main: '../bundles/platform-browser-dynamic-testing.umd.js' };
+cliSystemConfigPackages['@angular/http/testing'] = { main: '../bundles/http-testing.umd.js' };
+cliSystemConfigPackages['@angular/router/testing'] = { main: '../bundles/router-testing.umd.js' };
+cliSystemConfigPackages['@angular/forms/testing'] = { main: '../bundles/forms-testing.umd.js' };
 
 /** Type declaration for ambient System. */
 declare var System: any;

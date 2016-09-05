@@ -9,19 +9,20 @@ var Angular2App = require('angular-cli/lib/broccoli/angular2-app');
 module.exports = function(defaults) {
   return new Angular2App(defaults, {
 		polyfills: [
-			'vendor/core-js/client/core.js',
-			'vendor/systemjs/dist/system.src.js',
-			'vendor/zone.js/dist/zone.js'
+      'vendor/core-js/client/core.js',
+      'vendor/systemjs/dist/system.src.js',
+      'vendor/zone.js/dist/zone.js',
+      'vendor/web-animations-js/web-animations.min.js'
 		],
     vendorNpmFiles: [
-			'systemjs/dist/system-polyfills.js',
-			'systemjs/dist/system.src.js',
-			'zone.js/dist/*.+(js|js.map)',
-			'core-js/client/core.js',
-			'rxjs/**/*.+(js|js.map)',
+      'systemjs/dist/system-polyfills.js',
+      'systemjs/dist/system.src.js',
+      'zone.js/dist/*.+(js|js.map)',
+      'core-js/client/core.js',
+      'rxjs/**/*.+(js|js.map)',
       '@angular/**/*.+(js|js.map)',
+      'web-animations-js/**/*',
       'angular2-mdl/**/*',
-			'web-animations-js/**/*'
     ]
   });
 };

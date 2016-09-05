@@ -1,5 +1,6 @@
 import {
-  TestBed
+  TestBed,
+  async
 } from '@angular/core/testing';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -14,14 +15,14 @@ const item = {selected: false};
 
 describe('Component: CmCollection', () => {
 
-  beforeEach(() => {
+  beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [ CMModule, FormsModule ],
       declarations: [ TestComponent ],
     });
-  });
+  }));
 
-  it('should create the cmCollection component and one collection item directive', ( done ) => {
+  it('should create the cmCollection component and one collection item directive', async(( ) => {
 
     let fixture = TestBed.createComponent(TestComponent);
     fixture.detectChanges();
@@ -42,12 +43,10 @@ describe('Component: CmCollection', () => {
       // let cmCollectionItem = debElems[0].componentInstance;
       // console.log(cmCollectionItem);
 
-      done();
-
     });
-  });
+  }));
 
-  it('should remove the collection item from the collection if the component is destroyed', () => {
+  it('should remove the collection item from the collection if the component is destroyed', async(() => {
     let fixture = TestBed.createComponent(TestComponent);
     fixture.detectChanges();
 
@@ -64,9 +63,9 @@ describe('Component: CmCollection', () => {
 
     });
 
-  });
+  }));
 
-  it('should add the item to the selected items if the checkbox is clicked', ( done ) => {
+  it('should add the item to the selected items if the checkbox is clicked', async(() => {
     let fixture = TestBed.createComponent(TestComponent);
     fixture.detectChanges();
 
@@ -97,12 +96,11 @@ describe('Component: CmCollection', () => {
 
         expect(fixture.componentInstance.selectedItems.length).toBe(0, 'the item was not removed from the selection');
 
-        done();
 
       });
     });
 
-  });
+  }));
 
 
 });

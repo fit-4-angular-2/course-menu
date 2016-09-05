@@ -17,6 +17,7 @@ import {
 import { FormsModule } from '@angular/forms';
 import { CMModule } from '../cm/index';
 import { AppStateInjector } from '../model/app-state.injector';
+import { AppStateService } from '../model/app-state.service';
 
 describe('CourseItemComponent', () => {
 
@@ -26,7 +27,7 @@ describe('CourseItemComponent', () => {
     TestBed.configureTestingModule({
       imports: [ MdlModule, FormsModule, CMModule ],
       declarations: [CourseItemComponent, TestComponent],
-      providers: [AppStateInjector]
+      providers: [AppStateInjector, AppStateService]
     });
     TestBed.compileComponents().then( () => {
       fixture = TestBed.createComponent(TestComponent);

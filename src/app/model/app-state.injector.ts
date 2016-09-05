@@ -2,22 +2,23 @@ import {
   Injectable,
   Injector,
   ReflectiveInjector,
-  Provider,
-  Type
+  Provider
 } from '@angular/core';
 import {IAppAction} from './app-state.service';
+import { Type } from '@angular/core/src/type';
+
 
 @Injectable()
 export class AppStateInjector {
 
-  private clazzMap = new Map<Type, any>();
+  private clazzMap = new Map<Type<IAppAction>, any>();
 
   constructor(private injector: Injector) {}
 
   // how to make sure that acitonClass is of type IAppAction
   public resolveAndInstantiate(
-    actionClass: Type,
-    providers?: Array<Type | Provider | {[k: string]: any} | any[]>): IAppAction {
+    actionClass: any,
+    providers?: [Provider]): IAppAction {
 
     // create a possibly emoty array of additional providers
     const localProviders = providers ? [...providers] : [];
@@ -47,7 +48,7 @@ export class AppStateInjector {
   // appStateInjector.replaceTokenWithClass(SendMenuSelectionAction, DummySendMenuSelectionAction);
   // this will instanciate DummySendMenuSelectionAction if SendMenuSelectionAction is requested.
   // this will imporve testablility.
-  public replaceTokenWithClass(token: Type, clazz: any) {
+  public replaceTokenWithClass(token: any, clazz: any) {
     this.clazzMap.set(token, clazz);
   }
 }

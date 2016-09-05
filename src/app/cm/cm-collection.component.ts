@@ -11,17 +11,16 @@ import {
 
 import { CmCollectionItemDirective } from './cm-collection-item.directive';
 
-const noop = () => {};
-
-const CM_COLLECTION_CONTROL_VALUE_ACCESSOR = new Provider(NG_VALUE_ACCESSOR, {
-  useExisting: forwardRef(() => CmCollectionComponent),
-  multi: true
-});
+const noop = (_?: any) => {};
 
 @Component({
   selector: 'cm-collection',
   template: '<ng-content></ng-content>',
-  providers: [ CM_COLLECTION_CONTROL_VALUE_ACCESSOR ]
+  providers: [ {
+    provide: NG_VALUE_ACCESSOR,
+    useExisting: forwardRef(() => CmCollectionComponent),
+    multi: true
+  } ]
 })
 export class CmCollectionComponent  implements ControlValueAccessor, OnInit {
 

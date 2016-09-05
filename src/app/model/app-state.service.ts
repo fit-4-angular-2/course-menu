@@ -5,9 +5,9 @@ import 'rxjs/add/operator/scan';
 import 'rxjs/add/operator/share';
 import {
   Injectable,
-  Provider,
-  Type
+  Provider
 } from '@angular/core';
+import { Type } from '@angular/core/src/type';
 
 import { AppState } from './app-state';
 import {AppStateInjector} from './app-state.injector';
@@ -50,7 +50,7 @@ export class AppStateService {
   }
 
 
-  public dispatchAction(actionClass: Type, providers?: Array<Type | Provider | {[k: string]: any} | any[]>) {
+  public dispatchAction(actionClass: any, providers?: [Provider]) {
     const action = this.injector.resolveAndInstantiate(actionClass, providers);
     this.actionDispatcher.next(action);
   }

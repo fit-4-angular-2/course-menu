@@ -1,15 +1,13 @@
-import {
-  addProviders,
-  inject
-} from '@angular/core/testing';
+
 import { ItemsService, IItemsService } from './items.service';
-import { MockBackend } from '@angular/http/testing';
+
 import {
   BaseRequestOptions,
   Http,
   Response,
   ResponseOptions
 } from '@angular/http';
+import { MockBackend } from '@angular/http/testing';
 import { SERVER_URL_TOKEN } from './../consts';
 import { AppStateService } from './app-state.service';
 import { LoadCourseItemsAction } from '../actions/load-course-items.action';
@@ -17,6 +15,8 @@ import { Observable } from 'rxjs/Observable';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 import { CourseItem } from './../model/index';
 import { MenuSelection } from './app-state';
+import { inject, TestBed } from '@angular/core/testing';
+
 
 export let coursItem = new CourseItem('Grundlagen', 'Projekt erstellen, Arbeiten mit Angular CLI, Komponenten');
 export let oneItem: CourseItem[] =  [coursItem];
@@ -34,21 +34,23 @@ export class MockItemsService implements IItemsService {
 }
 
 
-beforeEach(() => {
-  addProviders([
-    ItemsService,
-    MockBackend,
-    BaseRequestOptions,
-    AppStateService,
-    LoadCourseItemsAction,
-    { provide: SERVER_URL_TOKEN, useValue: 'whatever' },
-    { provide: Http,
-      useFactory: (backend, options) => new Http(backend, options),
-      deps: [MockBackend, BaseRequestOptions] }
-  ]);
-});
-
 describe('ItemsService', () => {
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [
+        ItemsService,
+        MockBackend,
+        BaseRequestOptions,
+        AppStateService,
+        LoadCourseItemsAction,
+        { provide: SERVER_URL_TOKEN, useValue: 'whatever' },
+        { provide: Http,
+          useFactory: (backend, options) => new Http(backend, options),
+          deps: [MockBackend, BaseRequestOptions] }
+      ]
+    })
+  });
 
   let service: ItemsService;
   let mockbackend: MockBackend;
