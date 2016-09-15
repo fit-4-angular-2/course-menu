@@ -37,7 +37,7 @@
     "broccoli-merge-trees": "1.1.4",
     "codeclimate-test-reporter": "^0.3.3",
     "codelyzer": "0.0.28",
-    "coveralls": "2.11.12",
+    "coveralls": "2.11.13",
     "ember-cli-inject-live-reload": "1.4.1",
     "es6-shim": "0.35.1",
     "jasmine-core": "2.5.0",
