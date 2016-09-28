@@ -3,7 +3,6 @@ import {
   ElementRef,
   OnInit,
   Input,
-  Provider,
   NgZone,
   forwardRef
 } from '@angular/core';
@@ -16,7 +15,6 @@ import {
 declare var grecaptcha: { render: Function };
 
 @Component({
-  moduleId: module.id,
   selector: 're-captcha',
   template: '',
   providers: [ {

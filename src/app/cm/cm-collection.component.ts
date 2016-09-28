@@ -1,6 +1,5 @@
 import {
   forwardRef,
-  Provider,
   Component,
   OnInit
 } from '@angular/core';

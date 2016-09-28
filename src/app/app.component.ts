@@ -22,10 +22,9 @@ export const AppRoutes: [Route] = [
 
 
 @Component({
-  moduleId: module.id,
   selector: 'app-root',
   templateUrl: 'app.component.html',
-  styleUrls: ['app.component.css'],
+  styleUrls: ['app.component.scss'],
 })
 export class AppComponent implements OnInit {
   public title = 'Angular 2 CourseMenu';

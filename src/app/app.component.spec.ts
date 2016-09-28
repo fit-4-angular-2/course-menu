@@ -26,7 +26,7 @@ export class MockRouter {
 
   public createUrlTree() {}
 
-  public serializeUrl(url: UrlTree) {return ''};
+  public serializeUrl(url: UrlTree) {return ''; };
 
 }
 

@@ -49,7 +49,7 @@ describe('ItemsService', () => {
           useFactory: (backend, options) => new Http(backend, options),
           deps: [MockBackend, BaseRequestOptions] }
       ]
-    })
+    });
   });
 
   let service: ItemsService;

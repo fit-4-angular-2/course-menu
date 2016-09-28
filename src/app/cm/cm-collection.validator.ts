@@ -11,7 +11,7 @@ export class CmCollectionValidators {
    */
   static atLeastSelectedItems(minSelectedItemsCount: number): ValidatorFn {
     return (control: AbstractControl): {[key: string]: any} => {
-      let selectedItems = <[]>control.value;
+      let selectedItems = <any>control.value;
       return selectedItems.length >= minSelectedItemsCount ?
         null :
         {'atLeastSelectedItems': {'requiredCount': minSelectedItemsCount, 'actualCount': selectedItems.length}};
@@ -22,7 +22,7 @@ export class CmCollectionValidators {
    * Validator that requires that at least one item is selected.
    */
   static atLeastOneItemSelected(control: AbstractControl): {[key: string]: any} {
-    let selectedItems = <[]>control.value;
+    let selectedItems = <any>control.value;
     return selectedItems.length >= 1 ?
       null :
     {'atLeastSelectedItems': {'requiredCount': 1, 'actualCount': selectedItems.length}};

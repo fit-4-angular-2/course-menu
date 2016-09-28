@@ -8,7 +8,7 @@ import { MdlModule } from 'angular2-mdl';
 import { RouterModule } from '@angular/router';
 import { AppComponent, AppRoutes } from './app.component';
 import { SERVER_URL_TOKEN, SITE_KEY } from './consts';
-import { environment } from './environment';
+import { environment } from './../environments/environment';
 import { ImprintComponent } from './imprint/imprint.component';
 import { HomeComponent } from './home/home.component';
 import { CourseItemComponent } from './course-item/course-item.component';

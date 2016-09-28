@@ -10,7 +10,6 @@ import {
 
 
 @Component({
-  moduleId: module.id,
   selector: 'course-item',
   templateUrl: 'course-item.component.html',
   styleUrls: ['course-item.component.css']

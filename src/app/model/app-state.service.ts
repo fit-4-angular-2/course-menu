@@ -7,7 +7,6 @@ import {
   Injectable,
   Provider
 } from '@angular/core';
-import { Type } from '@angular/core/src/type';
 
 import { AppState } from './app-state';
 import {AppStateInjector} from './app-state.injector';
