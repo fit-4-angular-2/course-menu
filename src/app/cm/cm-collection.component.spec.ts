@@ -77,27 +77,12 @@ describe('Component: CmCollection', () => {
       debElem.nativeElement.click();
       fixture.detectChanges();
 
-      fixture.whenStable().then( () => {
+      expect(fixture.componentInstance.selectedItems.length).toBe(1, 'the item was not selected');
 
-        let collectionInstance = fixture.debugElement.query(By.directive(CmCollectionComponent)).componentInstance;
+      debElem.nativeElement.click();
 
-        // simulate that the item is selected
-        collectionInstance.updateSelectedItems(item, true);
+      expect(fixture.componentInstance.selectedItems.length).toBe(0, 'the item was not removed from the selection');
 
-        // TODO check this after the next rc
-        // console.log(collectionInstance.selectedValues); // is empty :(
-        // console.log(fixture.componentInstance.items); // item is selected
-        // console.log(fixture.componentInstance.selectedItems); // also empty
-
-        expect(fixture.componentInstance.selectedItems.length).toBe(1, 'the item was not selected');
-
-        // simulate that the item is not selected
-        collectionInstance.updateSelectedItems(item, false);
-
-        expect(fixture.componentInstance.selectedItems.length).toBe(0, 'the item was not removed from the selection');
-
-
-      });
     });
 
   }));

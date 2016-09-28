@@ -68,6 +68,10 @@ export class HomeComponent implements OnInit {
         'selectedItems': this.selectedItemsControl,
         'token': this.tokenControl
       });
+
+      // this.form.valueChanges.subscribe( (formValues) => {
+      //   console.log(`Model Driven Form valid: ${this.form.valid} value:`, JSON.stringify(formValues));
+      // });
     });
 
   }
