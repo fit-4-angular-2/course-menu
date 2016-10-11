@@ -22,6 +22,7 @@ import {
   MENU_SELECTION,
   TOKEN
 } from '../actions/index';
+import { MdlDialogService } from 'angular2-mdl';
 
 
 @Component({
@@ -47,7 +48,8 @@ export class HomeComponent implements OnInit {
     private itemsService: ItemsService,
     @Inject(SITE_KEY) public sitekey: string,
     private appStateService: AppStateService,
-    private formBuilder: FormBuilder) {
+    private formBuilder: FormBuilder,
+    private dialofService: MdlDialogService) {
   }
 
   public ngOnInit() {
@@ -91,5 +93,9 @@ export class HomeComponent implements OnInit {
       {provide: TOKEN, useValue: this.form.value.token}
     ]);
 
+  }
+
+  public test() {
+    this.dialofService.alert('test');
   }
 }
