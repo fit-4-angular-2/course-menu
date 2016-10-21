@@ -18,6 +18,7 @@ import { SendMenuSelectionAction, MENU_SELECTION, TOKEN } from '../actions/index
 import { MenuSelection } from '../model/app-state';
 import { AppStateInjector } from '../model/app-state.injector';
 import { ErrorBackendCallAction } from '../actions/error-backend-call.action';
+import { APP_BASE_HREF } from '@angular/common';
 
 @Injectable()
 class DummyLoadCourseItemsAction implements IAppAction {
@@ -70,6 +71,7 @@ describe('HomeComponent', () => {
       declarations: [],
       providers: [
         AppStateInjector,
+        { provide: APP_BASE_HREF, useValue: '/'},
         { provide: SITE_KEY, useValue: null}, // avoid loading the re-captcha scripts
       ]
     });
