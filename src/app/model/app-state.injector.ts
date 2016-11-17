@@ -23,25 +23,19 @@ export class AppStateInjector {
     actionClass: any,
     providers?: [Provider]): IAppAction {
 
-      console.log('appstateinjector', this.injector);
-
     // create a possibly emoty array of additional providers
     const localProviders = providers ? [...providers] : [];
 
     // check if there is any replacement required
     const requiredType = this.clazzMap.get(actionClass) ? this.clazzMap.get(actionClass) : actionClass;
 
-    const action  = ReflectiveInjector.resolveAndCreate(localProviders, this.injector).get(requiredType);
-
     // resolve the additional providers
-    // let binding = ReflectiveInjector.resolveAndCreate(localProviders, this.injector); // .resolve(localProviders);
+    let binding = ReflectiveInjector.resolve(localProviders);
 
     // create a child injector with the appmodule injector as it's parent
-    // const childInjector = ReflectiveInjector.fromResolvedProviders(binding, this.injector);
+    const childInjector = ReflectiveInjector.fromResolvedProviders(binding, this.injector);
 
-    // const action = childInjector.get(requiredType);
-    // instanitate the requested aciton
-    // const action = childInjector.resolveAndInstantiate(requiredType);
+    const action = childInjector.resolveAndInstantiate(requiredType);
 
     // check that the aciton conforms to the IAppAction interface
     if (!action.createNewState) {
