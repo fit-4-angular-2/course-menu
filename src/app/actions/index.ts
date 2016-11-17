@@ -1,5 +1,5 @@
 
-import {NgModule} from '@angular/core';
+import { NgModule, ModuleWithProviders } from '@angular/core';
 
 import { LoadCourseItemsAction } from './load-course-items.action';
 import { SendMenuSelectionAction } from './send-menu-selection.action';
@@ -14,12 +14,18 @@ export * from './send-menu-selection.action';
 export * from './menu-selection-send.action';
 
 @NgModule({
-  providers: [
-    SendMenuSelectionAction,
-    CourseItemsLoadedAction,
-    LoadCourseItemsAction,
-    ErrorBackendCallAction,
-    MenuSelectionSendAction
-  ]
 })
-export class CourseMenuActionModule {}
+export class CourseMenuActionModule {
+  public static forRoot(): ModuleWithProviders {
+    return {
+      ngModule: CourseMenuActionModule,
+      providers: [
+        SendMenuSelectionAction,
+        CourseItemsLoadedAction,
+        LoadCourseItemsAction,
+        ErrorBackendCallAction,
+        MenuSelectionSendAction
+      ]
+    };
+  }
+}

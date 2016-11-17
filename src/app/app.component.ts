@@ -1,6 +1,7 @@
 import {
   Component,
-  OnInit
+  OnInit,
+  Injector
 } from '@angular/core';
 import {
   Router,
@@ -12,6 +13,7 @@ import {
   LoadCourseItemsAction
 } from './actions/load-course-items.action';
 import {AppStateService} from './model/app-state.service';
+import { AppStateInjector } from './model/app-state.injector';
 
 export const AppRoutes: [Route] = [
   { path: 'imprint', component: ImprintComponent },
@@ -29,7 +31,16 @@ export const AppRoutes: [Route] = [
 export class AppComponent implements OnInit {
   public title = 'Angular 2 CourseMenu';
 
-  constructor(private router: Router,  private appStateService: AppStateService) {}
+  constructor(
+    private router: Router,
+    private appStateService: AppStateService,
+    private injector: Injector,
+    private appStateInjector: AppStateInjector) {
+
+    //this.appStateInjector.injector = this.injector;
+    //console.log('app', this.injector.get(LoadCourseItemsAction));
+
+  }
 
   public ngOnInit() {
     this.appStateService.dispatchAction(LoadCourseItemsAction);

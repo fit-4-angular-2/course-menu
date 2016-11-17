@@ -17,6 +17,8 @@ import { ItemsService } from './model/items.service';
 import { AppStateService } from './model/app-state.service';
 import { CMModule } from './cm/index';
 import { AppStateInjector } from './model/app-state.injector';
+import { CourseMenuActionModule } from './actions/index';
+
 
 @NgModule({
   imports: [
@@ -26,19 +28,20 @@ import { AppStateInjector } from './model/app-state.injector';
     HttpModule,
     MdlModule,
     CMModule,
+    CourseMenuActionModule.forRoot(),
     RouterModule.forRoot(AppRoutes)
   ],
   declarations: [
+    CourseItemComponent,
     AppComponent,
     ImprintComponent,
     HomeComponent,
-    CourseItemComponent,
     ReCaptchaComponent
   ],
   providers: [
+    ItemsService,
     AppStateInjector,
     AppStateService,
-    ItemsService,
     { provide: SERVER_URL_TOKEN, useValue: environment.serverUrl },
     { provide: SITE_KEY, useValue: '6LeEuiUTAAAAAAHBatXPYkA5YrJj7i6YynkxFqsX'}
   ],
