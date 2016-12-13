@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import {
   FormsModule,
   ReactiveFormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import { HttpModule, XSRFStrategy, CookieXSRFStrategy, Request } from '@angular/http';
 import { MdlModule } from 'angular2-mdl';
 import { RouterModule } from '@angular/router';
 import { AppComponent, AppRoutes } from './app.component';
@@ -19,6 +19,13 @@ import { CMModule } from './cm/index';
 import { AppStateInjector } from './model/app-state.injector';
 import { CourseMenuActionModule } from './actions/index';
 
+
+export class NoopStrategy implements XSRFStrategy {
+
+  public configureRequest(req: Request): void {
+    console.log('configure', req);
+  }
+}
 
 @NgModule({
   imports: [
@@ -43,7 +50,8 @@ import { CourseMenuActionModule } from './actions/index';
     AppStateInjector,
     AppStateService,
     { provide: SERVER_URL_TOKEN, useValue: environment.serverUrl },
-    { provide: SITE_KEY, useValue: '6LeEuiUTAAAAAAHBatXPYkA5YrJj7i6YynkxFqsX'}
+    { provide: SITE_KEY, useValue: '6LeEuiUTAAAAAAHBatXPYkA5YrJj7i6YynkxFqsX'},
+    { provide: XSRFStrategy, useClass: NoopStrategy }
   ],
   entryComponents: [],
   bootstrap: [AppComponent],

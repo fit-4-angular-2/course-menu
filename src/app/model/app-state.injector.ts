@@ -37,6 +37,8 @@ export class AppStateInjector {
 
     const action = childInjector.resolveAndInstantiate(requiredType);
 
+    console.log(action);
+
     // check that the aciton conforms to the IAppAction interface
     if (!action.createNewState) {
       throw new Error(`instance of ${actionClass} did not conform to the IAppAction interface`);

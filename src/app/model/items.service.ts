@@ -30,7 +30,7 @@ export class ItemsService implements IItemsService {
   constructor(private http: Http, @Inject(SERVER_URL_TOKEN) private serverUrl: string) {}
 
   public loadItems(): Observable<CourseItem[]> {
-    return this.http.get(this.serverUrl + '/courses')
+    return this.http.get(this.serverUrl + '/courses', {headers: new Headers({})})
       .delay(750)
       .map((r: Response) => r.json().courses as CourseItem[]);
   }
