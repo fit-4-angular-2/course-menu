@@ -79,16 +79,12 @@ describe('HomeComponent', () => {
       console.error(e);
     }).then( () => {
       fixture  = TestBed.createComponent(HomeComponent);
+
+      appStateService = TestBed.get(AppStateService);
+      appStateInjector = TestBed.get(AppStateInjector);
+
     });
   }));
-
-
-
-  beforeEach(async(inject([AppStateService, AppStateInjector],
-    (_appStateService: AppStateService, appStateInjector_: AppStateInjector ) => {
-      appStateService = _appStateService;
-      appStateInjector = appStateInjector_;
-  })));
 
   it('should create the home component', async((  ) => {
     fixture.detectChanges();
@@ -190,23 +186,23 @@ describe('HomeComponent', () => {
   }));
 
 
-  // it('should mark an error state if an error occures during send data', ( ) => {
-  //
-  //   appStateInjector.replaceTokenWithClass(SendMenuSelectionAction, ErrorBackendCallAction);
-  //
-  //   let homeComp = fixture.componentInstance;
-  //
-  //   fixture.detectChanges();
-  //
-  //   appStateService.dispatchAction(DummyLoadCourseItemsAction);
-  //
-  //   fillInRequiredFileds(homeComp);
-  //
-  //   homeComp.send();
-  //
-  //   expect(homeComp.isHttpError).toBe(true);
-  //
-  // });
+  it('should mark an error state if an error occures during send data', ( ) => {
+
+    appStateInjector.replaceTokenWithClass(SendMenuSelectionAction, ErrorBackendCallAction);
+
+    let homeComp = fixture.componentInstance;
+
+    fixture.detectChanges();
+
+    appStateService.dispatchAction(DummyLoadCourseItemsAction);
+
+    fillInRequiredFileds(homeComp);
+
+    homeComp.send();
+
+    expect(homeComp.isHttpError).toBe(true);
+
+  });
 
 });
 
