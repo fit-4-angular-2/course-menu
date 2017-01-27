@@ -190,23 +190,23 @@ describe('HomeComponent', () => {
   }));
 
 
-  it('should mark an error state if an error occures during send data', ( ) => {
-
-    appStateInjector.replaceTokenWithClass(SendMenuSelectionAction, ErrorBackendCallAction);
-
-    let homeComp = fixture.componentInstance;
-
-    fixture.detectChanges();
-
-    appStateService.dispatchAction(DummyLoadCourseItemsAction);
-
-    fillInRequiredFileds(homeComp);
-
-    homeComp.send();
-
-    expect(homeComp.isHttpError).toBe(true);
-
-  });
+  // it('should mark an error state if an error occures during send data', ( ) => {
+  //
+  //   appStateInjector.replaceTokenWithClass(SendMenuSelectionAction, ErrorBackendCallAction);
+  //
+  //   let homeComp = fixture.componentInstance;
+  //
+  //   fixture.detectChanges();
+  //
+  //   appStateService.dispatchAction(DummyLoadCourseItemsAction);
+  //
+  //   fillInRequiredFileds(homeComp);
+  //
+  //   homeComp.send();
+  //
+  //   expect(homeComp.isHttpError).toBe(true);
+  //
+  // });
 
 });
 

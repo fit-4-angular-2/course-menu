@@ -48,8 +48,7 @@ export class HomeComponent implements OnInit {
     private itemsService: ItemsService,
     @Inject(SITE_KEY) public sitekey: string,
     private appStateService: AppStateService,
-    private formBuilder: FormBuilder,
-    private dialofService: MdlDialogService) {
+    private formBuilder: FormBuilder) {
   }
 
   public ngOnInit() {
@@ -95,7 +94,4 @@ export class HomeComponent implements OnInit {
 
   }
 
-  public test() {
-    this.dialofService.alert('test');
-  }
 }
