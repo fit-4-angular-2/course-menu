@@ -45,7 +45,7 @@
     "karma-coverage": "1.1.1",
     "karma-jasmine": "1.0.2",
     "karma-remap-istanbul": "0.4.0",
-    "karma-spec-reporter": "0.0.29",
+    "karma-spec-reporter": "0.0.31",
     "protractor": "4.0.14",
     "ts-node": "2.1.0",
     "tslint": "4.0.2",
